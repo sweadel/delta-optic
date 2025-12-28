@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دلتا للبصريات | Delta Optics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #0056b3; 
+            --secondary-color: #f8f9fa;
+            --text-color: #333;
+            --accent-color: #ffc107;
+            --whatsapp-color: #25D366;
+            --facebook-color: #1877F2;
+            --instagram-color: #C13584;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
+        body { line-height: 1.6; color: var(--text-color); background-color: #fff; scroll-behavior: smooth; }
+        a { text-decoration: none; }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); }
+        
+        .nav-links a {
+            color: var(--text-color);
+            margin-left: 1.5rem;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: var(--primary-color); }
+
+        .cta-btn {
+            background: var(--primary-color);
+            color: white !important;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            transition: 0.3s;
+        }
+        .cta-btn:hover { background: #003d80; }
+
+        /* Hero Section */
+        .hero {
+            height: 90vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1570222094114-28a9d8894566?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-top: 60px;
+        }
+
+        .hero-content h1 { font-size: 3rem; margin-bottom: 0.5rem; }
+        .hero-content p { font-size: 1.2rem; margin-bottom: 2rem; }
+        
+        .rating-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(5px);
+        }
+        .stars { color: var(--accent-color); }
+
+        /* Services */
+        .section { padding: 5rem 1rem; text-align: center; }
+        .section-title { margin-bottom: 3rem; color: var(--primary-color); position: relative; display: inline-block; }
+        .section-title::after {
+            content: ''; width: 50px; height: 3px; background: var(--accent-color);
+            position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: var(--secondary-color);
+            padding: 2rem;
+            border-radius: 10px;
+            transition: transform 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .service-card:hover { transform: translateY(-10px); }
+        .service-icon { font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1rem; }
+
+        /* Reviews */
+        .reviews-section { background: #f1f8ff; }
+        .review-card {
+            background: white; padding: 20px; border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1); max-width: 600px; margin: 0 auto;
+        }
+
+        /* Contact & Footer */
+        .info-section { background: #222; color: white; padding: 4rem 1rem; }
+        .info-container {
+            max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap;
+            justify-content: space-around; text-align: center;
+        }
+        .info-box { margin: 1rem; flex: 1; min-width: 250px; }
+        .info-box i { font-size: 2rem; margin-bottom: 1rem; color: var(--accent-color); }
+        
+        .social-links a {
+            color: white; font-size: 1.5rem; margin: 0 10px; transition: 0.3s;
+        }
+        .social-links a:hover { color: var(--accent-color); }
+
+        /* WhatsApp Float */
+        .whatsapp-float {
+            position: fixed; bottom: 20px; right: 20px;
+            background: var(--whatsapp-color); color: white;
+            width: 60px; height: 60px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 30px; box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            z-index: 100; transition: 0.3s;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); }
+
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2rem; }
+            .nav-links { display: none; } /* النسخة المبسطة للموبايل */
+        }
+    </style>
+</head>
+<body>
+
+    <a href="https://wa.me/962775549700" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-glasses"></i> دلتا للبصريات
+            </div>
+            <nav class="nav-links">
+                <a href="#home">الرئيسية</a>
+                <a href="#services">خدماتنا</a>
+                <a href="#reviews">آراء العملاء</a>
+                <a href="#contact" class="cta-btn">تواصل معنا</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="rating-badge">
+                <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+                <span> 5.0 (25 تقييم)</span>
+            </div>
+            <h1>دلتا للبصريات</h1>
+            <p>نظارات طبية وشمسية، عدسات لاصقة، وفحص نظر بأحدث الأجهزة.</p>
+            <p><i class="fas fa-map-marker-alt"></i> عمان، المقابلين، ش. الصخرة المشرفة</p>
+            <br>
+            <a href="tel:0775549700" class="cta-btn">
+                <i class="fas fa-phone-alt"></i> اتصل الآن: 0775549700
+            </a>
+        </div>
+    </section>
+
+    <section class="section" id="services">
+        <h2 class="section-title">خدماتنا المتكاملة</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <i class="fas fa-eye service-icon"></i>
+                <h3>فحص نظر شامل</h3>
+                <p>فحص دقيق باستخدام أجهزة حديثة لضمان أفضل قياس لنظرك.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-glasses service-icon"></i>
+                <h3>نظارات طبية وشمسية</h3>
+                <p>أحدث الماركات العالمية وتصاميم عصرية تناسب الجميع.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-record-vinyl service-icon"></i> <h3>عدسات لاصقة</h3>
+                <p>تشكيلة متنوعة من العدسات الطبية والتجميلية المريحة للعين.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-user-md service-icon"></i>
+                <h3>استشارات بصرية</h3>
+                <p>نساعدك في اختيار الأنسب لصحة عينيك وشكل وجهك.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section reviews-section" id="reviews">
+        <h2 class="section-title">ماذا يقول عملاؤنا؟</h2>
+        <div class="review-card">
+            <div class="stars" style="margin-bottom: 10px;">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+            <p style="font-size: 1.1rem; font-style: italic;">"أشكركم على الخدمة الجميلة والسريعة ❤️"</p>
+            <p style="margin-top: 10px; font-weight: bold; color: #555;">- أحد عملائنا المميزين</p>
+        </div>
+    </section>
+
+    <section class="info-section" id="contact">
+        <div class="info-container">
+            <div class="info-box">
+                <i class="fas fa-map-marked-alt"></i>
+                <h3>زورونا في</h3>
+                <p>عمان - المقابلين<br>شارع الصخرة المشرفة (شارع الإذاعة والتلفزيون)<br>قرب المؤسسة العسكرية</p>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-clock"></i>
+                <h3>ساعات العمل</h3>
+                <p>نستقبلكم يومياً<br>حتى الساعة 12:00 منتصف الليل</p>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-phone-volume"></i>
+                <h3>تواصلوا معنا</h3>
+                <p><a href="tel:0775549700" style="color:white;">07 7554 9700</a></p>
+                <div class="social-links" style="margin-top: 15px;">
+                    <a href="https://www.facebook.com/delta.optics1" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/delta.optics1" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://linktr.ee/delta.optics" target="_blank"><i class="fas fa-link"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="background: #111; color: #aaa; text-align: center; padding: 15px;">
+        <p>جميع الحقوق محفوظة &copy; 2025 دلتا للبصريات</p>
+    </footer>
+
+</body>
+</html>
