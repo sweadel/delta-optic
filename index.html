@@ -1,1043 +1,256 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head id="j_idt2">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <link rel="shortcut icon" type="image/x-icon" href="/resources/barcelona-layout/images/x-icon.webp"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-        <meta name="apple-mobile-web-app-capable" content="yes"/>
-        <link type="text/css" rel="stylesheet" href="/faces/javax.faces.resource/theme.css?ln=primefaces-barcelona-green"/>
-        <link type="text/css" rel="stylesheet" href="/faces/javax.faces.resource/fa/font-awesome.css?ln=primefaces&amp;v=6.0"/>
-        <script type="text/javascript" src="/faces/javax.faces.resource/jquery/jquery.js?ln=primefaces&amp;v=6.0"></script>
-        <script type="text/javascript" src="/faces/javax.faces.resource/jquery/jquery-plugins.js?ln=primefaces&amp;v=6.0"></script>
-        <script type="text/javascript" src="/faces/javax.faces.resource/core.js?ln=primefaces&amp;v=6.0"></script>
-        <script type="text/javascript" src="/faces/javax.faces.resource/components.js?ln=primefaces&amp;v=6.0"></script>
-        <link type="text/css" rel="stylesheet" href="/faces/javax.faces.resource/components.css?ln=primefaces&amp;v=6.0"/>
-        <link type="text/css" rel="stylesheet" href="/faces/javax.faces.resource/css/nanoscroller.css?ln=barcelona-layout"/>
-        <link type="text/css" rel="stylesheet" href="/faces/javax.faces.resource/css/animate.css?ln=barcelona-layout"/>
-        <link type="text/css" rel="stylesheet" href="/faces/javax.faces.resource/css/ripple.css?ln=barcelona-layout"/>
-        <link type="text/css" rel="stylesheet" href="/faces/javax.faces.resource/css/custom_edu.css?ln=barcelona-layout"/>
-        <link type="text/css" rel="stylesheet" href="/faces/javax.faces.resource/css/layout-green.css?ln=barcelona-layout"/>
-        <link type="text/css" rel="stylesheet" href="/faces/javax.faces.resource/css/custom_ar.css?ln=barcelona-layout"/>
-        <script type="text/javascript">
-            if (window.PrimeFaces) {
-                PrimeFaces.settings.locale = 'ar';
-            }
-        </script>
-        <title>نتائج المواد</title>
-        <script type="text/javascript" src="/faces/javax.faces.resource/js/nanoscroller.js?ln=barcelona-layout"></script>
-        <script type="text/javascript" src="/faces/javax.faces.resource/js/layout.js?ln=barcelona-layout"></script>
-        <script type="text/javascript" src="/faces/javax.faces.resource/js/common.js?ln=barcelona-layout"></script>
-    </head>
-    <body class="main-body" dir="RTL">
-        <div class="layout-wrapper  layout-rtl">
-            <div class="topbar">
-                <div class="logo">
-                    <a href="/faces/ui/pages/student/courseResult/index.xhtml">
-                        <img id="j_idt14" src="/faces/javax.faces.resource/images/x-icon.webp?ln=barcelona-layout" alt=""/>
-                    </a>
-                </div>
-                <a id="topbar-menu-button" href="#">
-                    <i class="fa fa-bars"></i>
-                </a>
-                <a href="/faces/ui/pages/student/courseResult/index.xhtml" class="app-name white">البوابة الالكترونية</a>
-                <ul class="topbar-menu fadeInDown animated">
-                    <li class="profile-item">
-                        <a href="#">
-                            <div class="profile-image">
-                                <img id="j_idt18" src="/faces/javax.faces.resource/no_image.webp?ln=barcelona-layout/images" alt="" title="عادل عامر عادل جعاره"/>
-                            </div>
-                            <div class="profile-info">
-                                <span class="topbar-item-name profile-name">202411603</span>
-                                <span class="topbar-item-name profile-role">طالب</span>
-                            </div>
-                        </a>
-                        <ul class="animated">
-                            <li role="menuitem">
-                                <a id="j_idt20" href="#" class="ui-commandlink ui-widget Animated05" onclick="PF('userPreferencesDialog').show();;PrimeFaces.ab({s:&quot;j_idt20&quot;});return false;">
-                                    <i class="fa fa-fw fa-cog"></i>
-                                    خصائص المستخدم
-                        
-                                </a>
-                            </li>
-                            <li role="menuitem">
-                                <form id="j_idt23" name="j_idt23" method="post" action="/faces/ui/pages/student/courseResult/index.xhtml" enctype="application/x-www-form-urlencoded">
-                                    <input type="hidden" name="j_idt23" value="j_idt23"/>
-                                    <a id="j_idt23:j_idt24" href="#" class="ui-commandlink ui-widget" onclick="PrimeFaces.addSubmitParam('j_idt23',{'j_idt23:j_idt24':'j_idt23:j_idt24'}).submit('j_idt23');return false;">
-                                        <i class="fa fa-fw fa-sign-out"></i>
-                                        خروج
-                            
-                                    </a>
-                                    <input type="hidden" name="javax.faces.ViewState" id="j_id1:javax.faces.ViewState:0" value="7537011666538616375:-3392364690619674604" autocomplete="off"/>
-                                </form>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#" title="الرسائل">
-                            <i class="topbar-icon material-icons animated swing fa fa-fw fa-envelope-o"></i>
-                            <span class="topbar-badge animated rubberBand" style="background: #ff432e; color: #ffffff;">0</span>
-                            <span class="topbar-item-name">الرسائل</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="تنبيه الغياب">
-                            <i class="topbar-icon fa fa-fw fa-bell-o"></i>
-                            <span class="topbar-badge animated rubberBand" style="background: #ff432e; color: #ffffff;">0
-                    </span>
-                            <span class="topbar-item-name">تنبيه الغياب</span>
-                        </a>
-                    </li>
-                </ul>
-                <form id="j_idt38" name="j_idt38" method="post" action="/faces/ui/pages/student/courseResult/index.xhtml" enctype="application/x-www-form-urlencoded">
-                    <input type="hidden" name="j_idt38" value="j_idt38"/>
-                    <div id="j_idt38:j_idt39" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-shadow ui-hidden-container ui-dialog-rtl">
-                        <div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top">
-                            <span id="j_idt38:j_idt39_title" class="ui-dialog-title">خصائص المستخدم</span>
-                            <a href="#" class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all" aria-label="Close">
-                                <span class="ui-icon ui-icon-closethick"></span>
-                            </a>
-                        </div>
-                        <div class="ui-dialog-content ui-widget-content">
-                            <table id="j_idt38:j_idt40" class="ui-panelgrid ui-widget" role="grid">
-                                <tbody>
-                                    <tr class="ui-widget-content" role="row">
-                                        <td role="gridcell" class="ui-panelgrid-cell">
-                                            <label id="j_idt38:j_idt41" class="ui-outputlabel ui-widget">اللغة المفضلة</label>
-                                        </td>
-                                        <td role="gridcell" class="ui-panelgrid-cell">
-                                            <div id="j_idt38:j_idt42" class="ui-selectonemenu ui-widget ui-state-default ui-corner-all">
-                                                <div class="ui-helper-hidden-accessible">
-                                                    <input id="j_idt38:j_idt42_focus" name="j_idt38:j_idt42_focus" type="text" autocomplete="off" role="combobox" aria-haspopup="true" aria-expanded="false"/>
-                                                </div>
-                                                <div class="ui-helper-hidden-accessible">
-                                                    <select id="j_idt38:j_idt42_input" name="j_idt38:j_idt42_input" tabindex="-1">
-                                                        <option value="">يرجى الاختيار ...</option>
-                                                        <option value="1" selected="selected">العربية</option>
-                                                        <option value="2">English</option>
-                                                    </select>
-                                                </div>
-                                                <label id="j_idt38:j_idt42_label" class="ui-selectonemenu-label ui-inputfield ui-corner-all">&nbsp;</label>
-                                                <div class="ui-selectonemenu-trigger ui-state-default ui-corner-right">
-                                                    <span class="ui-icon ui-icon-triangle-1-s ui-c"></span>
-                                                </div>
-                                                <div id="j_idt38:j_idt42_panel" class="ui-selectonemenu-panel ui-widget ui-widget-content ui-corner-all ui-helper-hidden ui-shadow">
-                                                    <div class="ui-selectonemenu-items-wrapper" style="height:auto">
-                                                        <ul id="j_idt38:j_idt42_items" class="ui-selectonemenu-items ui-selectonemenu-list ui-widget-content ui-widget ui-corner-all ui-helper-reset" role="listbox">
-                                                            <li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="يرجى الاختيار ..." tabindex="-1" role="option">يرجى الاختيار ...</li>
-                                                            <li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="العربية" tabindex="-1" role="option">العربية</li>
-                                                            <li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="English" tabindex="-1" role="option">English</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <script id="j_idt38:j_idt42_s" type="text/javascript">
-                                                $(function() {
-                                                    PrimeFaces.cw("SelectOneMenu", "widget_j_idt38_j_idt42", {
-                                                        id: "j_idt38:j_idt42"
-                                                    });
-                                                });
-                                            </script>
-                                        </td>
-                                    </tr>
-                                    <tr class="ui-widget-content" role="row">
-                                        <td role="gridcell" class="ui-panelgrid-cell">
-                                            <label id="j_idt38:j_idt45" class="ui-outputlabel ui-widget">تلقي التنبيهات ؟</label>
-                                        </td>
-                                        <td role="gridcell" class="ui-panelgrid-cell">
-                                            <div id="j_idt38:j_idt46" class="ui-chkbox ui-widget">
-                                                <div class="ui-helper-hidden-accessible">
-                                                    <input id="j_idt38:j_idt46_input" name="j_idt38:j_idt46_input" type="checkbox" autocomplete="off" checked="checked" aria-checked="true"/>
-                                                </div>
-                                                <div class="ui-chkbox-box ui-widget ui-corner-all ui-state-default ui-state-active">
-                                                    <span class="ui-chkbox-icon ui-icon ui-icon-check ui-c"></span>
-                                                </div>
-                                            </div>
-                                            <script id="j_idt38:j_idt46_s" type="text/javascript">
-                                                PrimeFaces.cw("SelectBooleanCheckbox", "widget_j_idt38_j_idt46", {
-                                                    id: "j_idt38:j_idt46"
-                                                });
-                                            </script>
-                                        </td>
-                                    </tr>
-                                    <tr class="ui-widget-content" role="row">
-                                        <td role="gridcell" class="ui-panelgrid-cell">
-                                            <label id="j_idt38:j_idt47" class="ui-outputlabel ui-widget">لون البوابة المفضل</label>
-                                        </td>
-                                        <td role="gridcell" class="ui-panelgrid-cell">
-                                            <div id="j_idt38:j_idt48" class="ui-selectonemenu ui-widget ui-state-default ui-corner-all">
-                                                <div class="ui-helper-hidden-accessible">
-                                                    <input id="j_idt38:j_idt48_focus" name="j_idt38:j_idt48_focus" type="text" autocomplete="off" role="combobox" aria-haspopup="true" aria-expanded="false"/>
-                                                </div>
-                                                <div class="ui-helper-hidden-accessible">
-                                                    <select id="j_idt38:j_idt48_input" name="j_idt38:j_idt48_input" tabindex="-1" onchange="PrimeFaces.ab({s:&quot;j_idt38:j_idt48&quot;,e:&quot;change&quot;,p:&quot;j_idt38:j_idt48&quot;});">
-                                                        <option value="">يرجى الاختيار ...</option>
-                                                        <option value="blue">blue</option>
-                                                        <option value="teal">teal</option>
-                                                        <option value="cyan">cyan</option>
-                                                        <option value="blue-grey">blue-grey</option>
-                                                        <option value="dark-blue">dark-blue</option>
-                                                        <option value="dark-green">dark-green</option>
-                                                        <option value="light-blue">light-blue</option>
-                                                        <option value="indigo">indigo</option>
-                                                        <option value="deep-purple">deep-purple</option>
-                                                        <option value="green" selected="selected">green</option>
-                                                    </select>
-                                                </div>
-                                                <label id="j_idt38:j_idt48_label" class="ui-selectonemenu-label ui-inputfield ui-corner-all">&nbsp;</label>
-                                                <div class="ui-selectonemenu-trigger ui-state-default ui-corner-right">
-                                                    <span class="ui-icon ui-icon-triangle-1-s ui-c"></span>
-                                                </div>
-                                                <div id="j_idt38:j_idt48_panel" class="ui-selectonemenu-panel ui-widget ui-widget-content ui-corner-all ui-helper-hidden ui-shadow">
-                                                    <div class="ui-selectonemenu-items-wrapper" style="height:200px">
-                                                        <ul id="j_idt38:j_idt48_items" class="ui-selectonemenu-items ui-selectonemenu-list ui-widget-content ui-widget ui-corner-all ui-helper-reset" role="listbox">
-                                                            <li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="يرجى الاختيار ..." tabindex="-1" role="option">يرجى الاختيار ...</li>
-                                                            <li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="blue" tabindex="-1" role="option">blue</li>
-                                                            <li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="teal" tabindex="-1" role="option">teal</li>
-                                                            <li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="cyan" tabindex="-1" role="option">cyan</li>
-                                                            <li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="blue-grey" tabindex="-1" role="option">blue-grey</li>
-                                                            <li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="dark-blue" tabindex="-1" role="option">dark-blue</li>
-                                                            <li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="dark-green" tabindex="-1" role="option">dark-green</li>
-                                                            <li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="light-blue" tabindex="-1" role="option">light-blue</li>
-                                                            <li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="indigo" tabindex="-1" role="option">indigo</li>
-                                                            <li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="deep-purple" tabindex="-1" role="option">deep-purple</li>
-                                                            <li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="green" tabindex="-1" role="option">green</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <script id="j_idt38:j_idt48_s" type="text/javascript">
-                                                $(function() {
-                                                    PrimeFaces.cw("SelectOneMenu", "widget_j_idt38_j_idt48", {
-                                                        id: "j_idt38:j_idt48",
-                                                        behaviors: {
-                                                            change: function(ext, event) {
-                                                                PrimeFaces.ab({
-                                                                    s: "j_idt38:j_idt48",
-                                                                    e: "change",
-                                                                    p: "j_idt38:j_idt48"
-                                                                }, ext);
-                                                            }
-                                                        }
-                                                    });
-                                                });
-                                            </script>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <img id="j_idt38:j_idt60" height="10px;" alt="" src="/faces/javax.faces.resource/spacer/dot_clear.gif?ln=primefaces&amp;v=6.0"/>
-                            <button id="j_idt38:saveUserPreferenceBtn" name="j_idt38:saveUserPreferenceBtn" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left red-btn" onclick="PrimeFaces.ab({s:&quot;j_idt38:saveUserPreferenceBtn&quot;,onco:function(xhr,status,args){PF('userPreferencesDialog').hide();;}});return false;" title="حفظ" type="submit">
-                                <span class="ui-button-icon-left ui-icon ui-c fa fa-save white"></span>
-                                <span class="ui-button-text ui-c">حفظ</span>
-                            </button>
-                            <script id="j_idt38:saveUserPreferenceBtn_s" type="text/javascript">
-                                PrimeFaces.cw("CommandButton", "widget_j_idt38_saveUserPreferenceBtn", {
-                                    id: "j_idt38:saveUserPreferenceBtn"
-                                });
-                            </script>
-                            <img id="j_idt38:j_idt61" width="10px;" alt="" src="/faces/javax.faces.resource/spacer/dot_clear.gif?ln=primefaces&amp;v=6.0"/>
-                            <button id="j_idt38:j_idt62" name="j_idt38:j_idt62" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left orange-btn" onclick="PrimeFaces.ab({s:&quot;j_idt38:j_idt62&quot;,onco:function(xhr,status,args){PF('userPreferencesDialog').hide();;}});return false;" title="الغاء" type="submit">
-                                <span class="ui-button-icon-left ui-icon ui-c fa fa-close white"></span>
-                                <span class="ui-button-text ui-c">الغاء</span>
-                            </button>
-                            <script id="j_idt38:j_idt62_s" type="text/javascript">
-                                PrimeFaces.cw("CommandButton", "widget_j_idt38_j_idt62", {
-                                    id: "j_idt38:j_idt62"
-                                });
-                            </script>
-                        </div>
-                    </div>
-                    <script id="j_idt38:j_idt39_s" type="text/javascript">
-                        $(function() {
-                            PrimeFaces.cw("Dialog", "userPreferencesDialog", {
-                                id: "j_idt38:j_idt39",
-                                closeOnEscape: true
-                            });
-                        });
-                    </script>
-                    <input type="hidden" name="javax.faces.ViewState" id="j_id1:javax.faces.ViewState:1" value="7537011666538616375:-3392364690619674604" autocomplete="off"/>
-                </form>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دلتا للبصريات | Delta Optics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #0056b3; 
+            --secondary-color: #f8f9fa;
+            --text-color: #333;
+            --accent-color: #ffc107;
+            --whatsapp-color: #25D366;
+            --facebook-color: #1877F2;
+            --instagram-color: #C13584;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
+        body { line-height: 1.6; color: var(--text-color); background-color: #fff; scroll-behavior: smooth; }
+        a { text-decoration: none; }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); }
+        
+        .nav-links a {
+            color: var(--text-color);
+            margin-left: 1.5rem;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: var(--primary-color); }
+
+        .cta-btn {
+            background: var(--primary-color);
+            color: white !important;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            transition: 0.3s;
+        }
+        .cta-btn:hover { background: #003d80; }
+
+        /* Hero Section */
+        .hero {
+            height: 90vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1570222094114-28a9d8894566?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-top: 60px;
+        }
+
+        .hero-content h1 { font-size: 3rem; margin-bottom: 0.5rem; }
+        .hero-content p { font-size: 1.2rem; margin-bottom: 2rem; }
+        
+        .rating-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(5px);
+        }
+        .stars { color: var(--accent-color); }
+
+        /* Services */
+        .section { padding: 5rem 1rem; text-align: center; }
+        .section-title { margin-bottom: 3rem; color: var(--primary-color); position: relative; display: inline-block; }
+        .section-title::after {
+            content: ''; width: 50px; height: 3px; background: var(--accent-color);
+            position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: var(--secondary-color);
+            padding: 2rem;
+            border-radius: 10px;
+            transition: transform 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .service-card:hover { transform: translateY(-10px); }
+        .service-icon { font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1rem; }
+
+        /* Reviews */
+        .reviews-section { background: #f1f8ff; }
+        .review-card {
+            background: white; padding: 20px; border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1); max-width: 600px; margin: 0 auto;
+        }
+
+        /* Contact & Footer */
+        .info-section { background: #222; color: white; padding: 4rem 1rem; }
+        .info-container {
+            max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap;
+            justify-content: space-around; text-align: center;
+        }
+        .info-box { margin: 1rem; flex: 1; min-width: 250px; }
+        .info-box i { font-size: 2rem; margin-bottom: 1rem; color: var(--accent-color); }
+        
+        .social-links a {
+            color: white; font-size: 1.5rem; margin: 0 10px; transition: 0.3s;
+        }
+        .social-links a:hover { color: var(--accent-color); }
+
+        /* WhatsApp Float */
+        .whatsapp-float {
+            position: fixed; bottom: 20px; right: 20px;
+            background: var(--whatsapp-color); color: white;
+            width: 60px; height: 60px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 30px; box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            z-index: 100; transition: 0.3s;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); }
+
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2rem; }
+            .nav-links { display: none; } /* النسخة المبسطة للموبايل */
+        }
+    </style>
+</head>
+<body>
+
+    <a href="https://wa.me/962775549700" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-glasses"></i> دلتا للبصريات
             </div>
-            <div class="layout-sidebar ">
-                <div id="j_idt65" class="layout-tabmenu">
-                    <ul class="layout-tabmenu-nav">
-                        <li>
-                            <a href="#" class="ripplelink tabmenuitem-link">
-                                <i class="material-icons">home</i>
-                            </a>
-                            <div class="layout-tabmenu-tooltip">
-                                <div class="layout-tabmenu-tooltip-arrow"></div>
-                                <div class="layout-tabmenu-tooltip-text">الصفحة الرئيسية</div>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="#" class="ripplelink tabmenuitem-link">
-                                <i class="material-icons">inbox</i>
-                            </a>
-                            <div class="layout-tabmenu-tooltip">
-                                <div class="layout-tabmenu-tooltip-arrow"></div>
-                                <div class="layout-tabmenu-tooltip-text">الرسائل الواردة</div>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="#" class="ripplelink tabmenuitem-link">
-                                <i class="material-icons">people</i>
-                            </a>
-                            <div class="layout-tabmenu-tooltip">
-                                <div class="layout-tabmenu-tooltip-arrow"></div>
-                                <div class="layout-tabmenu-tooltip-text">الهيئة التدريسية</div>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="layout-tabmenu-contents">
-                        <div class="layout-tabmenu-content">
-                            <div class="layout-submenu-title clearfix">
-                                <span>الصفحة الرئيسية</span>
-                                <a href="#" class="menu-button material-icons">menu</a>
-                                <a href="#" class="menu-pin-button">
-                                    <i class="fa fa-thumb-tack fa-rotate-90"></i>
-                                </a>
-                            </div>
-                            <div class="layout-submenu-content">
-                                <div class="nano">
-                                    <div class="nano-content menu-scroll-content">
-                                        <form id="menu-form" name="menu-form" method="post" action="/faces/ui/pages/student/courseResult/index.xhtml" enctype="application/x-www-form-urlencoded">
-                                            <input type="hidden" name="menu-form" value="menu-form"/>
-                                            <ul id="menu-form:j_idt67" class="navigation-menu">
-                                                <li id="menu-form:um_dashboard" role="menuitem">
-                                                    <a class="ripplelink" href="/faces/ui/pages/student/index.xhtml">
-                                                        <i class="material-icons"></i>
-                                                        <span>الصفحة الرئيسية</span>
-                                                    </a>
-                                                </li>
-                                                <li id="menu-form:um_customization1" role="menuitem">
-                                                    <a href="#" class="ripplelink">
-                                                        <i class="material-icons"></i>
-                                                        <span>أوضاع القائمة</span>
-                                                        <span class="ink animate"></span>
-                                                        <i class="material-icons">keyboard_arrow_down</i>
-                                                    </a>
-                                                    <ul role="menu">
-                                                        <li id="menu-form:menu1" role="menuitem">
-                                                            <a class="ripplelink" href="#" onclick="PrimeFaces.addSubmitParam('menu-form',{'menu-form:menu1':'menu-form:menu1'}).submit('menu-form');return false;">
-                                                                <i class="material-icons"></i>
-                                                                <span>Light Menu</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:menu2" role="menuitem">
-                                                            <a class="ripplelink" href="#" onclick="PrimeFaces.addSubmitParam('menu-form',{'menu-form:menu2':'menu-form:menu2'}).submit('menu-form');return false;">
-                                                                <i class="material-icons"></i>
-                                                                <span>Dark Menu</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:menu3" role="menuitem">
-                                                            <a class="ripplelink" href="#" onclick="PrimeFaces.addSubmitParam('menu-form',{'menu-form:menu3':'menu-form:menu3'}).submit('menu-form');return false;">
-                                                                <i class="material-icons"></i>
-                                                                <span>Static Menu</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:menu4" role="menuitem">
-                                                            <a class="ripplelink" href="#" onclick="PrimeFaces.addSubmitParam('menu-form',{'menu-form:menu4':'menu-form:menu4'}).submit('menu-form');return false;">
-                                                                <i class="material-icons"></i>
-                                                                <span>Overlay Menu</span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li id="menu-form:om_orientation" role="menuitem">
-                                                    <a href="#" class="ripplelink">
-                                                        <i class="material-icons"></i>
-                                                        <span>اللغة</span>
-                                                        <span class="ink animate"></span>
-                                                        <i class="material-icons">keyboard_arrow_down</i>
-                                                    </a>
-                                                    <ul role="menu">
-                                                        <li id="menu-form:om_ltr" role="menuitem">
-                                                            <a class="ripplelink" href="#" onclick="PrimeFaces.addSubmitParam('menu-form',{'menu-form:om_ltr':'menu-form:om_ltr'}).submit('menu-form');return false;">
-                                                                <i class="material-icons"></i>
-                                                                <span>الانجليزية</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:om_rtl" role="menuitem">
-                                                            <a class="ripplelink" href="#" onclick="PrimeFaces.addSubmitParam('menu-form',{'menu-form:om_rtl':'menu-form:om_rtl'}).submit('menu-form');return false;">
-                                                                <i class="material-icons"></i>
-                                                                <span>العربية</span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li id="menu-form:um_themes" role="menuitem">
-                                                    <a href="#" class="ripplelink">
-                                                        <i class="material-icons"></i>
-                                                        <span>القوالب</span>
-                                                        <span class="ink animate"></span>
-                                                        <i class="material-icons">keyboard_arrow_down</i>
-                                                    </a>
-                                                    <ul role="menu">
-                                                        <li id="menu-form:theme1" role="menuitem">
-                                                            <a class="ripplelink" href="#" onclick="PrimeFaces.addSubmitParam('menu-form',{'menu-form:theme1':'menu-form:theme1'}).submit('menu-form');return false;">
-                                                                <i class="material-icons"></i>
-                                                                <span>Blue - Amber</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:theme2" role="menuitem">
-                                                            <a class="ripplelink" href="#" onclick="PrimeFaces.addSubmitParam('menu-form',{'menu-form:theme2':'menu-form:theme2'}).submit('menu-form');return false;">
-                                                                <i class="material-icons"></i>
-                                                                <span>Teal - Amber</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:theme3" role="menuitem">
-                                                            <a class="ripplelink" href="#" onclick="PrimeFaces.addSubmitParam('menu-form',{'menu-form:theme3':'menu-form:theme3'}).submit('menu-form');return false;">
-                                                                <i class="material-icons"></i>
-                                                                <span>Blue Grey - Green</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:theme4" role="menuitem">
-                                                            <a class="ripplelink" href="#" onclick="PrimeFaces.addSubmitParam('menu-form',{'menu-form:theme4':'menu-form:theme4'}).submit('menu-form');return false;">
-                                                                <i class="material-icons"></i>
-                                                                <span>Cyan - Yellow</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:theme5" role="menuitem">
-                                                            <a class="ripplelink" href="#" onclick="PrimeFaces.addSubmitParam('menu-form',{'menu-form:theme5':'menu-form:theme5'}).submit('menu-form');return false;">
-                                                                <i class="material-icons"></i>
-                                                                <span>Dark - Blue</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:theme6" role="menuitem">
-                                                            <a class="ripplelink" href="#" onclick="PrimeFaces.addSubmitParam('menu-form',{'menu-form:theme6':'menu-form:theme6'}).submit('menu-form');return false;">
-                                                                <i class="material-icons"></i>
-                                                                <span>Dark - Green</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:theme7" role="menuitem">
-                                                            <a class="ripplelink" href="#" onclick="PrimeFaces.addSubmitParam('menu-form',{'menu-form:theme7':'menu-form:theme7'}).submit('menu-form');return false;">
-                                                                <i class="material-icons"></i>
-                                                                <span>Light Blue - Green</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:theme8" role="menuitem">
-                                                            <a class="ripplelink" href="#" onclick="PrimeFaces.addSubmitParam('menu-form',{'menu-form:theme8':'menu-form:theme8'}).submit('menu-form');return false;">
-                                                                <i class="material-icons"></i>
-                                                                <span>Indigo - Cyan</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:theme9" role="menuitem">
-                                                            <a class="ripplelink" href="#" onclick="PrimeFaces.addSubmitParam('menu-form',{'menu-form:theme9':'menu-form:theme9'}).submit('menu-form');return false;">
-                                                                <i class="material-icons"></i>
-                                                                <span>Deep Purple - Pink</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:theme10" role="menuitem">
-                                                            <a class="ripplelink" href="#" onclick="PrimeFaces.addSubmitParam('menu-form',{'menu-form:theme10':'menu-form:theme10'}).submit('menu-form');return false;">
-                                                                <i class="material-icons"></i>
-                                                                <span>Green - Yellow</span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li id="menu-form:j_idt68" role="menuitem">
-                                                    <a href="#" class="ripplelink">
-                                                        <i class="material-icons"></i>
-                                                        <span>أكاديمي</span>
-                                                        <span class="ink animate"></span>
-                                                        <i class="material-icons">keyboard_arrow_down</i>
-                                                    </a>
-                                                    <ul role="menu">
-                                                        <li id="menu-form:j_idt69" role="menuitem">
-                                                            <a style="color: #null;" class="ripplelink fa fa-check" href="/faces/ui/pages/student/schedule/index.xhtml">
-                                                                <span>الجدول الدراسي</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:j_idt70" role="menuitem">
-                                                            <a style="color: #null;" class="ripplelink fa fa-check" href="/faces/ui/pages/student/plan/index.xhtml">
-                                                                <span>جميع خطة الطالب</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:j_idt71" role="menuitem">
-                                                            <a style="color: #null;" class="ripplelink fa fa-check" href="/faces/ui/pages/student/transcript/index.xhtml">
-                                                                <span>السجل الاكاديمي</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:j_idt72" role="menuitem">
-                                                            <a style="color: #null;" class="ripplelink fa fa-check" href="/faces/ui/pages/student/academicTransactions/index.xhtml">
-                                                                <span>الحركات الاكاديمية</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:j_idt73" role="menuitem">
-                                                            <a style="color: #null;" class="ripplelink fa fa-check" href="/faces/ui/pages/student/courseResult/index.xhtml">
-                                                                <span>نتائج المواد</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:j_idt74" role="menuitem">
-                                                            <a style="color: #null;" class="ripplelink fa fa-check" href="/faces/ui/pages/student/evaluation/index.xhtml">
-                                                                <span>التقييم</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:j_idt75" role="menuitem">
-                                                            <a style="color: #null;" class="ripplelink fa fa-check" href="/faces/ui/pages/student/instantMessages/index.xhtml">
-                                                                <span>التراسل</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:j_idt76" role="menuitem">
-                                                            <a style="color: #null;" class="ripplelink fa fa-check" href="/faces/ui/pages/student/homeworks/index.xhtml">
-                                                                <span>الواجبات الدراسية</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:j_idt77" role="menuitem">
-                                                            <a style="color: #null;" class="ripplelink fa fa-check" href="/faces/ui/pages/student/placementExams/index.xhtml">
-                                                                <span>نتائج امتحان المستوى</span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li class="Separator"></li>
-                                                <li id="menu-form:j_idt80" role="menuitem">
-                                                    <a href="#" class="ripplelink">
-                                                        <i class="material-icons"></i>
-                                                        <span>شخصي</span>
-                                                        <span class="ink animate"></span>
-                                                        <i class="material-icons">keyboard_arrow_down</i>
-                                                    </a>
-                                                    <ul role="menu">
-                                                        <li id="menu-form:j_idt81" role="menuitem">
-                                                            <a style="color: #null;" class="ripplelink fa fa-check" href="/faces/ui/pages/student/financialRecord/index.xhtml">
-                                                                <span>السجل المالي</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:j_idt82" role="menuitem">
-                                                            <a style="color: #null;" class="ripplelink fa fa-check" href="/faces/ui/pages/student/custodians/index.xhtml">
-                                                                <span>عهدة الطالب</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:j_idt83" role="menuitem">
-                                                            <a style="color: #null;" class="ripplelink fa fa-check" href="/faces/ui/pages/student/absence/index.xhtml">
-                                                                <span>كشف الغيابات</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:j_idt84" role="menuitem">
-                                                            <a style="color: #null;" class="ripplelink fa fa-check" href="/faces/ui/pages/student/punishes/index.xhtml">
-                                                                <span>العقوبات</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:j_idt85" role="menuitem">
-                                                            <a style="color: #null;" class="ripplelink fa fa-check" href="/faces/ui/pages/student/profile/myProfile.xhtml">
-                                                                <span>معلومات الطالب</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:j_idt86" role="menuitem">
-                                                            <a style="color: #null;" class="ripplelink fa fa-check" href="/faces/ui/pages/student/suspensions/index.xhtml">
-                                                                <span>التعليق</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:j_idt87" role="menuitem">
-                                                            <a style="color: #null;" class="ripplelink fa fa-check" href="/faces/ui/pages/student/violations/index.xhtml">
-                                                                <span>المخالفات</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:j_idt88" role="menuitem">
-                                                            <a style="color: #null;" class="ripplelink fa fa-check" href="/faces/ui/pages/student/examSchedule/index.xhtml">
-                                                                <span>جدول االامتحانات</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:j_idt89" role="menuitem">
-                                                            <a style="color: #null;" class="ripplelink fa fa-check" href="/faces/ui/pages/student/updateStudentInfo/index.xhtml">
-                                                                <span>تعديل بياناتي</span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li class="Separator"></li>
-                                                <li id="menu-form:j_idt91" role="menuitem">
-                                                    <a href="#" class="ripplelink">
-                                                        <i class="material-icons"></i>
-                                                        <span>التسجيل</span>
-                                                        <span class="ink animate"></span>
-                                                        <i class="material-icons">keyboard_arrow_down</i>
-                                                    </a>
-                                                    <ul role="menu">
-                                                        <li id="menu-form:j_idt92" role="menuitem">
-                                                            <a style="color: #null;" class="ripplelink fa fa-check" href="/faces/ui/pages/student/registration/index.xhtml">
-                                                                <span>التسجيل الإلكتروني</span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li class="Separator"></li>
-                                                <li id="menu-form:j_idt94" role="menuitem">
-                                                    <a href="#" class="ripplelink">
-                                                        <i class="material-icons"></i>
-                                                        <span>روابط خاصة بالطالب</span>
-                                                        <span class="ink animate"></span>
-                                                        <i class="material-icons">keyboard_arrow_down</i>
-                                                    </a>
-                                                    <ul role="menu">
-                                                        <li id="menu-form:j_idt95" role="menuitem">
-                                                            <a class="ripplelink" href="https://www.zuj.edu.jo" target="_blank">
-                                                                <i class="material-icons">apps</i>
-                                                                <span>موقع الجامعة الرئيسي</span>
-                                                            </a>
-                                                        </li>
-                                                        <li id="menu-form:j_idt96" role="menuitem">
-                                                            <a class="ripplelink" href="https://login.microsoftonline.com" target="_blank">
-                                                                <i class="material-icons">apps</i>
-                                                                <span>رابط البريد الالكتروني</span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li id="menu-form:j_idt97" role="menuitem">
-                                                    <a class="ripplelink" href="#" onclick="PrimeFaces.ab({s:&quot;menu-form:j_idt97&quot;,onco:function(xhr,status,args){document.getElementById('contents:mainReportViewer').click();;},f:&quot;menu-form&quot;});return false;">
-                                                        <i class="material-icons">apps</i>
-                                                        <span>بطاقة الدخول للامتحان</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                            <script id="menu-form:j_idt67_s" type="text/javascript">
-                                                PrimeFaces.cw("BarcelonaMenu", "me", {
-                                                    id: "menu-form:j_idt67"
-                                                });
-                                            </script>
-                                            <input type="hidden" name="javax.faces.ViewState" id="j_id1:javax.faces.ViewState:2" value="7537011666538616375:-3392364690619674604" autocomplete="off"/>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="layout-tabmenu-content">
-                            <div class="layout-submenu-title clearfix">
-                                <span>الرسائل الواردة</span>
-                                <a href="#" class="menu-button material-icons">menu</a>
-                                <a href="#" class="menu-pin-button">
-                                    <i class="fa fa-thumb-tack fa-rotate-90"></i>
-                                </a>
-                            </div>
-                            <div class="layout-submenu-content">
-                                <div class="nano">
-                                    <div class="nano-content menu-scroll-content">
-                                        <div class="inbox-tab">
-                                            <ul></ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="layout-tabmenu-content">
-                            <div class="layout-submenu-title clearfix">
-                                <span>الواجب الدراسي</span>
-                                <a href="#" class="menu-button material-icons">menu</a>
-                                <a href="#" class="menu-pin-button">
-                                    <i class="fa fa-thumb-tack fa-rotate-90"></i>
-                                </a>
-                            </div>
-                            <div class="layout-submenu-content">
-                                <div class="nano">
-                                    <div class="nano-content menu-scroll-content"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="layout-tabmenu-content">
-                            <div class="layout-submenu-title clearfix">
-                                <span>الهيئة التدريسية</span>
-                                <a href="#" class="menu-button material-icons">menu</a>
-                                <a href="#" class="menu-pin-button">
-                                    <i class="fa fa-thumb-tack fa-rotate-90"></i>
-                                </a>
-                            </div>
-                            <div class="layout-submenu-content">
-                                <div class="nano">
-                                    <div class="nano-content menu-scroll-content">
-                                        <div class="team-tab">
-                                            <ul>
-                                                <li class="clearfix">
-                                                    <img id="j_idt107" src="/faces/javax.faces.resource/images/no_image.webp?ln=barcelona-layout" alt="" width="45"/>
-                                                    <span class="name Fs11">عايش منور الحروب</span>
-                                                    <span class="location Fs11">عميد الكلية</span>
-                                                    <span class="location Fs11" dir="ltr">Aysh@zuj.edu.jo</span>
-                                                </li>
-                                                <li class="clearfix">
-                                                    <img id="j_idt110" src="/faces/javax.faces.resource/images/no_image.webp?ln=barcelona-layout" alt="" width="45"/>
-                                                    <span class="name Fs11">وائل جمعه عبداللطيف الزيادات</span>
-                                                    <span class="location Fs11">رئيس القسم</span>
-                                                    <span class="location Fs11" dir="ltr">wael.alzyadat@zuj.edu.jo</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <script id="j_idt65_s" type="text/javascript">
-                    PrimeFaces.cw("Barcelona", "widget_j_idt65", {
-                        id: "j_idt65"
-                    });
-                </script>
-            </div>
-            <form id="contents" name="contents" method="post" action="/faces/ui/pages/student/courseResult/index.xhtml" enctype="application/x-www-form-urlencoded">
-                <input type="hidden" name="contents" value="contents"/>
-                <a id="contents:mainReportViewer" href="/viewReport?docId=659580976c34d0079699cd7c1f05" class="ui-link ui-widget" target="_blank"></a>
-                <span id="contents:msgs"></span>
-                <script id="contents:msgs_s" type="text/javascript">
-                    $(function() {
-                        PrimeFaces.cw('Growl', 'widget_contents_msgs', {
-                            id: 'contents:msgs',
-                            sticky: false,
-                            life: 6000,
-                            escape: true,
-                            msgs: []
-                        });
-                    });
-                </script>
-                <div class="layout-main">
-                    <div class="layout-main-content">
-                        <div id="contents:j_idt114" class="ui-breadcrumb ui-module ui-widget ui-widget-header ui-helper-clearfix ui-corner-all" role="menu">
-                            <ul>
-                                <li role="menuitem">
-                                    <a tabindex="-1" title="الصفحة الرئيسية" class="ui-menuitem-link ui-corner-all ui-icon ui-icon-home" href="/">
-                                        <span class="ui-menuitem-text"></span>
-                                    </a>
-                                </li>
-                                <li class="ui-breadcrumb-chevron ui-icon ui-icon-triangle-1-e"></li>
-                                <li role="menuitem">
-                                    <a tabindex="-1" title="الصفحة الرئيسية" class="ui-menuitem-link ui-corner-all" href="/faces/ui/pages/student/index.xhtml">
-                                        <span class="ui-menuitem-text">الصفحة الرئيسية</span>
-                                    </a>
-                                </li>
-                                <li class="ui-breadcrumb-chevron ui-icon ui-icon-triangle-1-e"></li>
-                                <li role="menuitem">
-                                    <a tabindex="-1" title="نتائج المواد" class="ui-menuitem-link ui-corner-all breadCrumbActive" href="/faces/ui/pages/student/courseResult/index.xhtml">
-                                        <span class="ui-menuitem-text">نتائج المواد</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="ui-g">
-                            <div class="ui-g-12">
-                                <div class="card">
-                                    <h3>نتائج المواد</h3>
-                                    <img id="contents:j_idt119" height="15px;" alt="" src="/faces/javax.faces.resource/spacer/dot_clear.gif?ln=primefaces&amp;v=6.0"/>
-                                    <div id="contents:j_idt120" class="ui-panelgrid ui-widget" style="width: 50%;">
-                                        <div id="contents:j_idt120_content" class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
-                                            <div class="ui-grid-row">
-                                                <div class="ui-panelgrid-cell ui-grid-col-6">
-                                                    <label id="contents:j_idt121" class="ui-outputlabel ui-widget">الفصل الدراسي</label>
-                                                </div>
-                                                <div class="ui-panelgrid-cell ui-grid-col-6">
-                                                    <div id="contents:j_idt122" class="ui-selectonemenu ui-widget ui-state-default ui-corner-all">
-                                                        <div class="ui-helper-hidden-accessible">
-                                                            <input id="contents:j_idt122_focus" name="contents:j_idt122_focus" type="text" autocomplete="off" role="combobox" aria-haspopup="true" aria-expanded="false"/>
-                                                        </div>
-                                                        <div class="ui-helper-hidden-accessible">
-                                                            <select id="contents:j_idt122_input" name="contents:j_idt122_input" tabindex="-1" onchange="PrimeFaces.ab({s:&quot;contents:j_idt122&quot;,e:&quot;change&quot;,p:&quot;contents:j_idt122&quot;,u:&quot;contents&quot;});">
-                                                                <option value="">يرجى الاختيار ...</option>
-                                                                <option value="20252">الفصل الثاني 2025/2026</option>
-                                                                <option value="20251" selected="selected">الفصل الأول 2025/2026</option>
-                                                                <option value="20243">الفصل الصيفي 2024/2025</option>
-                                                                <option value="20242">الفصل الثاني 2024/2025</option>
-                                                                <option value="20241">الفصل الأول 2024/2025</option>
-                                                            </select>
-                                                        </div>
-                                                        <label id="contents:j_idt122_label" class="ui-selectonemenu-label ui-inputfield ui-corner-all">&nbsp;</label>
-                                                        <div class="ui-selectonemenu-trigger ui-state-default ui-corner-right">
-                                                            <span class="ui-icon ui-icon-triangle-1-s ui-c"></span>
-                                                        </div>
-                                                        <div id="contents:j_idt122_panel" class="ui-selectonemenu-panel ui-widget ui-widget-content ui-corner-all ui-helper-hidden ui-shadow">
-                                                            <div class="ui-selectonemenu-items-wrapper" style="height:auto">
-                                                                <ul id="contents:j_idt122_items" class="ui-selectonemenu-items ui-selectonemenu-list ui-widget-content ui-widget ui-corner-all ui-helper-reset" role="listbox">
-                                                                    <li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="يرجى الاختيار ..." tabindex="-1" role="option">يرجى الاختيار ...</li>
-                                                                    <li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="الفصل الثاني 2025/2026" tabindex="-1" role="option">الفصل الثاني 2025/2026</li>
-                                                                    <li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="الفصل الأول 2025/2026" tabindex="-1" role="option">الفصل الأول 2025/2026</li>
-                                                                    <li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="الفصل الصيفي 2024/2025" tabindex="-1" role="option">الفصل الصيفي 2024/2025</li>
-                                                                    <li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="الفصل الثاني 2024/2025" tabindex="-1" role="option">الفصل الثاني 2024/2025</li>
-                                                                    <li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="الفصل الأول 2024/2025" tabindex="-1" role="option">الفصل الأول 2024/2025</li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <script id="contents:j_idt122_s" type="text/javascript">
-                                                        $(function() {
-                                                            PrimeFaces.cw("SelectOneMenu", "widget_contents_j_idt122", {
-                                                                id: "contents:j_idt122",
-                                                                behaviors: {
-                                                                    change: function(ext, event) {
-                                                                        PrimeFaces.ab({
-                                                                            s: "contents:j_idt122",
-                                                                            e: "change",
-                                                                            p: "contents:j_idt122",
-                                                                            u: "contents"
-                                                                        }, ext);
-                                                                    }
-                                                                }
-                                                            });
-                                                        });
-                                                    </script>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <img id="contents:j_idt125" height="10px;" alt="" src="/faces/javax.faces.resource/spacer/dot_clear.gif?ln=primefaces&amp;v=6.0"/>
-                                    <div id="contents:j_idt126" class="ui-datatable ui-widget ui-datatable-reflow">
-                                        <div class="ui-datatable-header ui-widget-header ui-corner-top">
-                                            <button id="contents:j_idt126:j_idt127" name="contents:j_idt126:j_idt127" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left orange-btn" onclick="PrimeFaces.bcn(this,event,[function(event){this.form.target = '_blank'},function(event){}]);" title="طباعة" type="submit">
-                                                <span class="ui-button-icon-left ui-icon ui-c fa fa-print white"></span>
-                                                <span class="ui-button-text ui-c">طباعة</span>
-                                            </button>
-                                            <script id="contents:j_idt126:j_idt127_s" type="text/javascript">
-                                                PrimeFaces.cw("CommandButton", "widget_contents_j_idt126_j_idt127", {
-                                                    id: "contents:j_idt126:j_idt127"
-                                                });
-                                            </script>
-                                        </div>
-                                        <div class="ui-datatable-tablewrapper">
-                                            <table role="grid">
-                                                <thead id="contents:j_idt126_head">
-                                                    <tr role="row">
-                                                        <th id="contents:j_idt126:j_idt128" class="ui-state-default" role="columnheader" aria-label="رمز المقرر">
-                                                            <span class="ui-column-title">رمز المقرر</span>
-                                                        </th>
-                                                        <th id="contents:j_idt126:j_idt130" class="ui-state-default" role="columnheader" aria-label="اسم المقرر">
-                                                            <span class="ui-column-title">اسم المقرر</span>
-                                                        </th>
-                                                        <th id="contents:j_idt126:j_idt132" class="ui-state-default" role="columnheader" aria-label="النشاط">
-                                                            <span class="ui-column-title">النشاط</span>
-                                                        </th>
-                                                        <th id="contents:j_idt126:j_idt134" class="ui-state-default" role="columnheader" aria-label="الحالة">
-                                                            <span class="ui-column-title">الحالة</span>
-                                                        </th>
-                                                        <th id="contents:j_idt126:j_idt136" class="ui-state-default" role="columnheader" aria-label="العلامة">
-                                                            <span class="ui-column-title">العلامة</span>
-                                                        </th>
-                                                        <th id="contents:j_idt126:j_idt139" class="ui-state-default" role="columnheader" aria-label="ناجح؟">
-                                                            <span class="ui-column-title">ناجح؟</span>
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="contents:j_idt126_data" class="ui-datatable-data ui-widget-content">
-                                                    <tr data-ri="0" class="ui-widget-content ui-datatable-even" role="row">
-                                                        <td role="gridcell">
-                                                            <label id="contents:j_idt126:0:j_idt129" class="ui-outputlabel ui-widget">0420002</label>
-                                                        </td>
-                                                        <td role="gridcell">
-                                                            <label id="contents:j_idt126:0:j_idt131" class="ui-outputlabel ui-widget">اللغة الانجليزية الاستدراكية</label>
-                                                        </td>
-                                                        <td role="gridcell">
-                                                            <label id="contents:j_idt126:0:j_idt133" class="ui-outputlabel ui-widget">نظري</label>
-                                                        </td>
-                                                        <td role="gridcell">
-                                                            <label id="contents:j_idt126:0:j_idt135" class="ui-outputlabel ui-widget">مسجلة</label>
-                                                        </td>
-                                                        <td role="gridcell">
-                                                            <label id="contents:j_idt126:0:j_idt138" class="ui-outputlabel ui-widget green" style="font-weight: bold !important;"></label>
-                                                        </td>
-                                                        <td role="gridcell">
-                                                            <label id="contents:j_idt126:0:j_idt140" class="ui-outputlabel ui-widget green" style="font-weight: bold !important;">ناجح</label>
-                                                        </td>
-                                                    </tr>
-                                                    <tr data-ri="1" class="ui-widget-content ui-datatable-odd" role="row">
-                                                        <td role="gridcell">
-                                                            <label id="contents:j_idt126:1:j_idt129" class="ui-outputlabel ui-widget">0420172</label>
-                                                        </td>
-                                                        <td role="gridcell">
-                                                            <label id="contents:j_idt126:1:j_idt131" class="ui-outputlabel ui-widget">الثقافة الرقمية</label>
-                                                        </td>
-                                                        <td role="gridcell">
-                                                            <label id="contents:j_idt126:1:j_idt133" class="ui-outputlabel ui-widget">نظري</label>
-                                                        </td>
-                                                        <td role="gridcell">
-                                                            <label id="contents:j_idt126:1:j_idt135" class="ui-outputlabel ui-widget">مسجلة</label>
-                                                        </td>
-                                                        <td role="gridcell">
-                                                            <label id="contents:j_idt126:1:j_idt137" class="ui-outputlabel ui-widget red" style="font-weight: bold !important;"></label>
-                                                        </td>
-                                                        <td role="gridcell"></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <script id="contents:j_idt126_s" type="text/javascript">
-                                        $(function() {
-                                            PrimeFaces.cw("DataTable", "widget_contents_j_idt126", {
-                                                id: "contents:j_idt126",
-                                                reflow: true
-                                            });
-                                        });
-                                    </script>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="contents:j_idt145" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-shadow ui-hidden-container">
-                            <div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top">
-                                <span id="contents:j_idt145_title" class="ui-dialog-title"></span>
-                                <a href="#" class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all" aria-label="Close">
-                                    <span class="ui-icon ui-icon-closethick"></span>
-                                </a>
-                            </div>
-                            <div class="ui-dialog-content ui-widget-content">
-                                <div id="contents:j_idt146" class="ui-panel ui-widget ui-widget-content ui-corner-all" data-widget="widget_contents_j_idt146">
-                                    <div id="contents:j_idt146_header" class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
-                                        <span class="ui-panel-title"></span>
-                                    </div>
-                                    <div id="contents:j_idt146_content" class="ui-panel-content ui-widget-content">
-                                        <div id="contents:courseDtlPnl" class="ui-panelgrid ui-widget">
-                                            <div id="contents:courseDtlPnl_content" class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
-                                                <div class="ui-grid-row">
-                                                    <div class="ui-panelgrid-cell ui-grid-col-12">
-                                                        <div id="contents:j_idt147" class="ui-datatable ui-widget ui-datatable-reflow">
-                                                            <div class="ui-datatable-tablewrapper">
-                                                                <table role="grid">
-                                                                    <thead id="contents:j_idt147_head">
-                                                                        <tr role="row">
-                                                                            <th id="contents:j_idt147:j_idt148" class="ui-state-default" role="columnheader" aria-label="تفاصيل المقرر">
-                                                                                <span class="ui-column-title">تفاصيل المقرر</span>
-                                                                            </th>
-                                                                            <th id="contents:j_idt147:j_idt150" class="ui-state-default" role="columnheader" aria-label="العلامة العظمى">
-                                                                                <span class="ui-column-title">العلامة العظمى</span>
-                                                                            </th>
-                                                                            <th id="contents:j_idt147:j_idt152" class="ui-state-default" role="columnheader" aria-label="العلامة">
-                                                                                <span class="ui-column-title">العلامة</span>
-                                                                            </th>
-                                                                            <th id="contents:j_idt147:j_idt155" class="ui-state-default" role="columnheader" aria-label="وزن التقييم">
-                                                                                <span class="ui-column-title">وزن التقييم</span>
-                                                                            </th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody id="contents:j_idt147_data" class="ui-datatable-data ui-widget-content">
-                                                                        <tr class="ui-widget-content ui-datatable-empty-message">
-                                                                            <td colspan="4">لا يوجد بيانات ...</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                            <div class="ui-datatable-footer ui-widget-header ui-corner-bottom">
-                                                                <img id="contents:j_idt147:j_idt158" width="10px;" alt="" src="/faces/javax.faces.resource/spacer/dot_clear.gif?ln=primefaces&amp;v=6.0"/>
-                                                                <label id="contents:j_idt147:j_idt159" class="ui-outputlabel ui-widget" style="font-weight: bold !important;"></label>
-                                                            </div>
-                                                        </div>
-                                                        <script id="contents:j_idt147_s" type="text/javascript">
-                                                            $(function() {
-                                                                PrimeFaces.cw("DataTable", "widget_contents_j_idt147", {
-                                                                    id: "contents:j_idt147",
-                                                                    reflow: true
-                                                                });
-                                                            });
-                                                        </script>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button id="contents:j_idt160" name="contents:j_idt160" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" onclick="PrimeFaces.bcn(this,event,[function(event){PF('courseDtlDialogWV').hide();},function(event){PrimeFaces.ab({s:&quot;contents:j_idt160&quot;});return false;}]);" title="ok" type="submit">
-                                            <span class="ui-button-text ui-c">ok</span>
-                                        </button>
-                                        <script id="contents:j_idt160_s" type="text/javascript">
-                                            PrimeFaces.cw("CommandButton", "widget_contents_j_idt160", {
-                                                id: "contents:j_idt160"
-                                            });
-                                        </script>
-                                    </div>
-                                </div>
-                                <script id="contents:j_idt146_s" type="text/javascript">
-                                    PrimeFaces.cw("Panel", "widget_contents_j_idt146", {
-                                        id: "contents:j_idt146"
-                                    });
-                                </script>
-                            </div>
-                        </div>
-                        <script id="contents:j_idt145_s" type="text/javascript">
-                            $(function() {
-                                PrimeFaces.cw("Dialog", "courseDtlDialogWV", {
-                                    id: "contents:j_idt145",
-                                    closeOnEscape: true
-                                });
-                            });
-                        </script>
-                        <img id="contents:j_idt161" height="20px;" alt="" src="/faces/javax.faces.resource/spacer/dot_clear.gif?ln=primefaces&amp;v=6.0"/>
-                        <button id="contents:j_idt162" name="contents:j_idt162" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left OrangeButton" onclick="PrimeFaces.ab({s:&quot;contents:j_idt162&quot;});return false;" type="submit">
-                            <span class="ui-button-icon-left ui-icon ui-c fa fa-arrow-circle-o-left white"></span>
-                            <span class="ui-button-text ui-c">رجوع</span>
-                        </button>
-                        <script id="contents:j_idt162_s" type="text/javascript">
-                            PrimeFaces.cw("CommandButton", "widget_contents_j_idt162", {
-                                id: "contents:j_idt162"
-                            });
-                        </script>
-                        <div class="footer clearfix">
-                            <div class="card">
-                                <div class="ui-g footer-content">
-                                    <div style="alignment-adjust: central;">
-                                        <a href="https://www.facebook.com/AlZaytoonahUniversityOfficial" target="_blank">
-                                            <i class="fa fa-facebook-square" style="color: #3b5998;"></i>
-                                        </a>
-                                        <a href="https://twitter.com/alzaytoonahunv" target="_blank">
-                                            <i class="fa fa-twitter" style="color: #00acee;"></i>
-                                        </a>
-                                        <a href="https://www.youtube.com/alzaytoonahuniversity" target="_blank">
-                                            <i class="fa fa-youtube" style="color: #ff0000;"></i>
-                                        </a>
-                                        <a href="https://www.linkedin.com/company/al-zaytoonah-university-of-jordan" target="_blank">
-                                            <i class="fa fa-linkedin" style="color: #0072b1;"></i>
-                                        </a>
-                                        <a href="https://en.wikipedia.org/wiki/Al-Zaytoonah_University_of_Jordan" target="_blank">
-                                            <i class="fa fa-wikipedia-w" style="color: #000000;"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="footer-desg">
-                                    <img id="contents:j_idt164" src="/faces/javax.faces.resource/images/edugateWhite.svg?ln=barcelona-layout" alt="" style="width: 10%;"/>
-                                    <img id="contents:j_idt165" alt="" src="/faces/javax.faces.resource/spacer/dot_clear.gif?ln=primefaces&amp;v=6.0" style="width: 0%;"/>جامعة الزيتونة الأردنية 2020
-            
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <input type="hidden" name="javax.faces.ViewState" id="j_id1:javax.faces.ViewState:3" value="7537011666538616375:-3392364690619674604" autocomplete="off"/>
-            </form>
+            <nav class="nav-links">
+                <a href="#home">الرئيسية</a>
+                <a href="#services">خدماتنا</a>
+                <a href="#reviews">آراء العملاء</a>
+                <a href="#contact" class="cta-btn">تواصل معنا</a>
+            </nav>
         </div>
-        <div id="j_idt169"></div>
-        <script id="j_idt169_s" type="text/javascript">
-            $(function() {
-                PrimeFaces.cw("AjaxStatus", "widget_j_idt169", {
-                    id: "j_idt169",
-                    start: function() {
-                        PF('statusDialog').show()
-                    },
-                    success: function() {
-                        PF('statusDialog').hide()
-                    }
-                });
-            });
-        </script>
-        <div id="j_idt170" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-shadow ui-hidden-container">
-            <div class="ui-dialog-content ui-widget-content">
-                <i class="fa fa-circle-o-notch fa-spin ajax-loader" aria-hidden="true"></i>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="rating-badge">
+                <span class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+                <span> 5.0 (25 تقييم)</span>
+            </div>
+            <h1>دلتا للبصريات</h1>
+            <p>نظارات طبية وشمسية، عدسات لاصقة، وفحص نظر بأحدث الأجهزة.</p>
+            <p><i class="fas fa-map-marker-alt"></i> عمان، المقابلين، ش. الصخرة المشرفة</p>
+            <br>
+            <a href="tel:0775549700" class="cta-btn">
+                <i class="fas fa-phone-alt"></i> اتصل الآن: 0775549700
+            </a>
+        </div>
+    </section>
+
+    <section class="section" id="services">
+        <h2 class="section-title">خدماتنا المتكاملة</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <i class="fas fa-eye service-icon"></i>
+                <h3>فحص نظر شامل</h3>
+                <p>فحص دقيق باستخدام أجهزة حديثة لضمان أفضل قياس لنظرك.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-glasses service-icon"></i>
+                <h3>نظارات طبية وشمسية</h3>
+                <p>أحدث الماركات العالمية وتصاميم عصرية تناسب الجميع.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-record-vinyl service-icon"></i> <h3>عدسات لاصقة</h3>
+                <p>تشكيلة متنوعة من العدسات الطبية والتجميلية المريحة للعين.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-user-md service-icon"></i>
+                <h3>استشارات بصرية</h3>
+                <p>نساعدك في اختيار الأنسب لصحة عينيك وشكل وجهك.</p>
             </div>
         </div>
-        <script id="j_idt170_s" type="text/javascript">
-            $(function() {
-                PrimeFaces.cw("Dialog", "statusDialog", {
-                    id: "j_idt170",
-                    draggable: false,
-                    resizable: false,
-                    modal: true
-                });
-            });
-        </script>
-        <div id="j_idt172" style="width:32px;height:32px;position:fixed;right:7px;bottom:7px">
-            <div id="j_idt172_start" style="display:none">
-                <i class="fa fa-circle-o-notch fa-spin ajax-loader" aria-hidden="true"></i>
+    </section>
+
+    <section class="section reviews-section" id="reviews">
+        <h2 class="section-title">ماذا يقول عملاؤنا؟</h2>
+        <div class="review-card">
+            <div class="stars" style="margin-bottom: 10px;">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
             </div>
-            <div id="j_idt172_complete" style="display:none"></div>
+            <p style="font-size: 1.1rem; font-style: italic;">"أشكركم على الخدمة الجميلة والسريعة ❤️"</p>
+            <p style="margin-top: 10px; font-weight: bold; color: #555;">- أحد عملائنا المميزين</p>
         </div>
-        <script id="j_idt172_s" type="text/javascript">
-            $(function() {
-                PrimeFaces.cw("AjaxStatus", "widget_j_idt172", {
-                    id: "j_idt172"
-                });
-            });
-        </script>
-    </body>
+    </section>
+
+    <section class="info-section" id="contact">
+        <div class="info-container">
+            <div class="info-box">
+                <i class="fas fa-map-marked-alt"></i>
+                <h3>زورونا في</h3>
+                <p>عمان - المقابلين<br>شارع الصخرة المشرفة (شارع الإذاعة والتلفزيون)<br>قرب المؤسسة العسكرية</p>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-clock"></i>
+                <h3>ساعات العمل</h3>
+                <p>نستقبلكم يومياً<br>حتى الساعة 12:00 منتصف الليل</p>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-phone-volume"></i>
+                <h3>تواصلوا معنا</h3>
+                <p><a href="tel:0775549700" style="color:white;">07 7554 9700</a></p>
+                <div class="social-links" style="margin-top: 15px;">
+                    <a href="https://www.facebook.com/delta.optics1" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/delta.optics1" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://linktr.ee/delta.optics" target="_blank"><i class="fas fa-link"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="background: #111; color: #aaa; text-align: center; padding: 15px;">
+        <p>جميع الحقوق محفوظة &copy; 2025 دلتا للبصريات</p>
+    </footer>
+
+</body>
 </html>
