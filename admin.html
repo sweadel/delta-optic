@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Delta Optics | Admin Panel</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+:root {
+    --primary:#1A9B9B;
+    --dark:#0f172a;
+    --bg:#f8fafc;
+    --danger:#ef4444;
+    --success:#22c55e;
+}
+
+body {
+    margin:0;
+    font-family:'Cairo',sans-serif;
+    background:var(--bg);
+}
+
+/* Sidebar */
+.sidebar {
+    width:240px;
+    height:100vh;
+    background:var(--dark);
+    color:white;
+    position:fixed;
+    padding:20px;
+}
+
+.sidebar h2 {
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.nav-link {
+    display:block;
+    padding:12px;
+    margin-bottom:10px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.nav-link:hover {
+    background:var(--primary);
+}
+
+/* Main */
+.main {
+    margin-right:260px;
+    padding:20px;
+}
+
+/* Cards */
+.card {
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.05);
+}
+
+/* Grid */
+.grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:20px;
+}
+
+/* Table */
+table {
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td {
+    padding:10px;
+    border-bottom:1px solid #eee;
+}
+
+th {
+    background:#f1f5f9;
+}
+
+/* Buttons */
+.btn {
+    padding:6px 12px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.btn-primary { background:var(--primary); color:white; }
+.btn-danger { background:var(--danger); color:white; }
+.btn-dark { background:var(--dark); color:white; }
+
+</style>
+</head>
+
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <h2>Delta Optics</h2>
+
+    <div class="nav-link" onclick="showView('dash')">
+        <i class="fas fa-chart-line"></i> الرئيسية
+    </div>
+
+    <div class="nav-link" onclick="showView('pos')">
+        <i class="fas fa-cash-register"></i> المبيعات
+    </div>
+
+    <div class="nav-link" onclick="showView('expenses')">
+        <i class="fas fa-money-bill"></i> المصروفات
+    </div>
+
+    <div class="nav-link admin-only" onclick="showView('staff')">
+        <i class="fas fa-users"></i> الموظفين
+    </div>
+</div>
+
+<!-- Main -->
+<div class="main">
+
+    <!-- Dashboard -->
+    <div id="dash" class="view">
+        <h2>لوحة التحكم</h2>
+
+        <div class="grid">
+            <div class="card">
+                <h3>المبيعات</h3>
+                <p id="kpi-sales">0.00</p>
+            </div>
+
+            <div class="card">
+                <h3>الأرباح</h3>
+                <p id="kpi-profit">0.00</p>
+            </div>
+
+            <div class="card">
+                <h3>المصروفات</h3>
+                <p id="kpi-expenses">0.00</p>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="card">
+            <h3>آخر الفواتير</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>المريض</th>
+                        <th>المبلغ</th>
+                    </tr>
+                </thead>
+                <tbody id="tb-invc"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- POS -->
+    <div id="pos" class="view" style="display:none;">
+        <h2>نقطة البيع</h2>
+
+        <div class="card">
+            <input id="pos-patient" placeholder="اسم الزبون"><br><br>
+            <input id="pos-total" placeholder="السعر"><br><br>
+            <input id="pos-paid" placeholder="المدفوع"><br><br>
+
+            <button class="btn btn-primary" onclick="createInvoice()">حفظ</button>
+        </div>
+    </div>
+
+    <!-- Expenses -->
+    <div id="expenses" class="view" style="display:none;">
+        <h2>المصروفات</h2>
+
+        <div class="card">
+            <input id="exp-amount" placeholder="المبلغ"><br><br>
+            <input id="exp-desc" placeholder="الوصف"><br><br>
+
+            <button class="btn btn-primary" onclick="saveExpense()">حفظ</button>
+        </div>
+    </div>
+
+    <!-- Staff -->
+    <div id="staff" class="view" style="display:none;">
+        <h2>الموظفين</h2>
+
+        <div class="card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>الاسم</th>
+                        <th>اليوزر</th>
+                    </tr>
+                </thead>
+                <tbody id="tb-staff"></tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<!-- Login Modal -->
+<div id="login-modal" style="position:fixed; inset:0; background:#000000aa; display:flex; align-items:center; justify-content:center;">
+    <div class="card" style="width:300px;">
+        <h3>تسجيل الدخول</h3>
+
+        <input id="auth-u" placeholder="Username"><br><br>
+        <input id="auth-p" type="password" placeholder="Password"><br><br>
+
+        <button class="btn btn-primary" onclick="handleLogin()">دخول</button>
+    </div>
+</div>
+
+<!-- Script -->
+<script type="module" src="app.js"></script>
+
+</body>
+</html>
