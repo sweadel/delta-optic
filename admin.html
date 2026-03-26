@@ -1,235 +1,125 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Delta Optics | Enterprise ERP V2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        /* ================= الثيم العالمي (Light & Dark Mode) ================= */
+        :root {
+            --primary: #2563eb; --primary-dark: #1d4ed8; --primary-shadow: #1e3a8a; --secondary: #3b82f6; 
+            --bg-color: #f3f4f6; --surface: rgba(255, 255, 255, 0.95); --border: #e5e7eb;
+            --text-main: #111827; --text-muted: #6b7280;
+            --success: #10b981; --success-dark: #059669; --danger: #ef4444; --warning: #f59e0b;
+            --shadow-float: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            --shadow-inset: inset 0 2px 4px 0 rgba(0, 0, 0, 0.04);
+        }
+        
+        /* الثيم الليلي */
+        body.dark-mode {
+            --bg-color: #0f172a; --surface: rgba(30, 41, 59, 0.95); --border: #334155;
+            --text-main: #f8fafc; --text-muted: #94a3b8;
+        }
+        body.dark-mode .clean-input { background: #1e293b; color: white; border-color: #475569; }
+        body.dark-mode .data-table th { background: #1e293b; color: #f8fafc; }
+        body.dark-mode .data-table td { background: #0f172a; color: #e2e8f0; }
+        body.dark-mode .header, body.dark-mode .sidebar { background: rgba(15, 23, 42, 0.9); }
 
-<title>Delta Optics | Admin Panel</title>
-
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
-
-<!-- Icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-<!-- SweetAlert -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<style>
-:root {
-    --primary:#1A9B9B;
-    --dark:#0f172a;
-    --bg:#f8fafc;
-    --danger:#ef4444;
-    --success:#22c55e;
-}
-
-body {
-    margin:0;
-    font-family:'Cairo',sans-serif;
-    background:var(--bg);
-}
-
-/* Sidebar */
-.sidebar {
-    width:240px;
-    height:100vh;
-    background:var(--dark);
-    color:white;
-    position:fixed;
-    padding:20px;
-}
-
-.sidebar h2 {
-    text-align:center;
-    margin-bottom:30px;
-}
-
-.nav-link {
-    display:block;
-    padding:12px;
-    margin-bottom:10px;
-    border-radius:8px;
-    cursor:pointer;
-}
-
-.nav-link:hover {
-    background:var(--primary);
-}
-
-/* Main */
-.main {
-    margin-right:260px;
-    padding:20px;
-}
-
-/* Cards */
-.card {
-    background:white;
-    padding:20px;
-    border-radius:12px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.05);
-}
-
-/* Grid */
-.grid {
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-    gap:20px;
-}
-
-/* Table */
-table {
-    width:100%;
-    border-collapse:collapse;
-}
-
-th,td {
-    padding:10px;
-    border-bottom:1px solid #eee;
-}
-
-th {
-    background:#f1f5f9;
-}
-
-/* Buttons */
-.btn {
-    padding:6px 12px;
-    border:none;
-    border-radius:6px;
-    cursor:pointer;
-}
-
-.btn-primary { background:var(--primary); color:white; }
-.btn-danger { background:var(--danger); color:white; }
-.btn-dark { background:var(--dark); color:white; }
-
-</style>
+        body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-color); color: var(--text-main); margin: 0; transition: background 0.3s, color 0.3s; }
+        .en-num { font-family: 'Segoe UI', Arial, sans-serif !important; direction: ltr !important; display: inline-block; font-weight: 800; }
+        
+        /* Sidebar & Header */
+        .sidebar { position: fixed; right: -300px; top: 0; width: 280px; height: 100vh; background: var(--surface); backdrop-filter: blur(20px); z-index: 3000; transition: 0.4s; border-left: 1px solid var(--border); overflow-y: auto; }
+        .sidebar.active { right: 0; }
+        .header { background: var(--surface); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
+        
+        /* UI Components */
+        .clean-card { background: var(--surface); border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow-float); margin-bottom: 25px; transition: transform 0.3s; }
+        .clean-card:hover { transform: translateY(-3px); }
+        .clean-card-header { padding: 18px 25px; border-bottom: 1px solid var(--border); font-weight: 900; font-size: 1.25rem; color: var(--primary); display: flex; justify-content: space-between; align-items: center; }
+        .clean-card-body { padding: 25px; }
+        .clean-input { width: 100%; padding: 14px 18px; border: 1px solid var(--border); border-radius: 10px; font-family: 'Tajawal'; font-size: 1.05rem; background: transparent; color: var(--text-main); transition: 0.2s; box-sizing: border-box; }
+        .clean-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15); outline: none; }
+        .btn-primary { width: 100%; padding: 15px; background: linear-gradient(180deg, var(--secondary) 0%, var(--primary) 100%); color: white; border: none; border-radius: 12px; font-weight: 900; font-size: 1.1rem; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px;}
+        .btn-primary:active { transform: translateY(2px); }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .data-table { width: 100%; border-collapse: collapse; text-align: right; }
+        .data-table th, .data-table td { padding: 15px; border-bottom: 1px solid var(--border); }
+        .stock-alert { color: var(--danger); font-weight: bold; animation: blink 1.5s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    </style>
 </head>
-
 <body>
-
-<!-- Sidebar -->
-<div class="sidebar">
-    <h2>Delta Optics</h2>
-
-    <div class="nav-link" onclick="showView('dash')">
-        <i class="fas fa-chart-line"></i> الرئيسية
+    <div class="sidebar" id="main-sidebar">
+        <div style="padding: 25px; font-weight: 900; color: var(--primary); font-size: 1.5rem;">DELTA ERP</div>
+        <button class="btn-primary" onclick="showView('dash'); toggleSidebar()" style="background:transparent; color:var(--text-main); box-shadow:none; text-align:right; justify-content:start;">داشبورد</button>
+        <button class="btn-primary" onclick="showView('rx'); toggleSidebar()" style="background:transparent; color:var(--text-main); box-shadow:none; text-align:right; justify-content:start;">العيادة</button>
+        <button class="btn-primary" onclick="showView('pos'); toggleSidebar()" style="background:transparent; color:var(--text-main); box-shadow:none; text-align:right; justify-content:start;">الكاشير</button>
+        <button class="btn-primary" onclick="showView('inv'); toggleSidebar()" style="background:transparent; color:var(--text-main); box-shadow:none; text-align:right; justify-content:start;">المخزون</button>
     </div>
 
-    <div class="nav-link" onclick="showView('pos')">
-        <i class="fas fa-cash-register"></i> المبيعات
-    </div>
-
-    <div class="nav-link" onclick="showView('expenses')">
-        <i class="fas fa-money-bill"></i> المصروفات
-    </div>
-
-    <div class="nav-link admin-only" onclick="showView('staff')">
-        <i class="fas fa-users"></i> الموظفين
-    </div>
-</div>
-
-<!-- Main -->
-<div class="main">
-
-    <!-- Dashboard -->
-    <div id="dash" class="view">
-        <h2>لوحة التحكم</h2>
-
-        <div class="grid">
-            <div class="card">
-                <h3>المبيعات</h3>
-                <p id="kpi-sales">0.00</p>
+    <div class="main">
+        <header class="header">
+            <div style="display: flex; gap: 15px; align-items: center;">
+                <button onclick="toggleSidebar()" class="clean-input" style="width:auto; padding:8px 15px; cursor:pointer;"><i class="fas fa-bars"></i></button>
+                <h2 style="margin:0;">المركز الطبي</h2>
             </div>
-
-            <div class="card">
-                <h3>الأرباح</h3>
-                <p id="kpi-profit">0.00</p>
+            <div style="display: flex; gap: 15px; align-items: center;">
+                <i class="fas fa-bell" id="stock-bell" style="font-size: 1.2rem; color: var(--text-muted);"></i>
+                <button onclick="document.body.classList.toggle('dark-mode')" class="clean-input" style="width:auto; padding:8px 15px; cursor:pointer;"><i class="fas fa-moon"></i></button>
+                <span id="display-user" style="font-weight:bold;"></span>
             </div>
+        </header>
 
-            <div class="card">
-                <h3>المصروفات</h3>
-                <p id="kpi-expenses">0.00</p>
-            </div>
-        </div>
+        <div class="content" style="padding: 30px;">
+            <section id="dash" class="view active">
+                <div class="grid-2">
+                    <div class="clean-card">
+                        <div class="clean-card-header">تحليل المبيعات (أسبوعي)</div>
+                        <div class="clean-card-body"><canvas id="salesChart"></canvas></div>
+                    </div>
+                    <div class="clean-card">
+                        <div class="clean-card-header">حركة الصندوق</div>
+                        <div class="clean-card-body" style="height: 300px; overflow-y: auto;">
+                            <table class="data-table"><tbody id="tb-daily-ledger"></tbody></table>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-        <br>
+            <section id="rx" class="view" style="display:none;">
+                <div class="clean-card">
+                    <div class="clean-card-header">
+                        أرشيف المراجعين 
+                        <button onclick="exportToExcel('tb-unified-rx', 'أرشيف_المراجعين')" class="btn-primary" style="width:auto; padding:10px 20px; font-size:0.9rem;"><i class="fas fa-file-excel"></i> تصدير إكسل</button>
+                    </div>
+                    <div class="clean-card-body">
+                        <table class="data-table">
+                            <thead><tr><th>اسم المراجع</th><th>تاريخ آخر زيارة</th><th>الإجمالي</th></tr></thead>
+                            <tbody id="tb-unified-rx"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
 
-        <div class="card">
-            <h3>آخر الفواتير</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>المريض</th>
-                        <th>المبلغ</th>
-                    </tr>
-                </thead>
-                <tbody id="tb-invc"></tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- POS -->
-    <div id="pos" class="view" style="display:none;">
-        <h2>نقطة البيع</h2>
-
-        <div class="card">
-            <input id="pos-patient" placeholder="اسم الزبون"><br><br>
-            <input id="pos-total" placeholder="السعر"><br><br>
-            <input id="pos-paid" placeholder="المدفوع"><br><br>
-
-            <button class="btn btn-primary" onclick="createInvoice()">حفظ</button>
-        </div>
-    </div>
-
-    <!-- Expenses -->
-    <div id="expenses" class="view" style="display:none;">
-        <h2>المصروفات</h2>
-
-        <div class="card">
-            <input id="exp-amount" placeholder="المبلغ"><br><br>
-            <input id="exp-desc" placeholder="الوصف"><br><br>
-
-            <button class="btn btn-primary" onclick="saveExpense()">حفظ</button>
-        </div>
-    </div>
-
-    <!-- Staff -->
-    <div id="staff" class="view" style="display:none;">
-        <h2>الموظفين</h2>
-
-        <div class="card">
-            <table>
-                <thead>
-                    <tr>
-                        <th>الاسم</th>
-                        <th>اليوزر</th>
-                    </tr>
-                </thead>
-                <tbody id="tb-staff"></tbody>
-            </table>
+            <section id="pos" class="view" style="display:none;"><h2>قسم الكاشير</h2></section>
+            <section id="inv" class="view" style="display:none;">
+                <div class="clean-card">
+                    <div class="clean-card-header">المستودع والنواقص</div>
+                    <div class="clean-card-body">
+                        <table class="data-table">
+                            <thead><tr><th>المنتج</th><th>الكمية</th><th>السعر</th></tr></thead>
+                            <tbody id="tb-inv"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
         </div>
     </div>
-
-</div>
-
-<!-- Login Modal -->
-<div id="login-modal" style="position:fixed; inset:0; background:#000000aa; display:flex; align-items:center; justify-content:center;">
-    <div class="card" style="width:300px;">
-        <h3>تسجيل الدخول</h3>
-
-        <input id="auth-u" placeholder="Username"><br><br>
-        <input id="auth-p" type="password" placeholder="Password"><br><br>
-
-        <button class="btn btn-primary" onclick="handleLogin()">دخول</button>
-    </div>
-</div>
-
-<!-- Script -->
-<script type="module" src="app.js"></script>
-
+    <script type="module" src="./app.js"></script>
 </body>
 </html>
