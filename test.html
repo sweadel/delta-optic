@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Medical Test | Delta Optics</title>
+    
+    <link rel="icon" href="logo.jpg" type="image/jpeg">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <style>
+        /* --- التصميم الملكي --- */
+        :root { 
+            --brand-color: #0891b2; --gold: #f59e0b; --bg-body: #f8fafc; --white: #ffffff; 
+            --text-main: #0f172a; --text-light: #64748b; --success: #10b981; --error: #ef4444; 
+            --warning: #f59e0b; --shadow-soft: 0 10px 30px rgba(0,0,0,0.03);
+            --border-soft: 1px solid rgba(0,0,0,0.04); --radius-lg: 24px; --radius-md: 16px;
+        }
+
+        * { box-sizing: border-box; font-family: 'Tajawal', sans-serif; -webkit-tap-highlight-color: transparent; user-select: none; }
+        body { background: var(--bg-body); color: var(--text-main); margin: 0; min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+
+        header { background: rgba(255,255,255,0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); height: 70px; padding: 0 20px; border-bottom: var(--border-soft); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+        .lang-btn { background: var(--white); border: var(--border-soft); border-radius: 12px; padding: 8px 14px; font-weight: 800; color: var(--brand-color); cursor: pointer; font-size: 0.95rem; z-index: 2; box-shadow: 0 4px 10px rgba(0,0,0,0.02); transition: 0.2s;}
+        .lang-btn:active { transform: scale(0.9); }
+        .header-center { position: absolute; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 8px; }
+        .header-title { font-weight: 900; font-size: 1.2rem; color: var(--text-main); margin: 0; letter-spacing: 0.5px;}
+        .back-btn { width: 42px; height: 42px; border-radius: 14px; background: var(--white); color: var(--brand-color); display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.2rem; z-index: 2; box-shadow: 0 4px 10px rgba(0,0,0,0.02); border: var(--border-soft); transition: 0.2s;}
+        .back-btn:active { transform: scale(0.9); }
+
+        .container { flex: 1; padding: 25px 20px; max-width: 500px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; align-items: center; }
+        .screen { display: none; width: 100%; animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0;}
+        .screen.active { display: block; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        .login-box { background: var(--white); padding: 35px 25px; border-radius: var(--radius-lg); box-shadow: var(--shadow-soft); text-align: center; width: 100%; border: var(--border-soft); margin-top: 20px;}
+        .login-box img { width: 90px; margin-bottom: 20px; border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
+        .login-input { width: 100%; padding: 18px; border-radius: var(--radius-md); border: 2px solid #f1f5f9; background: #f8fafc; font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; text-align: center; outline: none; transition: 0.3s; color: var(--text-main);}
+        .login-input:focus { border-color: var(--brand-color); background: var(--white); box-shadow: 0 0 0 4px rgba(8, 145, 178, 0.1); }
+
+        .welcome-box { text-align: center; margin-bottom: 25px; }
+        .patient-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--white); color: var(--brand-color); padding: 10px 20px; border-radius: 50px; font-weight: 800; font-size: 0.95rem; border: var(--border-soft); box-shadow: var(--shadow-soft);}
+        
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .test-card { background: var(--white); padding: 20px 15px; border-radius: var(--radius-lg); box-shadow: var(--shadow-soft); cursor: pointer; display: flex; flex-direction: column; align-items: center; text-align: center; border: var(--border-soft); transition: 0.2s; position: relative; overflow: hidden;}
+        .test-card:active { transform: scale(0.96); }
+        .icon-wrap { width: 55px; height: 55px; background: rgba(8, 145, 178, 0.08); border-radius: 18px; display: flex; align-items: center; justify-content: center; color: var(--brand-color); font-size: 1.6rem; margin-bottom: 12px; transition: 0.3s;}
+        .card-info h3 { margin: 0 0 6px; font-size: 1.05rem; color: var(--text-main); font-weight: 900; }
+        .card-info p { margin: 0; font-size: 0.8rem; color: var(--text-light); font-weight: 500;}
+
+        .progress-container { width: 100%; background: #f1f5f9; border-radius: 50px; height: 8px; margin-bottom: 20px; overflow: hidden; }
+        .progress-bar { height: 100%; background: var(--success); width: 0%; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 50px;}
+        .eye-indicator { background: var(--white); color: var(--brand-color); padding: 8px 20px; border-radius: 50px; font-size: 0.9rem; font-weight: 800; margin-bottom: 15px; text-align: center; display: inline-block; border: var(--border-soft); box-shadow: var(--shadow-soft);}
+
+        .test-area { background: var(--white); border-radius: var(--radius-lg); padding: 20px; text-align: center; margin-bottom: 25px; min-height: 260px; display: flex; flex-direction: column; justify-content: center; align-items: center; border: var(--border-soft); box-shadow: var(--shadow-soft); position: relative; overflow: hidden; }
+        .test-area.dark-mode { background: #0f172a; border-color: #0f172a; box-shadow: 0 15px 35px rgba(0,0,0,0.2);}
+        .e-char { font-weight: 900; line-height: 1; transition: transform 0.3s ease, font-size 0.3s ease; }
+        
+        .d-pad-container { direction: ltr; display: grid; grid-template-columns: 65px 65px 65px; grid-template-rows: 65px 65px; gap: 15px; justify-content: center; margin: 0 auto; }
+        .pad-btn { width: 65px; height: 65px; border-radius: 20px; border: var(--border-soft); background: var(--white); color: var(--brand-color); font-size: 1.6rem; box-shadow: var(--shadow-soft); cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
+        .pad-btn:active { transform: scale(0.9) translateY(2px); box-shadow: none; background: #f8fafc; }
+        .btn-up { grid-column: 2; grid-row: 1; } .btn-left { grid-column: 1; grid-row: 2; } .btn-down { grid-column: 2; grid-row: 2; } .btn-right { grid-column: 3; grid-row: 2; }
+
+        .color-canvas { background: #fff; border-radius: 50%; width: 230px; height: 230px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); margin-top: 10px;}
+        .numpad-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; max-width: 280px; margin: 0 auto; direction: ltr; }
+        .num-key { width: 75px; height: 75px; border-radius: 24px; border: var(--border-soft); background: var(--white); color: var(--text-main); font-size: 1.6rem; font-weight: 900; cursor: pointer; box-shadow: var(--shadow-soft); transition: 0.2s; display: flex; align-items: center; justify-content: center; }
+        .num-key:active { background: #f1f5f9; transform: scale(0.92); }
+        .key-action { background: #fef2f2; color: var(--error); }
+        .key-submit { background: var(--brand-color); color: white; border: none;}
+
+        .duo-split { display: flex; width: 100%; height: 220px; border-radius: 20px; overflow: hidden; box-shadow: inset 0 0 20px rgba(0,0,0,0.1); }
+        .duo-red { flex: 1; background: #ef4444; display: flex; align-items: center; justify-content: center; }
+        .duo-green { flex: 1; background: #10b981; display: flex; align-items: center; justify-content: center; }
+        .duo-circle { width: 65px; height: 65px; border: 10px solid #111; border-radius: 50%; }
+
+        .timer-circle { width: 160px; height: 160px; border-radius: 50%; border: 8px solid #f1f5f9; background: var(--white); display: flex; align-items: center; justify-content: center; font-size: 3.5rem; font-weight: 900; color: var(--brand-color); margin: 20px auto; position: relative; box-shadow: var(--shadow-soft);}
+        .timer-circle.active { border-color: var(--success); color: var(--success); animation: pulseTimer 1s infinite alternate; }
+        @keyframes pulseTimer { from { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); } to { transform: scale(1.02); box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); } }
+
+        .action-btn { width: 100%; padding: 18px; border-radius: var(--radius-md); border: none; font-weight: 900; font-size: 1.05rem; cursor: pointer; margin-bottom: 12px; display: flex; justify-content: center; gap: 10px; align-items: center; text-decoration: none; transition: 0.3s; box-shadow: var(--shadow-soft);}
+        .action-btn:active { transform: scale(0.98); }
+        .btn-primary { background: var(--brand-color); color: white; }
+        .btn-outline { background: var(--white); border: 2px solid #f1f5f9; color: var(--text-main); }
+        .btn-success { background: var(--success); color: white; }
+
+        .history-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; }
+        .history-item { background: var(--white); border: var(--border-soft); border-radius: var(--radius-lg); padding: 18px; display: flex; align-items: center; justify-content: space-between; transition: 0.2s; box-shadow: var(--shadow-soft); }
+        .history-info { display: flex; align-items: center; gap: 15px; }
+        .avatar { width: 50px; height: 50px; border-radius: 18px; background: rgba(8, 145, 178, 0.1); color: var(--brand-color); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: 900; }
+        .hist-name { font-weight: 900; font-size: 1.05rem; color: var(--text-main); margin-bottom: 4px; }
+        .hist-date { font-size: 0.8rem; color: var(--text-light); font-weight: 500;}
+        .view-btn { background: var(--bg-body); border: var(--border-soft); width: 45px; height: 45px; border-radius: 14px; color: var(--brand-color); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: 0.2s;}
+
+        .report-card { background: var(--white); padding: 25px; border-radius: var(--radius-lg); border: var(--border-soft); margin-bottom: 20px; width: 100%; box-shadow: var(--shadow-soft);}
+        .res-item { background: var(--bg-body); padding: 15px; border-radius: var(--radius-md); margin-bottom: 15px; border: var(--border-soft); }
+        .res-title { font-weight: 900; color: var(--brand-color); font-size: 1rem; margin-bottom: 12px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; display: flex; align-items: center; gap: 8px;}
+        .eye-row { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 6px; padding: 6px 12px; background: var(--white); border-radius: 8px; font-weight: 700; border: var(--border-soft);}
+
+        .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 1000; }
+        .modal-overlay.active { display: flex; }
+        .modal-box { background: var(--white); padding: 35px 25px; border-radius: 28px; width: 90%; max-width: 360px; text-align: center; animation: popModal 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 20px 50px rgba(0,0,0,0.1); border: var(--border-soft);}
+        @keyframes popModal { 0% { transform: scale(0.85) translateY(20px); opacity: 0; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
+        .modal-icon { font-size: 3.5rem; color: var(--brand-color); margin-bottom: 20px; }
+        .modal-title { font-size: 1.3rem; font-weight: 900; color: var(--text-main); margin-bottom: 12px; }
+        .modal-text { font-size: 1rem; color: var(--text-light); line-height: 1.6; margin-bottom: 30px; font-weight: 500;}
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-btn"><i class="fas fa-arrow-right"></i></a>
+        <div class="header-center"><h1 class="header-title">العيادة الذكية</h1></div>
+        <button class="lang-btn" onclick="toggleLang()">EN</button>
+    </header>
+
+    <div class="container">
+        <div id="screen-login" class="screen active">
+            <div class="login-box">
+                <img src="logo.jpg" onerror="this.src='https://via.placeholder.com/90?text=Delta'">
+                <h2 style="color:var(--brand-color); margin-bottom:12px; font-weight: 900;">تسجيل المراجع</h2>
+                <p style="color:var(--text-light); font-size:0.95rem; margin-bottom:25px; font-weight: 500;">أدخل بيانات المراجع لبدء الفحوصات</p>
+                
+                <input type="text" id="patientNameInput" class="login-input" placeholder="اسم المراجع (مثال: أحمد عادل)">
+                <input type="tel" id="patientPhoneInput" class="login-input" placeholder="رقم الهاتف للتواصل" dir="ltr" style="margin-bottom: 8px;">
+                <p style="font-size: 0.8rem; color: var(--text-light); text-align: right; margin-top: 0; margin-bottom: 25px; padding-right: 10px; font-weight: 500;">
+                    <i class="fas fa-shield-alt" style="color: var(--success); margin-left: 5px;"></i>نستأذنك برقمك ليتسنى لأخصائيينا التواصل معك وتقديم استشارة مجانية لنتائجك.
+                </p>
+                
+                <button class="action-btn btn-primary" onclick="startSession()"><i class="fas fa-play"></i> بدء الفحوصات</button>
+                <button class="action-btn btn-outline" onclick="show('screen-records')"><i class="fas fa-history"></i> المراجعين السابقين</button>
+            </div>
+        </div>
+
+        <div id="menu" class="screen">
+            <div class="welcome-box"><div class="patient-badge"><i class="fas fa-user-circle"></i> المراجع: <span id="display-patient-name" style="margin-right: 5px;"></span></div></div>
+            <div class="menu-grid">
+                <div class="test-card" onclick="startTest('vision')"><div class="icon-wrap"><i class="fas fa-eye"></i></div><div class="card-info"><h3>حدة النظر</h3><p>دقة الإبصار عن بعد</p></div></div>
+                <div class="test-card" onclick="startTest('duochrome')"><div class="icon-wrap" style="background:#fef2f2; color:#ef4444;"><i class="fas fa-adjust"></i></div><div class="card-info"><h3>أحمر وأخضر</h3><p>طول وقصر النظر</p></div></div>
+                <div class="test-card" onclick="startTest('contrast')"><div class="icon-wrap" style="background:#0f172a; color:white;"><i class="fas fa-moon"></i></div><div class="card-info"><h3>الرؤية الليلية</h3><p>قيادة ليلاً وتباين</p></div></div>
+                <div class="test-card" onclick="startTest('dryeye')"><div class="icon-wrap" style="background:#fffbeb; color:#f59e0b;"><i class="fas fa-tint"></i></div><div class="card-info"><h3>جفاف العين</h3><p>معدل رمش العين</p></div></div>
+                <div class="test-card" onclick="startTest('astigmatism')"><div class="icon-wrap"><i class="fas fa-certificate"></i></div><div class="card-info"><h3>انحراف النظر</h3><p>الاستجماتيزم</p></div></div>
+                <div class="test-card" onclick="startTest('color')"><div class="icon-wrap"><i class="fas fa-palette"></i></div><div class="card-info"><h3>عمى الألوان</h3><p>التمييز اللوني</p></div></div>
+            </div>
+            <button class="action-btn btn-success" style="margin-top:25px;" onclick="showFinalReport()"><i class="fas fa-file-alt"></i> إنهاء وعرض التقرير</button>
+        </div>
+
+        <div id="test-vision" class="screen">
+            <div class="progress-container"><div class="progress-bar" id="prog-vision"></div></div>
+            <div class="eye-indicator" id="eye-ind-vision">العين اليمنى</div>
+            <div class="test-area"><div id="e-char" class="e-char">E</div></div>
+            <div class="d-pad-container">
+                <button class="pad-btn btn-up" onclick="checkVision(270)"><i class="fas fa-chevron-up"></i></button>
+                <button class="pad-btn btn-left" onclick="checkVision(180)"><i class="fas fa-chevron-left"></i></button>
+                <button class="pad-btn btn-down" onclick="checkVision(90)"><i class="fas fa-chevron-down"></i></button>
+                <button class="pad-btn btn-right" onclick="checkVision(0)"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <div id="test-duochrome" class="screen">
+            <div class="eye-indicator" id="eye-ind-duo">العين اليمنى</div>
+            <div class="test-area" style="padding:20px;">
+                <h4 style="margin:0 0 20px; font-weight: 900; font-size: 1.1rem;">أين ترى الدائرة أوضح وأغمق؟</h4>
+                <div class="duo-split"><div class="duo-green"><div class="duo-circle"></div></div><div class="duo-red"><div class="duo-circle"></div></div></div>
+            </div>
+            <button class="action-btn" style="background:#ef4444; color:white;" onclick="saveDuochrome('red')">أوضح على الأحمر</button>
+            <button class="action-btn" style="background:#10b981; color:white;" onclick="saveDuochrome('green')">أوضح على الأخضر</button>
+            <button class="action-btn" style="background:#f1f5f9; color:var(--text-main);" onclick="saveDuochrome('equal')">نفس الوضوح (طبيعي)</button>
+        </div>
+
+        <div id="test-dryeye" class="screen">
+            <div class="eye-indicator" id="eye-ind-dry">العينين معاً</div>
+            <div class="test-area" style="padding:30px 15px;">
+                <h4 style="margin:0 0 12px; font-weight: 900; font-size: 1.2rem;">افتح عينيك وركز جيداً بالمركز</h4>
+                <p style="font-size:0.9rem; color:var(--text-light); margin:0; font-weight: 500;">اضغط "بدء"، وإذا شعرت بحرقة أو رمشت اضغط "رمشت!" فوراً.</p>
+                <div class="timer-circle" id="dry-timer">0.0</div>
+            </div>
+            <button class="action-btn btn-primary" id="btn-dry-start" onclick="startDryTimer()"><i class="fas fa-play"></i> بدء الفحص</button>
+            <button class="action-btn btn-outline" id="btn-dry-stop" onclick="stopDryTimer()" style="display:none; border-color:var(--error); color:var(--error);"><i class="fas fa-stop"></i> رمشت!</button>
+        </div>
+
+        <div id="test-contrast" class="screen">
+            <div class="progress-container"><div class="progress-bar" id="prog-contrast"></div></div>
+            <div class="eye-indicator" id="eye-ind-contrast">العين اليمنى</div>
+            <div class="test-area dark-mode"><div id="c-char" class="e-char" style="color:#ffffff;">E</div></div>
+            <div class="d-pad-container">
+                <button class="pad-btn btn-up" onclick="checkContrast(270)"><i class="fas fa-chevron-up"></i></button>
+                <button class="pad-btn btn-left" onclick="checkContrast(180)"><i class="fas fa-chevron-left"></i></button>
+                <button class="pad-btn btn-down" onclick="checkContrast(90)"><i class="fas fa-chevron-down"></i></button>
+                <button class="pad-btn btn-right" onclick="checkContrast(0)"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <div id="test-astigmatism" class="screen">
+            <div class="eye-indicator" id="eye-ind-ast">العين اليمنى</div>
+            <div class="test-area" style="padding:25px 0;">
+                <svg width="220" height="220" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="48" fill="none" stroke="#e2e8f0" stroke-width="1.5"/>
+                    <line x1="50" y1="5" x2="50" y2="95" stroke="#0f172a" stroke-width="1.5"/>
+                    <line x1="5" y1="50" x2="95" y2="50" stroke="#0f172a" stroke-width="1.5"/>
+                    <line x1="18.18" y1="18.18" x2="81.82" y2="81.82" stroke="#0f172a" stroke-width="1.5"/>
+                    <line x1="18.18" y1="81.82" x2="81.82" y2="18.18" stroke="#0f172a" stroke-width="1.5"/>
+                    <line x1="32.8" y1="8.4" x2="67.2" y2="91.6" stroke="#0f172a" stroke-width="1.5"/>
+                    <line x1="8.4" y1="32.8" x2="91.6" y2="67.2" stroke="#0f172a" stroke-width="1.5"/>
+                    <circle cx="50" cy="50" r="4" fill="#0f172a"/>
+                </svg>
+            </div>
+            <button class="action-btn" style="background:#fef2f2; color:var(--error);" onclick="finishAstigmatism(true)">نعم، أرى خطوطاً أغمق</button>
+            <button class="action-btn" style="background:var(--white); border:2px solid #e2e8f0; color:var(--text-main);" onclick="finishAstigmatism(false)">لا، جميعها متساوية بالوضوح</button>
+        </div>
+
+        <div id="test-color" class="screen">
+            <div class="progress-container"><div class="progress-bar" id="prog-color"></div></div>
+            <div style="display:flex; justify-content:center; margin-bottom:20px;"><canvas id="ishiharaCanvas" class="color-canvas"></canvas></div>
+            <div id="color-display" style="text-align:center; height:40px; font-size:2rem; font-weight:900; color:var(--brand-color); letter-spacing:6px; margin-bottom: 10px;"></div>
+            
+            <div class="numpad-grid">
+                <button class="num-key" onclick="typeColor(1)">1</button><button class="num-key" onclick="typeColor(2)">2</button><button class="num-key" onclick="typeColor(3)">3</button>
+                <button class="num-key" onclick="typeColor(4)">4</button><button class="num-key" onclick="typeColor(5)">5</button><button class="num-key" onclick="typeColor(6)">6</button>
+                <button class="num-key" onclick="typeColor(7)">7</button><button class="num-key" onclick="typeColor(8)">8</button><button class="num-key" onclick="typeColor(9)">9</button>
+                <button class="num-key key-action" onclick="clearColor()"><i class="fas fa-backspace"></i></button><button class="num-key" onclick="typeColor(0)">0</button><button class="num-key key-submit" onclick="checkColor()"><i class="fas fa-check"></i></button>
+            </div>
+        </div>
+
+        <div id="screen-records" class="screen">
+            <h2 style="color:var(--brand-color); text-align:center; margin-bottom:25px; font-weight: 900;">المراجعين السابقين</h2>
+            <div class="history-list" id="records-list"></div>
+            <button class="action-btn btn-outline" onclick="show('screen-login')"><i class="fas fa-arrow-right"></i> العودة للرئيسية</button>
+        </div>
+
+        <div id="screen-report" class="screen">
+            <div class="report-card">
+                <h2 style="color:var(--brand-color); margin-top:0; text-align:center; font-weight: 900;">التقرير الطبي المبدئي</h2>
+                <h4 style="text-align:center; color:var(--text-light); margin-bottom:25px; font-weight: 800; font-size: 1.1rem;" id="report-patient-name">الاسم</h4>
+                <div id="report-details"></div>
+            </div>
+            <a id="wa-btn" href="#" class="action-btn btn-success" target="_blank"><i class="fab fa-whatsapp"></i> حجز موعد للمراجع</a>
+            <button class="action-btn btn-outline" onclick="resetSystem()"><i class="fas fa-user-plus"></i> فحص مراجع جديد</button>
+        </div>
+    </div>
+
+    <div id="instructionModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-icon" id="modalIcon"><i class="fas fa-volume-up"></i></div>
+            <h2 class="modal-title" id="modalTitle">تعليمات الفحص</h2>
+            <p class="modal-text" id="modalText">تفاصيل...</p>
+            <button class="action-btn btn-primary" id="modalBtn" onclick="closeModal()">حسناً، ابدأ الفحص</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = { apiKey: "AIzaSyB11C4GGgAyqeThs8a9cvDNN7frvAA1nqQ", authDomain: "delta-optics-system.firebaseapp.com", projectId: "delta-optics-system", storageBucket: "delta-optics-system.firebasestorage.app", messagingSenderId: "111176219224", appId: "1:111176219224:web:e0d8a5f26b84d57249a82d" };
+        const app = initializeApp(firebaseConfig); const db = getFirestore(app);
+
+        // تم التعديل هون: صرنا نبعث حقل phone منفصل للفايربيس
+        window.saveToAdmin = async (name, phone, details) => {
+            try { await addDoc(collection(db, "tests"), { name: name, phone: phone, details: details, timestamp: serverTimestamp() }); } catch(e) { console.error("Error connecting to admin:", e); }
+        };
+    </script>
+
+    <script>
+        emailjs.init("C73X3wkgP71p7DY1F");
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const savedPhone = localStorage.getItem('delta_patient_phone');
+            if (savedPhone) document.getElementById('patientPhoneInput').value = savedPhone;
+        });
+
+        const i18n = {
+            ar: {
+                rightEye: "العين اليمنى", leftEye: "العين اليسرى", bothEyes: "العينين معاً",
+                resVision: "حدة النظر", resContrast: "الرؤية الليلية", resAst: "انحراف النظر", 
+                resColor: "عمى الألوان", resDuo: "فحص الأحمر/أخضر", resDry: "جفاف العين",
+                perfect: "ممتاز", bad: "يحتاج فحص عيادة", normal: "طبيعي",
+                myopia: "اشتباه قصر نظر", hyperopia: "اشتباه طول نظر",
+                dryYes: "احتمالية جفاف العين", dryNo: "الترطيب طبيعي",
+                introMsg: "مرحبا عيادة دلتا للبصريات 👓\nأود حجز موعد بناءً على هذا التقرير:\n",
+                voiceCoverLeft: "لو سمحت، غطي عينك الشمال، عشان نفحص عينك اليمين.",
+                voiceCoverRight: "ممتاز جداً، هسا غطي عينك اليمين، عشان نفحص الشمال.",
+                voiceBoth: "يرجى التركيز، والنظر للشاشة بعينيك الثنتين معاً."
+            }
+        };
+
+        const testDetailsMap = {
+            'vision': { icon: '👁️', desc: 'دقة الإبصار عن بعد' }, 'duochrome': { icon: '🔴', desc: 'توازن الضوء (طول وقصر النظر)' },
+            'contrast': { icon: '🌑', desc: 'جودة الرؤية والقيادة ليلاً' }, 'dryeye': { icon: '💧', desc: 'معدل رمش وترطيب العين' },
+            'astigmatism': { icon: '🌀', desc: 'تشوه الرؤية واللابؤرية' }, 'color': { icon: '🎨', desc: 'التمييز اللوني الدقيق' }
+        };
+
+        let currentPatient = ""; let currentPhone = ""; let currentResults = {}; let activeTest = ""; let currentEye = "right"; let modalCallback = null;
+
+        function playGoogleVoice(text) {
+            let url = "https://translate.googleapis.com/translate_tts?client=gtx&ie=UTF-8&tl=ar&q=" + encodeURIComponent(text);
+            let audio = new Audio(url);
+            audio.play().catch(e => { if('speechSynthesis' in window) { window.speechSynthesis.cancel(); let u = new SpeechSynthesisUtterance(text); u.lang = 'ar-SA'; u.rate = 0.85; window.speechSynthesis.speak(u); } });
+        }
+
+        function showModal(title, text, spokenText, callback) {
+            document.getElementById('modalTitle').innerText = title; document.getElementById('modalText').innerHTML = text;
+            modalCallback = callback; document.getElementById('instructionModal').classList.add('active');
+            if(spokenText) playGoogleVoice(spokenText);
+        }
+        function closeModal() { if('speechSynthesis' in window) window.speechSynthesis.cancel(); document.getElementById('instructionModal').classList.remove('active'); if(modalCallback) modalCallback(); }
+
+        function startSession() {
+            const name = document.getElementById('patientNameInput').value.trim();
+            const phone = document.getElementById('patientPhoneInput').value.trim();
+            if(!name) { alert('الرجاء كتابة اسم المراجع'); return; }
+            if(!phone) { alert('الرجاء كتابة رقم الهاتف للتواصل'); return; }
+            localStorage.setItem('delta_patient_phone', phone);
+            currentPatient = name; currentPhone = phone; currentResults = {}; 
+            document.getElementById('display-patient-name').innerText = currentPatient;
+            show('menu');
+        }
+
+        async function showFinalReport() {
+            if(Object.keys(currentResults).length === 0) { alert("لم تقم بإجراء أي فحص!"); return; }
+            let reportForAdmin = `رقم التواصل: ${currentPhone}\n`;
+            for (const [testKey, eyeData] of Object.entries(currentResults)) {
+                let titleName = i18n.ar[testKey === 'vision' ? 'resVision' : testKey === 'contrast' ? 'resContrast' : testKey === 'astigmatism' ? 'resAst' : testKey === 'color' ? 'resColor' : testKey === 'duochrome' ? 'resDuo' : 'resDry'];
+                reportForAdmin += `\n[ ${titleName} ]\n`;
+                for (const [eye, score] of Object.entries(eyeData)) { reportForAdmin += `- ${i18n.ar[eye]}: ${score}\n`; }
+            }
+            // إرسال الرقم للفايربيس لحاله عشان الادمن يقدر يعمل منه زر
+            if(window.saveToAdmin) await window.saveToAdmin(currentPatient, currentPhone, reportForAdmin);
+
+            emailjs.send("service_0w4ek18", "template_msh2s9p", { patient_name: currentPatient, message: reportForAdmin, date: new Date().toLocaleString('ar-EG') });
+            renderReportUI(currentPatient, currentPhone, currentResults); show('screen-report');
+        }
+
+        function loadRecords() {
+            const records = JSON.parse(localStorage.getItem('delta_patients')) || [];
+            const list = document.getElementById('records-list'); list.innerHTML = "";
+            if(records.length === 0) { list.innerHTML = `<p style="text-align:center; color:gray;">لا يوجد مراجعين سابقين.</p>`; return; }
+            records.reverse().forEach((r, idx) => { let firstLetter = r.name.charAt(0).toUpperCase(); list.innerHTML += `<div class="history-item"><div class="history-info"><div class="avatar">${firstLetter}</div><div><div class="hist-name">${r.name}</div><div class="hist-date">${r.date}</div></div></div><button class="view-btn" onclick="viewHistoryReport(${idx})"><i class="fas fa-file-medical"></i></button></div>`; });
+        }
+
+        function viewHistoryReport(idx) {
+            const records = JSON.parse(localStorage.getItem('delta_patients')) || [];
+            const r = records.reverse()[idx]; renderReportUI(r.name, r.phone || "غير متوفر", r.results); show('screen-report');
+        }
+
+        function renderReportUI(name, phone, resultsMap) {
+            document.getElementById('report-patient-name').innerText = name;
+            let html = ""; let waDetails = `👤 *الاسم:* ${name}\n📞 *الهاتف:* ${phone}\n\n`;
+            for (const [testKey, eyeData] of Object.entries(resultsMap)) {
+                let titleName = i18n.ar[testKey === 'vision' ? 'resVision' : testKey === 'contrast' ? 'resContrast' : testKey === 'astigmatism' ? 'resAst' : testKey === 'color' ? 'resColor' : testKey === 'duochrome' ? 'resDuo' : 'resDry'];
+                let tData = testDetailsMap[testKey];
+                html += `<div class="res-item"><div class="res-title"><span>${tData.icon} ${titleName}</span></div>`;
+                waDetails += `\n${tData.icon} *${titleName}*\n`;
+                for (const [eye, score] of Object.entries(eyeData)) { html += `<div class="eye-row"><span>• ${i18n.ar[eye]}</span><span>${score}</span></div>`; waDetails += `• ${i18n.ar[eye]}: ${score}\n`; }
+                html += `</div>`;
+            }
+            document.getElementById('report-details').innerHTML = html;
+            document.getElementById('wa-btn').href = `https://wa.me/962775549700?text=${encodeURIComponent(i18n.ar.introMsg + waDetails)}`;
+            saveToLocalHistory(name, phone, resultsMap);
+        }
+
+        function saveToLocalHistory(name, phone, resultsMap) {
+            let records = JSON.parse(localStorage.getItem('delta_patients')) || [];
+            const today = new Date().toLocaleDateString('ar-EG');
+            if(records.length > 0 && records[records.length-1].name === name && records[records.length-1].date === today) return;
+            records.push({ name: name, phone: phone, date: today, results: resultsMap });
+            localStorage.setItem('delta_patients', JSON.stringify(records));
+        }
+
+        function resetSystem() { currentPatient = ""; currentPhone = ""; currentResults = {}; document.getElementById('patientNameInput').value = localStorage.getItem('delta_patient_phone') ? "" : ""; show('screen-login'); }
+        function show(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); if(id === 'screen-records') loadRecords(); }
+        function setProgress(id, percent) { document.getElementById(id).style.width = percent + '%'; }
+
+        function startTest(testName) {
+            activeTest = testName;
+            if(testName === 'color' || testName === 'dryeye') { currentEye = "bothEyes"; showModal("تعليمات الفحص", `يرجى النظر للشاشة بالعينين معاً.`, i18n.ar.voiceBoth, () => { if(testName === 'color') startColor(); else { document.getElementById('btn-dry-start').style.display='flex'; document.getElementById('btn-dry-stop').style.display='none'; document.getElementById('dry-timer').innerText="0.0"; show('test-dryeye'); } }); }
+            else { currentEye = "rightEye"; showModal("تنبيه الفحص", `غطي عينك الشمال بيدك بدون ما تضغط عليها.`, i18n.ar.voiceCoverLeft, () => { if(testName === 'vision') startVisionProcess(); if(testName === 'contrast') startContrastProcess(); if(testName === 'duochrome') show('test-duochrome'); if(testName === 'astigmatism') show('test-astigmatism'); }); }
+        }
+
+        function saveEyeResult(score) {
+            if(!currentResults[activeTest]) currentResults[activeTest] = {};
+            if(currentEye === "rightEye") { currentResults[activeTest]['rightEye'] = score; currentEye = 'leftEye'; showModal("تبديل العين", "الآن غطي عينك اليمنى لكي نفحص اليسرى.", i18n.ar.voiceCoverRight, () => { if(activeTest === 'vision') startVisionProcess(); if(activeTest === 'contrast') startContrastProcess(); }); } else { currentResults[activeTest]['leftEye'] = score; show('menu'); }
+        }
+
+        const vSizes = [130, 100, 70, 50, 35, 25]; const vLabels = ["6/60", "6/36", "6/24", "6/18", "6/12", "6/6"]; let vStep = 0, vRot = 0, vErrors = 0;
+        function startVisionProcess() { vStep=0; vErrors=0; updateE(); show('test-vision'); }
+        function updateE() { setProgress('prog-vision', (vStep/vSizes.length)*100); if(vStep >= vSizes.length) { setTimeout(()=>saveEyeResult("6/6"), 300); return; } vRot = [0, 90, 180, 270][Math.floor(Math.random()*4)]; document.getElementById('e-char').style.cssText = `font-size:${vSizes[vStep]}px; transform:rotate(${vRot}deg);`; }
+        function checkVision(dir) { if(dir === vRot) { vStep++; updateE(); } else { vErrors++; if(vErrors > 1) saveEyeResult(vStep > 0 ? vLabels[vStep-1] : "< 6/60"); else updateE(); } }
+        function saveDuochrome(res) { saveEyeResult(res === 'red' ? i18n.ar.myopia : (res === 'green' ? i18n.ar.hyperopia : i18n.ar.normal)); }
+        const cOpacities = [0.8, 0.5, 0.3, 0.15, 0.08, 0.03]; let cStep = 0, cRot = 0, cErrors = 0;
+        function startContrastProcess() { cStep=0; cErrors=0; updateContrastE(); show('test-contrast'); }
+        function updateContrastE() { setProgress('prog-contrast', (cStep/cOpacities.length)*100); if(cStep >= cOpacities.length) { setTimeout(()=>saveEyeResult(i18n.ar.perfect), 300); return; } cRot = [0, 90, 180, 270][Math.floor(Math.random()*4)]; document.getElementById('c-char').style.cssText = `font-size:60px; color:#fff; opacity:${cOpacities[cStep]}; transform:rotate(${cRot}deg);`; }
+        function checkContrast(dir) { if(dir === cRot) { cStep++; updateContrastE(); } else { cErrors++; if(cErrors > 1) saveEyeResult(cStep > 3 ? i18n.ar.normal : i18n.ar.bad); else updateContrastE(); } }
+        let dryInterval; let dryTime = 0.0;
+        function startDryTimer() { dryTime = 0.0; document.getElementById('dry-timer').innerText = "0.0"; document.getElementById('btn-dry-start').style.display = 'none'; document.getElementById('btn-dry-stop').style.display = 'flex'; document.getElementById('dry-timer').classList.add('active'); dryInterval = setInterval(() => { dryTime += 0.1; document.getElementById('dry-timer').innerText = dryTime.toFixed(1); }, 100); }
+        function stopDryTimer() { clearInterval(dryInterval); document.getElementById('dry-timer').classList.remove('active'); if(!currentResults['dryeye']) currentResults['dryeye'] = {}; currentResults['dryeye']['bothEyes'] = dryTime < 10.0 ? i18n.ar.dryYes : i18n.ar.dryNo; setTimeout(() => show('menu'), 800); }
+        function finishAstigmatism(hasDefect) { saveEyeResult(hasDefect ? i18n.ar.bad : i18n.ar.normal); }
+        let colRound = 0, colScore = 0, colInput = ""; const colTests = [12, 5, 29]; 
+        function startColor() { colRound=0; colScore=0; nextColorPlate(); show('test-color'); }
+        function nextColorPlate() { setProgress('prog-color', (colRound/colTests.length)*100); if(colRound >= colTests.length) { if(!currentResults['color']) currentResults['color'] = {}; currentResults['color']['bothEyes'] = `${colScore}/${colTests.length}`; setTimeout(() => show('menu'), 300); return; } colInput = ""; document.getElementById('color-display').innerText = ""; generateIshiharaPlate(colTests[colRound]); }
+        function generateIshiharaPlate(num) { const ctx = document.getElementById('ishiharaCanvas').getContext('2d'); ctx.clearRect(0,0,230,230); ctx.font="bold 130px Arial"; ctx.textAlign="center"; ctx.textBaseline="middle"; ctx.fillText(num, 115, 115); const mData = ctx.getImageData(0,0,230,230); const dots = []; for(let i=0; i<1200; i++) { let r=Math.random()*4+2, x=Math.random()*230, y=Math.random()*230; if(Math.sqrt((x-115)**2 + (y-115)**2) > 110) continue; if(!dots.some(d => Math.sqrt((d.x-x)**2 + (d.y-y)**2) < d.r+r+1)) { let isNum = mData.data[(Math.floor(y)*230 + Math.floor(x))*4 +3] > 100; dots.push({x, y, r, c: isNum ? `rgb(${220+Math.random()*35}, ${50+Math.random()*100}, 40)` : `rgb(${80+Math.random()*50}, ${160+Math.random()*60}, ${140+Math.random()*60})`}); } } for(let d of dots) { ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, Math.PI*2); ctx.fillStyle = d.c; ctx.fill(); } }
+        function typeColor(n) { if(colInput.length < 2) colInput += n; document.getElementById('color-display').innerText = colInput; }
+        function clearColor() { colInput = ""; document.getElementById('color-display').innerText = ""; }
+        function checkColor() { if(parseInt(colInput) === colTests[colRound]) colScore++; colRound++; nextColorPlate(); }
+        function toggleLang() { alert("العربية مفعلة."); }
+    </script>
+</body>
+</html>
