@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delta Vision OS</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+
+/* ═══════════════════════════════════════════
+
+   THEME TOKENS (Light & Dark)
+
+═══════════════════════════════════════════ */
+
+:root {
+  --bg:     #09090b;
+  --bg2:    #0f0f12;
+  --bg3:    #17171c;
+  --bg4:    #1e1e26;
+  --b0:     rgba(255,255,255,0.04);
+  --b1:     rgba(255,255,255,0.08);
+  --b2:     rgba(255,255,255,0.13);
+  --blue:   #4f8ef7;
+  --purple: #7c3aed;
+  --green:  #06d6a0;
+  --amber:  #f59e0b;
+  --red:    #ef4444;
+  --t1: #eef0f8;
+  --t2: #8891a8;
+  --t3: #3f4559;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'IBM Plex Sans Arabic', sans-serif;
+  --r1: 8px; --r2: 12px; --r3: 18px; --r4: 24px;
+  --sw: 252px;
+  --hh: 58px;
+}
+
+/* LIGHT MODE */
+:root.light-mode {
+  --bg:     #f5f5f7;
+  --bg2:    #ffffff;
+  --bg3:    #f0f0f3;
+  --bg4:    #e8e8ec;
+  --b0:     rgba(0,0,0,0.04);
+  --b1:     rgba(0,0,0,0.08);
+  --b2:     rgba(0,0,0,0.13);
+  --t1: #1a1a1a;
+  --t2: #666666;
+  --t3: #999999;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+body{font-family:var(--sans);background:var(--bg);color:var(--t1);min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s;}
+
+::-webkit-scrollbar{width:3px;height:3px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--b2);border-radius:2px;}
+
+.mono{font-family:var(--mono)!important;}
+
+
+
+/* ═══════════════════════════════════════════
+
+   LOGIN SCREEN
+
+═══════════════════════════════════════════ */
+
+#login-screen {
+  position:fixed;inset:0;z-index:9999;
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .3s;
+}
+
+#login-screen.hidden {
+  display:none;
+}
+
+.login-wrap {
+  width:380px;
+  background:var(--bg2);
+  border:1px solid var(--b2);
+  border-radius:var(--r4);
+  padding:40px;
+  position:relative;overflow:hidden;
+}
+
+.login-wrap::before{
+  content:'';position:absolute;
+  top:-100px;left:50%;transform:translateX(-50%);
+  width:280px;height:280px;
+  background:radial-gradient(circle,rgba(79,142,247,.1) 0%,transparent 65%);
+  pointer-events:none;
+}
+
+.l-logo{text-align:center;margin-bottom:28px;}
+
+.l-logo .l-icon{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:52px;height:52px;
+  background:linear-gradient(135deg,var(--blue),var(--purple));
+  border-radius:14px;margin-bottom:14px;
+  font-size:20px;color:#fff;
+}
+
+.l-logo h1{font-size:18px;font-weight:600;margin-bottom:3px;}
+.l-logo p{font-size:11px;color:var(--t3);font-family:var(--mono);letter-spacing:2px;}
+
+.login-tabs {
+  display:flex;gap:0;margin-bottom:20px;border-bottom:1px solid var(--b1);
+}
+
+.login-tab {
+  flex:1;padding:12px;text-align:center;font-size:12px;font-weight:600;
+  color:var(--t3);cursor:pointer;border:none;background:none;
+  border-bottom:2px solid transparent;transition:all .2s;
+}
+
+.login-tab.active {
+  color:var(--blue);border-bottom-color:var(--blue);
+}
+
+.login-tab:hover {
+  color:var(--t2);
+}
+
+.lf{margin-bottom:13px;}
+.lf label{display:block;font-size:11px;font-weight:600;color:var(--t2);margin-bottom:6px;letter-spacing:.5px;text-transform:uppercase;}
+
+.lf input{
+  width:100%;padding:11px 13px;
+  background:var(--bg3);border:1px solid var(--b1);
+  border-radius:var(--r1);color:var(--t1);
+  font-family:var(--mono);font-size:13px;outline:none;
+  transition:border-color .2s,box-shadow .2s;
+}
+
+.lf input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(79,142,247,.1);}
+
+.l-btn{
+  width:100%;padding:12px;margin-top:4px;
+  background:linear-gradient(135deg,var(--blue),var(--purple));
+  color:#fff;border:none;border-radius:var(--r1);
+  font-family:var(--sans);font-size:14px;font-weight:600;
+  cursor:pointer;transition:opacity .2s,transform .1s;
+}
+
+.l-btn:hover{opacity:.9;}
+.l-btn:active{transform:scale(.99);}
+
+.l-btn-sec {
+  width:100%;padding:12px;margin-top:4px;
+  background:var(--bg3);color:var(--t1);border:1px solid var(--b1);
+  border-radius:var(--r1);font-family:var(--sans);font-size:14px;font-weight:600;
+  cursor:pointer;transition:all .2s;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+
+.l-btn-sec:hover{border-color:var(--blue);color:var(--blue);}
+
+.login-divider {
+  text-align:center;margin:16px 0;font-size:12px;color:var(--t3);
+}
+
+.login-divider::before,
+.login-divider::after {
+  content:'';display:inline-block;width:40%;height:1px;background:var(--b1);vertical-align:middle;margin:0 8px;
+}
+
+.login-footer {
+  text-align:center;margin-top:16px;font-size:12px;color:var(--t3);
+}
+
+.login-footer a {
+  color:var(--blue);text-decoration:none;cursor:pointer;transition:color .2s;
+}
+
+.login-footer a:hover {
+  color:var(--purple);
+}
+
+.login-panel {
+  display:none;
+}
+
+.login-panel.active {
+  display:block;
+}
+
+
+
+/* ═══════════════════════════════════════════
+
+   SHELL
+
+═══════════════════════════════════════════ */
+
+#shell{display:none;min-height:100vh;}
+#shell.visible {
+  display:flex;flex-direction:column;min-height:100vh;
+}
+
+
+
+/* SIDEBAR */
+
+.sidebar{
+  width:var(--sw);height:100vh;
+  position:fixed;top:0;right:0;
+  background:var(--bg2);
+  border-left:1px solid var(--b0);
+  display:flex;flex-direction:column;
+  z-index:300;
+  transition:transform .3s cubic-bezier(.16,1,.3,1);
+}
+
+.sidebar.off{transform:translateX(100%);}
+
+.sb-overlay{
+  display:none;position:fixed;inset:0;z-index:299;
+  background:rgba(0,0,0,.6);backdrop-filter:blur(3px);
+}
+
+.sb-overlay.on{display:block;}
+
+.sb-head{
+  padding:18px 16px;
+  border-bottom:1px solid var(--b0);
+  display:flex;align-items:center;gap:10px;
+}
+
+.sb-logo-icon{
+  width:32px;height:32px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--blue),var(--purple));
+  border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-size:14px;color:#fff;
+}
+
+.sb-logo-txt{flex:1;}
+.sb-logo-txt strong{display:block;font-size:13px;font-weight:600;}
+.sb-logo-txt small{font-size:10px;color:var(--t3);font-family:var(--mono);letter-spacing:1.5px;}
+
+.sb-x{background:none;border:none;color:var(--t3);cursor:pointer;font-size:15px;padding:4px;transition:color .2s;}
+.sb-x:hover{color:var(--t1);}
+
+.sb-nav{flex:1;overflow-y:auto;padding:8px;}
+
+.nav-grp-lbl{
+  font-size:10px;font-weight:700;color:var(--t3);
+  letter-spacing:1.5px;text-transform:uppercase;
+  padding:14px 10px 6px;
+}
+
+.nav-grp-lbl.adm{color:rgba(79,142,247,.45);}
+.nav-grp-lbl.dev{color:rgba(239,68,68,.45);}
+
+.ni{
+  display:flex;align-items:center;gap:9px;
+  padding:9px 10px;border-radius:var(--r1);
+  color:var(--t2);font-size:13px;font-weight:500;
+  cursor:pointer;border:none;background:none;
+  width:100%;text-align:right;
+  transition:all .15s;
+}
+
+.ni i{width:14px;text-align:center;flex-shrink:0;font-size:12px;}
+.ni:hover{background:var(--bg3);color:var(--t1);}
+.ni.active{background:rgba(79,142,247,.1);color:var(--blue);}
+.ni.active i{color:var(--blue);}
+
+.sb-foot{padding:12px;border-top:1px solid var(--b0);display:flex;gap:8px;}
+
+.btn-logout{
+  flex:1;padding:9px 12px;
+  background:rgba(239,68,68,.06);color:var(--red);
+  border:1px solid rgba(239,68,68,.12);border-radius:var(--r1);
+  font-family:var(--sans);font-size:13px;font-weight:600;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;
+  transition:background .2s;
+}
+
+.btn-logout:hover{background:rgba(239,68,68,.13);}
+
+.btn-theme {
+  flex:1;padding:9px 12px;
+  background:var(--bg3);color:var(--t2);
+  border:1px solid var(--b1);border-radius:var(--r1);
+  font-family:var(--sans);font-size:13px;font-weight:600;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;
+  transition:all .2s;
+}
+
+.btn-theme:hover{border-color:var(--blue);color:var(--blue);}
+
+
+
+/* HEADER */
+
+.main{display:flex;flex-direction:column;min-height:100vh;}
+
+.hdr{
+  height:var(--hh);
+  background:var(--bg2);border-bottom:1px solid var(--b0);
+  padding:0 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+  gap:12px;
+}
+
+.hdr-l{display:flex;align-items:center;gap:10px;}
+
+.btn-menu{
+  width:32px;height:32px;
+  background:var(--bg3);border:1px solid var(--b1);
+  border-radius:var(--r1);color:var(--t2);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:13px;flex-shrink:0;transition:all .2s;
+}
+
+.btn-menu:hover{border-color:var(--blue);color:var(--blue);}
+
+.srch{position:relative;}
+.srch i{position:absolute;right:10px;top:50%;transform:translateY(-50%);color:var(--t3);font-size:11px;}
+
+.srch input{
+  background:var(--bg3);border:1px solid var(--b1);
+  border-radius:var(--r1);padding:7px 28px 7px 12px;
+  color:var(--t1);font-family:var(--sans);font-size:13px;
+  width:200px;outline:none;transition:all .2s;
+}
+
+.srch input::placeholder{color:var(--t3);}
+.srch input:focus{border-color:var(--blue);width:240px;}
+
+.u-pill{
+  display:flex;align-items:center;gap:8px;
+  padding:5px 11px 5px 6px;
+  background:var(--bg3);border:1px solid var(--b1);border-radius:50px;
+}
+
+.u-av{
+  width:24px;height:24px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),var(--purple));
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;color:#fff;font-weight:700;
+}
+
+.u-name{font-size:12px;font-weight:600;}
+.u-role{font-size:10px;color:var(--blue);}
+
+
+
+/* ═══════════════════════════════════════════
+
+   PAGE SYSTEM — FIXED LAYOUT
+
+═══════════════════════════════════════════ */
+
+.pages-root{
+  flex:1;
+  position:relative;
+  width:100%;
+  min-height:calc(100vh - var(--hh));
+  overflow-y:auto;
+}
+
+.page{
+  display:none !important;
+  position:static !important;
+  padding:24px;
+  min-height:calc(100vh - var(--hh));
+  animation:pgIn .25s ease;
+  width:100%;
+}
+
+.page.page-active{
+  display:block !important;
+  position:static !important;
+}
+
+@keyframes pgIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+
+
+
+/* PAGE HEADER */
+
+.pg-hd{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  margin-bottom:22px;gap:12px;flex-wrap:wrap;
+}
+
+.pg-hd-l h2{font-size:19px;font-weight:600;letter-spacing:-.3px;margin-bottom:2px;}
+.pg-hd-l p{font-size:12px;color:var(--t2);}
+
+.date-chip{
+  padding:6px 13px;border-radius:var(--r1);
+  background:var(--bg3);border:1px solid var(--b1);
+  font-size:11px;color:var(--t2);font-family:var(--mono);
+  white-space:nowrap;flex-shrink:0;
+}
+
+
+
+/* ═══════════════════════════════════════════
+
+   CARDS
+
+═══════════════════════════════════════════ */
+
+.card{
+  background:var(--bg2);border:1px solid var(--b0);
+  border-radius:var(--r3);overflow:hidden;
+  transition:border-color .2s;
+}
+
+.card:hover{border-color:var(--b1);}
+
+.card-h{
+  padding:14px 18px;border-bottom:1px solid var(--b0);
+  display:flex;align-items:center;gap:8px;
+}
+
+.card-h h3{font-size:13px;font-weight:600;}
+
+.c-icon{
+  width:24px;height:24px;border-radius:7px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;flex-shrink:0;
+}
+
+.ci-b{background:rgba(79,142,247,.1);color:var(--blue);}
+.ci-p{background:rgba(124,58,237,.1);color:var(--purple);}
+.ci-g{background:rgba(6,214,160,.1);color:var(--green);}
+.ci-a{background:rgba(245,158,11,.1);color:var(--amber);}
+.ci-r{background:rgba(239,68,68,.1);color:var(--red);}
+
+.card-b{padding:18px;}
+
+
+
+/* ═══════════════════════════════════════════
+
+   KPI CARDS
+
+═══════════════════════════════════════════ */
+
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:13px;margin-bottom:20px;}
+
+.kpi{
+  background:var(--bg2);border:1px solid var(--b0);
+  border-radius:var(--r3);padding:18px;
+  position:relative;overflow:hidden;
+  transition:border-color .2s,transform .2s;
+}
+
+.kpi:hover{border-color:var(--b1);transform:translateY(-2px);}
+
+.kpi-line{position:absolute;top:0;left:0;right:0;height:2px;}
+
+.k-bl .kpi-line{background:linear-gradient(90deg,transparent,var(--blue),transparent);}
+.k-pu .kpi-line{background:linear-gradient(90deg,transparent,var(--purple),transparent);}
+.k-gr .kpi-line{background:linear-gradient(90deg,transparent,var(--green),transparent);}
+.k-am .kpi-line{background:linear-gradient(90deg,transparent,var(--amber),transparent);}
+.k-re .kpi-line{background:linear-gradient(90deg,transparent,var(--red),transparent);}
+
+.kpi-lbl{font-size:11px;color:var(--t2);font-weight:500;margin-bottom:8px;}
+.kpi-num{font-size:24px;font-weight:600;font-family:var(--mono);letter-spacing:-.5px;}
+
+.k-bl .kpi-num{color:var(--blue);}
+.k-pu .kpi-num{color:var(--purple);}
+.k-gr .kpi-num{color:var(--green);}
+.k-am .kpi-num{color:var(--amber);}
+.k-re .kpi-num{color:var(--red);}
+
+.kpi-unit{font-size:11px;color:var(--t3);margin-top:4px;}
+
+
+
+/* ═══════════════════════════════════════════
+
+   GRID HELPERS
+
+═══════════════════════════════════════════ */
+
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.g21{display:grid;grid-template-columns:2fr 1fr;gap:16px;}
+.g12{display:grid;grid-template-columns:1fr 2fr;gap:16px;}
+
+.mb{margin-bottom:16px;}
+.mb2{margin-bottom:22px;}
+.gap{display:flex;flex-direction:column;gap:14px;}
+
+
+
+/* ═══════════════════════════════════════════
+
+   FORM CONTROLS
+
+═══════════════════════════════════════════ */
+
+.fg{margin-bottom:13px;}
+.fg:last-child{margin-bottom:0;}
+
+.fl{
+  display:block;font-size:11px;font-weight:600;
+  color:var(--t2);margin-bottom:6px;
+  letter-spacing:.4px;text-transform:uppercase;
+}
+
+.fc{
+  width:100%;padding:10px 12px;
+  background:var(--bg3);border:1px solid var(--b1);
+  border-radius:var(--r1);color:var(--t1);
+  font-family:var(--sans);font-size:13px;outline:none;
+  transition:border-color .2s,box-shadow .2s;
+}
+
+.fc:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(79,142,247,.08);}
+.fc::placeholder{color:var(--t3);}
+
+select.fc{cursor:pointer;}
+input[type=file].fc{padding:7px 12px;cursor:pointer;}
+
+.fc.mono{font-family:var(--mono);}
+.fc.hi{border-color:var(--blue);}
+
+.row-2{display:grid;grid-template-columns:1fr auto;gap:9px;}
+
+.pass-field {
+  position:relative;
+}
+
+.pass-field input {
+  padding-left:38px !important;
+}
+
+.pass-toggle {
+  position:absolute;left:10px;top:50%;transform:translateY(-50%);
+  background:none;border:none;color:var(--t3);cursor:pointer;
+  font-size:13px;transition:color .2s;
+  z-index:10;
+}
+
+.pass-toggle:hover {
+  color:var(--t2);
+}
+
+
+
+/* CHECKBOX PERMISSIONS */
+
+.perm-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;}
+
+.perm-item{
+  display:flex;align-items:center;gap:8px;
+  padding:9px 11px;
+  background:var(--bg3);border:1px solid var(--b1);
+  border-radius:var(--r1);cursor:pointer;
+  transition:border-color .15s,background .15s;
+}
+
+.perm-item:hover{border-color:var(--b2);}
+
+.perm-item input[type=checkbox]{
+  width:15px;height:15px;accent-color:var(--blue);cursor:pointer;flex-shrink:0;
+}
+
+.perm-item label{font-size:12px;color:var(--t2);cursor:pointer;user-select:none;}
+
+.perm-item.checked{border-color:rgba(79,142,247,.3);background:rgba(79,142,247,.05);}
+.perm-item.checked label{color:var(--blue);}
+
+
+
+/* ═══════════════════════════════════════════
+
+   BUTTONS
+
+═══════════════════════════════════════════ */
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  padding:9px 15px;border-radius:var(--r1);
+  font-family:var(--sans);font-size:13px;font-weight:600;
+  cursor:pointer;border:none;transition:all .15s;
+}
+
+.btn-pr{background:var(--blue);color:#fff;}
+.btn-pr:hover{background:#3b7de8;}
+
+.btn-sc{background:var(--bg3);color:var(--t1);border:1px solid var(--b1);}
+.btn-sc:hover{border-color:var(--blue);color:var(--blue);}
+
+.btn-dn{background:rgba(239,68,68,.09);color:var(--red);border:1px solid rgba(239,68,68,.15);}
+.btn-dn:hover{background:rgba(239,68,68,.17);}
+
+.btn-gn{background:rgba(6,214,160,.09);color:var(--green);border:1px solid rgba(6,214,160,.15);}
+.btn-gn:hover{background:rgba(6,214,160,.17);}
+
+.btn-am{background:rgba(245,158,11,.09);color:var(--amber);border:1px solid rgba(245,158,11,.15);}
+.btn-am:hover{background:rgba(245,158,11,.17);}
+
+.btn-gr{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;}
+.btn-gr:hover{opacity:.9;}
+
+.btn-full{width:100%;}
+.btn-lg{padding:12px 20px;font-size:14px;border-radius:var(--r2);}
+.btn-sm{padding:5px 10px;font-size:11px;border-radius:6px;}
+
+
+
+/* ═══════════════════════════════════════════
+
+   TABLES
+
+═══════════════════════════════════════════ */
+
+.tw{overflow-x:auto;}
+
+.tbl{
+  width:100%;border-collapse:collapse;
+  font-size:13px;text-align:right;
+}
+
+.tbl thead th{
+  padding:11px 14px;
+  color:var(--t3);font-weight:700;font-size:10px;
+  letter-spacing:.8px;text-transform:uppercase;
+  border-bottom:1px solid var(--b0);
+  background:var(--bg3);white-space:nowrap;
+}
+
+.tbl tbody td{
+  padding:12px 14px;
+  border-bottom:1px solid var(--b0);
+  color:var(--t1);vertical-align:middle;
+}
+
+.tbl tbody tr:last-child td{border-bottom:none;}
+.tbl tbody tr:hover td{background:var(--bg3);}
+
+.fw{font-weight:600;}
+.dim{color:var(--t2);}
+
+
+
+/* ═══════════════════════════════════════════
+
+   BADGES
+
+═══════════════════════════════════════════ */
+
+.bdg{display:inline-block;padding:3px 9px;border-radius:50px;font-size:11px;font-weight:600;}
+
+.bdg-b{background:rgba(79,142,247,.1);color:var(--blue);}
+.bdg-p{background:rgba(124,58,237,.1);color:var(--purple);}
+.bdg-g{background:rgba(6,214,160,.1);color:var(--green);}
+.bdg-a{background:rgba(245,158,11,.1);color:var(--amber);}
+.bdg-r{background:rgba(239,68,68,.1);color:var(--red);}
+.bdg-x{background:var(--b0);color:var(--t2);}
+
+
+
+/* ═══════════════════════════════════════════
+
+   FINANCE BOX
+
+═══════════════════════════════════════════ */
+
+.fin{
+  background:var(--bg3);border:1px solid var(--b1);
+  border-radius:var(--r3);padding:18px;
+}
+
+.fin-ttl{
+  font-size:10px;font-weight:700;color:var(--t3);
+  letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:16px;display:flex;align-items:center;gap:6px;
+}
+
+.fin-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:9px 0;border-bottom:1px solid var(--b0);
+}
+
+.fin-row:last-of-type{border-bottom:none;}
+
+.fin-row label{font-size:12px;color:var(--t2);}
+
+.fin-row .fv{font-family:var(--mono);font-size:13px;font-weight:600;}
+
+.fin-total{
+  margin-top:10px;padding:13px;
+  background:var(--bg2);border-radius:var(--r2);
+  border:1px solid var(--b1);
+  display:flex;justify-content:space-between;align-items:baseline;
+}
+
+.fin-total label{font-size:12px;font-weight:600;color:var(--green);}
+
+.fin-total .fv{font-family:var(--mono);font-size:24px;font-weight:700;color:var(--green);}
+
+.fin-due{
+  margin-top:9px;padding:12px 14px;
+  background:rgba(239,68,68,.05);
+  border:1px solid rgba(239,68,68,.1);border-radius:var(--r2);
+  display:flex;justify-content:space-between;align-items:center;
+}
+
+.fin-due label{font-size:12px;color:#fca5a5;}
+
+.fin-due-val{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--red);}
+
+
+
+/* RX TABLE */
+
+.rx-tbl{width:100%;border-collapse:collapse;font-size:13px;}
+
+.rx-tbl th{
+  padding:9px 8px;color:var(--t3);font-weight:700;
+  font-size:10px;letter-spacing:.7px;text-align:center;
+  border-bottom:1px solid var(--b0);
+}
+
+.rx-tbl td{padding:8px 4px;border-bottom:1px solid var(--b0);}
+
+.rx-eye{font-weight:700;font-size:12px;padding:0 10px;white-space:nowrap;}
+
+.rx-eye.od{color:var(--blue);}
+.rx-eye.os{color:var(--green);}
+
+.rx-tbl input{
+  background:var(--bg);border:1px solid var(--b1);
+  border-radius:6px;padding:7px 8px;
+  color:var(--t1);font-family:var(--mono);font-size:13px;
+  outline:none;text-align:center;width:100%;
+  transition:border-color .2s;
+}
+
+.rx-tbl input:focus{border-color:var(--blue);}
+
+
+
+/* PURCHASE ROW */
+
+.pr{display:flex;gap:8px;margin-bottom:8px;}
+.pr input:first-child{flex:1;}
+.pr input:last-child{width:110px;text-align:right;}
+
+
+
+/* LEDGER */
+
+.ledger-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 0;border-bottom:1px solid var(--b0);
+}
+
+.ledger-item:last-child{border-bottom:none;}
+
+.ledger-lft{display:flex;align-items:center;gap:9px;}
+
+.ldot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+
+.ltime{font-family:var(--mono);font-size:10px;color:var(--t3);width:44px;}
+
+.ldesc{font-size:12px;color:var(--t2);}
+
+.lval{font-family:var(--mono);font-size:12px;font-weight:600;}
+
+.lval.inc{color:var(--green);}
+.lval.dec{color:var(--red);}
+
+
+
+/* MODALS */
+
+.modal-bg{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(0,0,0,.72);backdrop-filter:blur(4px);
+  display:none;align-items:center;justify-content:center;
+}
+
+.modal-bg.open{display:flex;}
+
+.modal{
+  background:var(--bg2);border:1px solid var(--b1);
+  border-radius:var(--r4);padding:28px;
+  width:90%;max-width:560px;
+  animation:mIn .22s cubic-bezier(.16,1,.3,1);
+  max-height:92vh;overflow-y:auto;
+}
+
+.modal-wide{max-width:780px;}
+
+@keyframes mIn{from{transform:scale(.95) translateY(6px);opacity:0;}to{transform:none;opacity:1;}}
+
+.modal-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+
+.modal-h h3{font-size:15px;font-weight:600;}
+
+.modal-cl{
+  background:var(--bg3);border:1px solid var(--b1);color:var(--t2);
+  width:28px;height:28px;border-radius:var(--r1);
+  cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;
+}
+
+.modal-cl:hover{color:var(--t1);}
+
+
+
+/* SECTION DIVIDER */
+
+.s-div{
+  font-size:10px;font-weight:700;color:var(--t3);
+  letter-spacing:1.5px;text-transform:uppercase;
+  border-bottom:1px solid var(--b0);padding-bottom:8px;
+  margin-bottom:14px;
+}
+
+
+
+/* PRINT */
+
+#print-area{display:none;}
+
+@media print{
+  body>*:not(#print-area){display:none!important;}
+  #print-area{display:block!important;}
+  .print-card{font-family:Arial,sans-serif;font-size:12px;padding:18px;max-width:90mm;margin:0 auto;}
+  .ptbl{width:100%;border-collapse:collapse;margin:7px 0;}
+  .ptbl th,.ptbl td{border:1px solid #ddd;padding:5px;text-align:center;}
+  .en{font-family:'Courier New',monospace;}
+}
+
+
+
+/* RESPONSIVE */
+
+@media(max-width:720px){
+  .g2,.g3,.g21,.g12{grid-template-columns:1fr;}
+  .kpi-row{grid-template-columns:1fr 1fr;}
+  .page{padding:14px;}
+  .srch input{width:130px;}
+  .login-wrap{width:90vw;}
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+
+<!-- ═══ LOGIN SCREEN ═══ -->
+
+<div id="login-screen">
+
+  <div class="login-wrap">
+
+    <div class="l-logo">
+      <div class="l-icon"><i class="fas fa-eye"></i></div>
+      <h1>Delta Vision OS</h1>
+      <p>ENTERPRISE PLATFORM</p>
+    </div>
+
+    <!-- LOGIN TABS -->
+    <div class="login-tabs">
+      <button class="login-tab active" onclick="switchLoginTab('login')"><i class="fas fa-sign-in-alt"></i> دخول</button>
+      <button class="login-tab" onclick="switchLoginTab('forgot')"><i class="fas fa-key"></i> نسيت المرور</button>
+    </div>
+
+    <!-- LOGIN PANEL -->
+    <div id="login-panel" class="login-panel active">
+      <div class="lf"><label>البريد الإلكتروني</label><input type="text" id="auth-u" placeholder="user@delta.com" dir="ltr"></div>
+
+      <div class="lf">
+        <label>كلمة المرور</label>
+        <div class="pass-field">
+          <input type="password" id="auth-p" placeholder="••••••••" dir="ltr" onkeydown="if(event.key==='Enter')handleLogin()">
+          <button class="pass-toggle" type="button" onclick="toggleAuthPassVis()">
+            <i class="fas fa-eye" id="pass-eye-login"></i>
+          </button>
+        </div>
+      </div>
+
+      <button class="l-btn" onclick="handleLogin()"><i class="fas fa-arrow-right-to-bracket"></i> دخول النظام</button>
+
+      <div class="login-divider">أو</div>
+
+      <button class="l-btn-sec" onclick="handleGoogleLogin()">
+        <i class="fab fa-google"></i> دخول عبر Google
+      </button>
+    </div>
+
+    <!-- FORGOT PASSWORD PANEL -->
+    <div id="forgot-panel" class="login-panel">
+      <p style="font-size:12px;color:var(--t2);margin-bottom:14px;">أدخل بريدك الإلكتروني وسنرسل لك رابط استرجاع كلمة المرور</p>
+
+      <div class="lf">
+        <label>البريد الإلكتروني</label>
+        <input type="text" id="forgot-email" placeholder="user@delta.com" dir="ltr">
+      </div>
+
+      <button class="l-btn" onclick="handleForgotPassword()"><i class="fas fa-paper-plane"></i> إرسال رابط الاسترجاع</button>
+
+      <div class="login-footer">
+        أتذكر كلمة المرور؟ <a onclick="switchLoginTab('login')">عد للدخول</a>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- ═══ MODALS ═══ -->
+
+<div id="mod-history" class="modal-bg">
+  <div class="modal modal-wide">
+    <div class="modal-h">
+      <h3><i class="fas fa-folder-open" style="color:var(--blue);margin-left:8px;"></i>سجل: <span id="hist-name" style="color:var(--blue);"></span></h3>
+      <div style="display:flex;gap:7px;">
+        <button class="btn btn-sc btn-sm" onclick="printPatientHistory()"><i class="fas fa-print"></i> طباعة</button>
+        <button class="modal-cl" onclick="closeModal('mod-history')"><i class="fas fa-times"></i></button>
+      </div>
+    </div>
+    <div class="tw"><table class="tbl"><thead><tr><th>التاريخ</th><th>رقم الملف</th><th>التفاصيل</th><th>القيمة</th><th>خيارات</th></tr></thead><tbody id="tb-hist"></tbody></table></div>
+  </div>
+</div>
+
+<div id="mod-online" class="modal-bg">
+  <div class="modal">
+    <div class="modal-h">
+      <h3><i class="fas fa-microscope" style="color:var(--blue);margin-left:8px;"></i>تقرير الفحص الذكي</h3>
+      <button class="modal-cl" onclick="closeModal('mod-online')"><i class="fas fa-times"></i></button>
+    </div>
+    <div style="background:var(--bg3);border:1px solid var(--b1);border-radius:var(--r2);padding:13px 15px;margin-bottom:13px;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:7px;"><span style="font-size:11px;color:var(--t2);">الاسم</span><span id="rpt-name" style="font-weight:600;font-size:13px;"></span></div>
+      <div style="display:flex;justify-content:space-between;"><span style="font-size:11px;color:var(--t2);">الهاتف</span><span id="rpt-phone" class="mono" style="color:var(--blue);font-weight:600;font-size:14px;"></span></div>
+    </div>
+    <div id="rpt-details" style="background:var(--bg3);border:1px solid var(--b1);border-radius:var(--r2);padding:16px;font-size:13px;line-height:1.8;white-space:pre-wrap;color:var(--t1);max-height:200px;overflow-y:auto;"></div>
+    <div style="margin-top:13px;display:flex;gap:9px;">
+      <button id="btn-done-rpt" class="btn btn-gn btn-full"><i class="fas fa-check-double"></i> تعليم كمُنجز</button>
+      <a id="btn-wa-rpt" href="#" target="_blank" class="btn btn-full" style="background:#10b981;color:#fff;text-decoration:none;"><i class="fab fa-whatsapp"></i> واتساب</a>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- ═══ SIDEBAR ═══ -->
+
+<div class="sb-overlay" id="sb-overlay" onclick="toggleSidebar()"></div>
+
+<aside class="sidebar off" id="sidebar">
+
+  <div class="sb-head">
+    <div class="sb-logo-icon"><i class="fas fa-eye"></i></div>
+    <div class="sb-logo-txt"><strong>Delta Vision</strong><small>ENTERPRISE OS</small></div>
+    <button class="sb-x" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
+  </div>
+
+  <nav class="sb-nav">
+
+    <div class="nav-grp-lbl">العمليات اليومية</div>
+    <button class="ni active" data-page="dash" onclick="goPage('dash')"><i class="fas fa-chart-pie"></i> لوحة التحكم</button>
+    <button class="ni" data-page="rx" onclick="goPage('rx')"><i class="fas fa-notes-medical"></i> العيادة والملفات</button>
+    <button class="ni" data-page="pos" onclick="goPage('pos')"><i class="fas fa-cash-register"></i> الكاشير السريع</button>
+    <button class="ni" data-page="online" onclick="goPage('online')"><i class="fas fa-globe"></i> فحوصات الأونلاين</button>
+
+    <div class="nav-grp-lbl">اللوجستيات</div>
+    <button class="ni" data-page="inv" onclick="goPage('inv')"><i class="fas fa-boxes"></i> المخزون</button>
+    <button class="ni" data-page="lab" onclick="goPage('lab')"><i class="fas fa-flask"></i> المختبر</button>
+
+    <div class="admin-only" style="display:none;">
+      <div class="nav-grp-lbl adm">الإدارة</div>
+      <button class="ni" data-page="gallery" onclick="goPage('gallery')"><i class="fas fa-images"></i> المعرض</button>
+      <button class="ni" data-page="cms" onclick="goPage('cms')"><i class="fas fa-cog"></i> إعدادات النظام</button>
+    </div>
+
+    <div class="developer-only" style="display:none;">
+      <div class="nav-grp-lbl dev">المطور</div>
+      <button class="ni" data-page="accounts" onclick="goPage('accounts')"><i class="fas fa-user-shield"></i> إدارة الحسابات</button>
+      <button class="ni" data-page="audit" onclick="goPage('audit')"><i class="fas fa-user-secret"></i> سجل التدقيق</button>
+      <button class="ni" data-page="recycle" onclick="goPage('recycle')"><i class="fas fa-trash-restore"></i> سلة المحذوفات</button>
+    </div>
+
+  </nav>
+
+  <div class="sb-foot">
+    <button class="btn-theme" onclick="toggleTheme()" title="تبديل الوضع"><i class="fas fa-moon" id="theme-icon"></i></button>
+    <button class="btn-logout" onclick="handleLogout()"><i class="fas fa-power-off"></i> خروج</button>
+  </div>
+
+</aside>
+
+
+
+<!-- ═══ SHELL ═══ -->
+
+<div id="shell">
+
+  <div class="main">
+
+    <!-- HEADER -->
+
+    <header class="hdr">
+
+      <div class="hdr-l">
+
+        <button class="btn-menu" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+
+        <div class="srch"><i class="fas fa-search"></i><input type="text" id="g-search" placeholder="بحث سريع..." onkeyup="globalSearch()"></div>
+
+      </div>
+
+      <div class="u-pill">
+
+        <div class="u-av" id="u-av">?</div>
+
+        <div><div class="u-name" id="u-name-display">—</div><div class="u-role" id="u-role-display">—</div></div>
+
+      </div>
+
+    </header>
+
+
+
+    <!-- PAGES ROOT — fully isolated -->
+
+    <div class="pages-root">
+
+      <!-- ══ DASHBOARD ══ -->
+      <div id="page-dash" class="page page-active">
+
+        <div class="pg-hd">
+
+          <div class="pg-hd-l"><h2>لوحة التحكم</h2><p>ملخص الأداء المالي اليومي</p></div>
+
+          <div class="date-chip" id="date-chip">—</div>
+
+        </div>
+
+        <div class="kpi-row">
+
+          <div class="kpi k-bl"><div class="kpi-line"></div><div class="kpi-lbl">المبيعات الإجمالية</div><div class="kpi-num" id="kpi-sales">0.00</div><div class="kpi-unit">JOD — اليوم</div></div>
+
+          <div class="kpi k-pu admin-only"><div class="kpi-line"></div><div class="kpi-lbl">المقبوضات</div><div class="kpi-num" id="kpi-paid">0.00</div><div class="kpi-unit">JOD — نقدي + تحويل</div></div>
+
+          <div class="kpi k-re admin-only"><div class="kpi-line"></div><div class="kpi-lbl">المصروفات</div><div class="kpi-num" id="kpi-exp">0.00</div><div class="kpi-unit">JOD — اليوم</div></div>
+
+          <div class="kpi k-gr admin-only"><div class="kpi-line"></div><div class="kpi-lbl">الصافي في الصندوق</div><div class="kpi-num" id="kpi-net">0.00</div><div class="kpi-unit">مقبوضات − مصاريف</div></div>
+
+          <div class="kpi k-am admin-only"><div class="kpi-line"></div><div class="kpi-lbl">الذمم</div><div class="kpi-num" id="kpi-due">0.00</div><div class="kpi-unit">JOD — متبقٍ</div></div>
+
+        </div>
+
+        <div class="g21 mb2 admin-only">
+
+          <div class="card">
+
+            <div class="card-h"><div class="c-icon ci-b"><i class="fas fa-list"></i></div><h3>حركة الصندوق اليومية</h3></div>
+
+            <div class="card-b" id="ledger-wrap" style="max-height:280px;overflow-y:auto;padding-top:4px;"></div>
+
+          </div>
+
+          <div class="card">
+
+            <div class="card-h"><div class="c-icon ci-r"><i class="fas fa-wallet"></i></div><h3>تسجيل مصروف</h3></div>
+
+            <div class="card-b">
+
+              <div class="fg"><label class="fl">المبلغ (JOD)</label><input type="number" id="exp-amount" class="fc mono" placeholder="0.00"></div>
+
+              <div class="fg"><label class="fl">البيان</label><input type="text" id="exp-desc" class="fc" placeholder="كهرباء، ضيافة، صيانة..."></div>
+
+              <button class="btn btn-dn btn-full btn-lg" style="margin-top:4px;" onclick="saveExpense()"><i class="fas fa-minus-circle"></i> تسجيل المصروف</button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ══ CLINIC / RX ══ -->
+      <div id="page-rx" class="page">
+
+        <datalist id="patients-dl"></datalist>
+
+        <div class="pg-hd"><div class="pg-hd-l"><h2>العيادة والملفات</h2><p>تسجيل المراجعين وإصدار الوصفات الطبية</p></div></div>
+
+        <div class="card mb">
+
+          <div class="card-h"><div class="c-icon ci-b"><i class="fas fa-user-plus"></i></div><h3>بيانات المراجع</h3></div>
+
+          <div class="card-b">
+
+            <div class="g2">
+
+              <div class="fg"><label class="fl">اسم المراجع</label><input type="text" id="u-name" list="patients-dl" class="fc" placeholder="الاسم الكامل..."></div>
+
+              <div class="fg"><label class="fl">رقم الهاتف</label><input type="text" id="u-phone" class="fc mono" placeholder="07XXXXXXXX" dir="ltr"></div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="card mb2">
+
+          <div class="card-h"><div class="c-icon ci-p"><i class="fas fa-eye"></i></div><h3>القياسات البصرية — Optical Rx</h3></div>
+
+          <div class="card-b">
+
+            <div class="tw">
+
+              <table class="rx-tbl">
+
+                <thead><tr><th style="text-align:right;padding-right:10px;">Eye</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>ADD</th></tr></thead>
+
+                <tbody>
+
+                  <tr><td class="rx-eye od">R — OD</td><td><input id="od-s" placeholder="0.00"></td><td><input id="od-c" placeholder="0.00"></td><td><input id="od-a" placeholder="0"></td><td><input id="od-add" placeholder="0.00"></td></tr>
+
+                  <tr><td class="rx-eye os">L — OS</td><td><input id="os-s" placeholder="0.00"></td><td><input id="os-c" placeholder="0.00"></td><td><input id="os-a" placeholder="0"></td><td><input id="os-add" placeholder="0.00"></td></tr>
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+            <div class="g2" style="margin-top:14px;">
+
+              <div class="fg" style="margin:0;"><label class="fl">PD — المسافة الحدقية</label><input id="u-pd" class="fc mono" placeholder="60"></div>
+
+              <div class="fg" style="margin:0;"><label class="fl">ملاحظات</label><input id="u-notes" class="fc" placeholder="ملاحظات للوصفة..."></div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="g2 mb2">
+
+          <div class="card">
+
+            <div class="card-h"><div class="c-icon ci-g"><i class="fas fa-shopping-bag"></i></div><h3>المشتريات</h3></div>
+
+            <div class="card-b">
+
+              <div class="pr"><input id="u-fr-t" class="fc" placeholder="الإطار (الماركة)"><input id="u-fr-p" type="number" class="fc mono" placeholder="السعر" oninput="calcRx()"></div>
+
+              <div class="pr"><input id="u-ln-t" class="fc" placeholder="العدسات (النوع)"><input id="u-ln-p" type="number" class="fc mono" placeholder="السعر" oninput="calcRx()"></div>
+
+              <div class="pr"><input id="u-cl-t" class="fc" placeholder="العدسات اللاصقة"><input id="u-cl-p" type="number" class="fc mono" placeholder="السعر" oninput="calcRx()"></div>
+
+              <div class="pr"><input id="u-ex-t" class="fc" placeholder="أخرى (قطرات...)"><input id="u-ex-p" type="number" class="fc mono" placeholder="السعر" oninput="calcRx()"></div>
+
+            </div>
+
+          </div>
+
+          <div>
+
+            <div class="fin">
+
+              <div class="fin-ttl"><i class="fas fa-calculator"></i> الخلاصة المالية</div>
+
+              <div class="fin-row"><label>المجموع</label><span class="fv mono" id="rx-sub">0.00 JOD</span></div>
+
+              <div class="fin-row"><label>الخصم</label>
+
+                <select id="rx-disc" class="fc mono" style="width:95px;padding:6px 9px;font-size:12px;" onchange="calcRx()">
+
+                  <option value="0">0%</option><option value="10">10%</option><option value="20">20%</option>
+
+                  <option value="30">30%</option><option value="40">40%</option><option value="50">50%</option><option value="100">100%</option>
+
+                </select>
+
+              </div>
+
+              <div class="fin-row"><label>طريقة الدفع</label>
+
+                <select id="rx-pay" class="fc" style="width:115px;padding:6px 9px;font-size:12px;">
+
+                  <option value="كاش">كاش</option><option value="فيزا">فيزا</option><option value="كليك">كليك</option><option value="تأمين">تأمين</option>
+
+                </select>
+
+              </div>
+
+              <div class="fin-row"><label>المدفوع نقداً</label>
+
+                <input id="rx-paid" type="number" class="fc mono hi" placeholder="0.00" oninput="calcRx()" style="width:120px;padding:8px 10px;font-size:13px;">
+
+              </div>
+
+              <div class="fin-total"><label>الإجمالي</label><span class="fv" id="rx-total">0.00</span></div>
+
+              <div class="fin-due"><label>الباقي (الذمة)</label><span class="fin-due-val" id="rx-due-disp">0.00 JOD</span></div>
+
+              <input type="hidden" id="rx-due-val" value="0">
+
+              <button class="btn btn-gr btn-full btn-lg" style="margin-top:13px;" onclick="saveRx()"><i class="fas fa-print"></i> حفظ وطباعة الوصفة</button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="card">
+
+          <div class="card-h"><div class="c-icon ci-b"><i class="fas fa-users"></i></div><h3>أرشيف المراجعين</h3></div>
+
+          <div class="tw"><table class="tbl"><thead><tr><th>المراجع</th><th>آخر زيارة</th><th>إجمالي الإنفاق</th><th>السجل</th></tr></thead><tbody id="tb-rx"></tbody></table></div>
+
+        </div>
+
+      </div>
+
+      <!-- ══ POS ══ -->
+      <div id="page-pos" class="page">
+
+        <div class="pg-hd"><div class="pg-hd-l"><h2>الكاشير السريع</h2><p>مبيعات سريعة من المخزون</p></div></div>
+
+        <div class="g2 mb2">
+
+          <div class="card">
+
+            <div class="card-h"><div class="c-icon ci-g"><i class="fas fa-shopping-cart"></i></div><h3>بيانات البيع</h3></div>
+
+            <div class="card-b">
+
+              <div class="fg"><label class="fl">الزبون</label><input type="text" id="pos-cust" list="patients-dl" class="fc" placeholder="اسم الزبون..."></div>
+
+              <div class="fg"><label class="fl">المنتج من المخزون</label><select id="pos-prod" class="fc" onchange="posUpdatePrice()"><option value="">— اختر المنتج —</option></select></div>
+
+            </div>
+
+          </div>
+
+          <div>
+
+            <div class="fin">
+
+              <div class="fin-ttl"><i class="fas fa-receipt"></i> ملخص الفاتورة</div>
+
+              <div class="fin-row"><label>السعر</label><span class="fv mono" id="pos-price-disp">0.00 JOD</span></div>
+
+              <div class="fin-row"><label>الخصم</label>
+
+                <select id="pos-disc" class="fc mono" style="width:95px;padding:6px 9px;font-size:12px;" onchange="posCalc()">
+
+                  <option value="0">0%</option><option value="10">10%</option><option value="20">20%</option><option value="50">50%</option><option value="100">100%</option>
+
+                </select>
+
+              </div>
+
+              <div class="fin-row"><label>طريقة الدفع</label>
+
+                <select id="pos-pay" class="fc" style="width:115px;padding:6px 9px;font-size:12px;">
+
+                  <option value="كاش">كاش</option><option value="فيزا">فيزا</option><option value="كليك">كليك</option>
+
+                </select>
+
+              </div>
+
+              <div class="fin-row"><label>المدفوع</label>
+
+                <input id="pos-paid" type="number" class="fc mono hi" placeholder="0.00" oninput="posCalc()" style="width:120px;padding:8px 10px;font-size:13px;">
+
+              </div>
+
+              <div class="fin-total"><label>الإجمالي</label><span class="fv" id="pos-total-disp">0.00</span></div>
+
+              <div class="fin-due"><label>الباقي</label><span class="fin-due-val" id="pos-due-disp">0.00 JOD</span></div>
+
+              <input type="hidden" id="pos-due-val" value="0">
+
+              <input type="hidden" id="pos-price-val" value="0">
+
+              <button class="btn btn-gr btn-full btn-lg" style="margin-top:13px;" onclick="savePos()"><i class="fas fa-receipt"></i> إصدار وطباعة الفاتورة</button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="card">
+
+          <div class="card-h"><div class="c-icon ci-a"><i class="fas fa-list-alt"></i></div><h3>سجل الكاشير</h3></div>
+
+          <div class="tw"><table class="tbl"><thead><tr><th>الفاتورة</th><th>الزبون</th><th>المنتج</th><th>الإجمالي</th><th>الباقي</th><th>خيارات</th></tr></thead><tbody id="tb-pos"></tbody></table></div>
+
+        </div>
+
+      </div>
+
+      <!-- ══ ONLINE RX ══ -->
+      <div id="page-online" class="page">
+
+        <div class="pg-hd"><div class="pg-hd-l"><h2>فحوصات الأونلاين</h2><p>الطلبات الواردة من الموقع الإلكتروني</p></div></div>
+
+        <div class="card"><div class="card-h"><div class="c-icon ci-b"><i class="fas fa-globe"></i></div><h3>الفحوصات الذكية</h3></div><div class="tw"><table class="tbl"><thead><tr><th>الاسم</th><th>الهاتف</th><th>التاريخ</th><th>الحالة</th><th>إجراء</th></tr></thead><tbody id="tb-online"></tbody></table></div></div>
+
+      </div>
+
+      <!-- ══ INVENTORY ══ -->
+      <div id="page-inv" class="page">
+
+        <div class="pg-hd"><div class="pg-hd-l"><h2>إدارة المخزون</h2><p>متابعة المنتجات والكميات والأسعار</p></div></div>
+
+        <div class="card mb2">
+
+          <div class="card-h"><div class="c-icon ci-g"><i class="fas fa-plus-circle"></i></div><h3>إضافة / تعديل منتج</h3></div>
+
+          <div class="card-b">
+
+            <div class="g3">
+
+              <div class="fg"><label class="fl">الاسم</label><input id="p-name" class="fc"></div>
+
+              <div class="fg"><label class="fl">السعر (JOD)</label><input id="p-price" type="number" class="fc mono"></div>
+
+              <div class="fg"><label class="fl">الكمية</label><input id="p-qty" type="number" class="fc mono"></div>
+
+            </div>
+
+            <div class="g2" style="margin-top:0;">
+
+              <div class="fg"><label class="fl">التصنيف</label><select id="p-type" class="fc"><option value="طبي">طبي</option></select></div>
+
+              <div class="fg"><label class="fl">صورة المنتج</label><input type="file" accept="image/*" class="fc" onchange="compressImage(event,'p-img')"><input type="hidden" id="p-img"></div>
+
+            </div>
+
+            <button class="btn btn-gr btn-lg" onclick="saveProduct()"><i class="fas fa-save"></i> حفظ في المستودع</button>
+
+          </div>
+
+        </div>
+
+        <div class="card"><div class="card-h"><div class="c-icon ci-b"><i class="fas fa-warehouse"></i></div><h3>المستودع الحالي</h3></div><div class="tw"><table class="tbl"><thead><tr><th>المنتج</th><th>التصنيف</th><th>الكمية</th><th>السعر</th><th>خيارات</th></tr></thead><tbody id="tb-inv"></tbody></table></div></div>
+
+      </div>
+
+      <!-- ══ LAB ══ -->
+      <div id="page-lab" class="page">
+
+        <div class="pg-hd"><div class="pg-hd-l"><h2>المختبر والتجهيز</h2><p>متابعة حالات التجهيز والتسليم</p></div></div>
+
+        <div class="card"><div class="card-h"><div class="c-icon ci-p"><i class="fas fa-flask"></i></div><h3>قائمة المختبر</h3></div><div class="tw"><table class="tbl"><thead><tr><th>الفاتورة</th><th>المراجع</th><th>التفاصيل</th><th>الحالة</th></tr></thead><tbody id="tb-lab"></tbody></table></div></div>
+
+      </div>
+
+      <!-- ══ GALLERY ══ -->
+      <div id="page-gallery" class="page admin-only">
+
+        <div class="pg-hd"><div class="pg-hd-l"><h2>واجهة المعرض</h2><p>إدارة التشكيلات المعروضة على الموقع</p></div></div>
+
+        <div class="card mb2">
+
+          <div class="card-h"><div class="c-icon ci-b"><i class="fas fa-cloud-upload-alt"></i></div><h3>رفع تشكيلة</h3></div>
+
+          <div class="card-b">
+
+            <input type="hidden" id="gal-id">
+
+            <div class="g2">
+
+              <div class="fg"><label class="fl">الاسم</label><input id="gal-name" class="fc"></div>
+
+              <div class="fg"><label class="fl">النوع</label><select id="gal-type" class="fc"><option value="medical">طبي</option><option value="sun">شمسي</option></select></div>
+
+            </div>
+
+            <div class="fg"><label class="fl">الصورة</label><input type="file" accept="image/*" class="fc" onchange="compressImage(event,'gal-img','gal-prev')"><input type="hidden" id="gal-img"><img id="gal-prev" style="display:none;margin-top:8px;border-radius:var(--r2);max-height:80px;border:1px solid var(--b1);"></div>
+
+            <button class="btn btn-gr btn-lg" onclick="saveGallery()"><i class="fas fa-cloud-upload-alt"></i> نشر للموقع</button>
+
+          </div>
+
+        </div>
+
+        <div class="card"><div class="card-h"><div class="c-icon ci-a"><i class="fas fa-images"></i></div><h3>الموديلات المرفوعة</h3></div><div class="tw"><table class="tbl"><thead><tr><th>الاسم</th><th>النوع</th><th>خيارات</th></tr></thead><tbody id="tb-gal"></tbody></table></div></div>
+
+      </div>
+
+      <!-- ══ CMS ══ -->
+      <div id="page-cms" class="page admin-only">
+
+        <div class="pg-hd"><div class="pg-hd-l"><h2>إعدادات النظام</h2><p>تكوين النظام والموقع الإلكتروني</p></div></div>
+
+        <div class="card">
+
+          <div class="card-h"><div class="c-icon ci-b"><i class="fas fa-cog"></i></div><h3>الإعدادات العامة</h3></div>
+
+          <div class="card-b">
+
+            <div class="fg"><label class="fl">شريط الإعلانات</label><input id="cms-topbar" class="fc" placeholder="نص الإعلان..."></div>
+
+            <div class="g3" style="margin-top:2px;">
+
+              <div class="fg"><label class="fl">حالة المحل</label><select id="cms-mode" class="fc"><option value="auto">تلقائي</option><option value="force_open">مفتوح دائماً</option><option value="force_close">مغلق</option></select></div>
+
+              <div class="fg"><label class="fl">وقت الفتح</label><input type="time" id="cms-open" class="fc mono"></div>
+
+              <div class="fg"><label class="fl">وقت الإغلاق</label><input type="time" id="cms-close" class="fc mono"></div>
+
+            </div>
+
+            <button class="btn btn-gr btn-lg" style="margin-top:4px;" onclick="saveCMS()"><i class="fas fa-sync"></i> تحديث الإعدادات</button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ══ ACCOUNTS ══ -->
+      <div id="page-accounts" class="page developer-only">
+
+        <div class="pg-hd"><div class="pg-hd-l"><h2>إدارة الحسابات</h2><p>نظام الصلاحيات المتقدم — RBAC</p></div></div>
+
+        <div class="g12 mb2">
+
+          <!-- FORM PANEL -->
+          <div class="card">
+
+            <div class="card-h"><div class="c-icon ci-r"><i class="fas fa-user-edit"></i></div><h3 id="acc-form-title">إضافة حساب جديد</h3></div>
+
+            <div class="card-b">
+
+              <input type="hidden" id="acc-id">
+
+              <div class="s-div">بيانات الحساب</div>
+
+              <div class="fg"><label class="fl">الاسم الكامل</label><input id="acc-name" class="fc" placeholder="محمد أحمد..."></div>
+
+              <div class="fg"><label class="fl">البريد الإلكتروني (اليوزر)</label><input id="acc-user" class="fc mono" placeholder="user@delta.com" dir="ltr"></div>
+
+              <div class="fg">
+
+                <label class="fl">كلمة المرور</label>
+
+                <div class="pass-field">
+
+                  <input id="acc-pass" type="password" class="fc mono" placeholder="••••••••" dir="ltr">
+
+                  <button class="pass-toggle" type="button" onclick="togglePassVis('acc-pass','eye-acc')"><i class="fas fa-eye" id="eye-acc"></i></button>
+
+                </div>
+
+              </div>
+
+              <div class="s-div" style="margin-top:16px;">مستوى الوصول</div>
+
+              <div class="fg">
+
+                <label class="fl">الرتبة الرئيسية</label>
+
+                <select id="acc-role" class="fc" onchange="syncRolePerms()">
+
+                  <option value="employee">موظف</option>
+
+                  <option value="manager">مدير</option>
+
+                  <option value="developer">مطور / مسؤول</option>
+
+                </select>
+
+              </div>
+
+              <div class="s-div" style="margin-top:16px;">الصلاحيات التفصيلية</div>
+
+              <div class="perm-grid" id="perm-grid">
+
+                <label class="perm-item" id="p-view_dash"><input type="checkbox" id="perm-view_dash" onchange="permToggle(this)"><label for="perm-view_dash">لوحة التحكم</label></label>
+
+                <label class="perm-item" id="p-clinic"><input type="checkbox" id="perm-clinic" onchange="permToggle(this)"><label for="perm-clinic">العيادة والملفات</label></label>
+
+                <label class="perm-item" id="p-pos"><input type="checkbox" id="perm-pos" onchange="permToggle(this)"><label for="perm-pos">الكاشير</label></label>
+
+                <label class="perm-item" id="p-online"><input type="checkbox" id="perm-online" onchange="permToggle(this)"><label for="perm-online">فحوصات الأونلاين</label></label>
+
+                <label class="perm-item" id="p-inventory"><input type="checkbox" id="perm-inventory" onchange="permToggle(this)"><label for="perm-inventory">المخزون</label></label>
+
+                <label class="perm-item" id="p-lab"><input type="checkbox" id="perm-lab" onchange="permToggle(this)"><label for="perm-lab">المختبر</label></label>
+
+                <label class="perm-item" id="p-expenses"><input type="checkbox" id="perm-expenses" onchange="permToggle(this)"><label for="perm-expenses">تسجيل المصاريف</label></label>
+
+                <label class="perm-item" id="p-delete"><input type="checkbox" id="perm-delete" onchange="permToggle(this)"><label for="perm-delete">حذف السجلات</label></label>
+
+                <label class="perm-item" id="p-reports"><input type="checkbox" id="perm-reports" onchange="permToggle(this)"><label for="perm-reports">التقارير المالية</label></label>
+
+                <label class="perm-item" id="p-gallery"><input type="checkbox" id="perm-gallery" onchange="permToggle(this)"><label for="perm-gallery">إدارة المعرض</label></label>
+
+              </div>
+
+              <div style="display:flex;gap:9px;margin-top:16px;">
+
+                <button class="btn btn-gr btn-lg" style="flex:1;" onclick="saveAccount()"><i class="fas fa-save"></i> حفظ الحساب</button>
+
+                <button class="btn btn-sc btn-lg" onclick="resetAccountForm()"><i class="fas fa-times"></i> إلغاء</button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- TABLE PANEL -->
+          <div class="card">
+
+            <div class="card-h"><div class="c-icon ci-b"><i class="fas fa-users-cog"></i></div><h3>قائمة الحسابات</h3></div>
+
+            <div class="tw"><table class="tbl"><thead><tr><th>الاسم</th><th>البريد</th><th>الرتبة</th><th>الحالة</th><th>خيارات</th></tr></thead><tbody id="tb-accounts"></tbody></table></div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ══ AUDIT ══ -->
+      <div id="page-audit" class="page developer-only">
+
+        <div class="pg-hd"><div class="pg-hd-l"><h2>سجل التدقيق</h2><p>مراقبة جميع العمليات في الوقت الفعلي</p></div></div>
+
+        <div class="card"><div class="card-h"><div class="c-icon ci-r"><i class="fas fa-user-secret"></i></div><h3>Audit Log — آخر 50 عملية</h3></div><div class="tw" style="max-height:580px;overflow-y:auto;"><table class="tbl"><thead><tr><th>الموظف</th><th>الجهاز</th><th>العملية</th><th>الوقت</th></tr></thead><tbody id="tb-audit"></tbody></table></div></div>
+
+      </div>
+
+      <!-- ══ RECYCLE ══ -->
+      <div id="page-recycle" class="page developer-only">
+
+        <div class="pg-hd"><div class="pg-hd-l"><h2>سلة المحذوفات</h2><p>استرجاع البيانات المحذوفة</p></div></div>
+
+        <div class="card"><div class="card-h"><div class="c-icon ci-r"><i class="fas fa-trash-restore"></i></div><h3>المحذوفات</h3></div><div class="tw" style="max-height:580px;overflow-y:auto;"><table class="tbl"><thead><tr><th>النوع</th><th>البيان</th><th>حُذف بواسطة</th><th>الوقت</th><th>استرجاع</th></tr></thead><tbody id="tb-recycle"></tbody></table></div></div>
+
+      </div>
+
+    </div><!-- /pages-root -->
+
+  </div><!-- /main -->
+
+</div><!-- /shell -->
+
+<div id="print-area"><div id="print-content"></div></div>
+
+<script type="module" src="./app.js"></script>
+
+</body>
+
+</html>
