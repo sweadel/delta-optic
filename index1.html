@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Delta Optics | دلتا للبصريات</title>
+    
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https://via.placeholder.com; connect-src 'self' https://generativelanguage.googleapis.com https://firestore.googleapis.com https://api.emailjs.com https://api.ipify.org;">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    <link rel="icon" href="logo.jpg" type="image/jpeg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root { 
+            --primary: #0e7490; --secondary: #0ea5e9; --bg-color: #f8fafc;
+            --surface: rgba(255, 255, 255, 0.7); --surface-border: rgba(255, 255, 255, 0.5);
+            --text-main: #0f172a; --text-muted: #64748b; --success: #10b981; --error: #ef4444; --gold: #f59e0b;
+        }
+        [data-theme="dark"] {
+            --primary: #22d3ee; --secondary: #38bdf8; --bg-color: #0f172a;
+            --surface: rgba(30, 41, 59, 0.7); --surface-border: rgba(255, 255, 255, 0.05);
+            --text-main: #f8fafc; --text-muted: #cbd5e1;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; outline: none; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; padding-bottom: 90px; transition: 0.4s; }
+
+        /* ⭐ شريط الإعلانات الأخضر */
+        .announcement-bar {
+            display: none; 
+            background: linear-gradient(90deg, #10b981, #059669); /* لون أخضر جذاب */
+            color: white; 
+            text-align: center; 
+            padding: 10px 15px; 
+            font-size: 0.95rem; 
+            font-weight: 800;
+            width: 100%; 
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); 
+            animation: slideDown 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            z-index: 1001;
+        }
+        .announcement-bar i { animation: tada 1.5s infinite; margin-left: 8px; }
+        @keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes tada { 0% { transform: scale(1); } 10%, 20% { transform: scale(0.9) rotate(-3deg); } 30%, 50%, 70%, 90% { transform: scale(1.1) rotate(3deg); } 40%, 60%, 80% { transform: scale(1.1) rotate(-3deg); } 100% { transform: scale(1) rotate(0); } }
+
+        header { background: var(--surface); backdrop-filter: blur(15px); padding: 12px 20px; border-bottom: 1px solid var(--surface-border); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+        .header-brand { display: flex; align-items: center; gap: 10px; }
+        .header-logo { width: 38px; height: 38px; object-fit: contain; border-radius: 8px; }
+        .header-title { font-size: 1.1rem; font-weight: 900; color: var(--primary); }
+        
+        .header-actions { display: flex; gap: 10px; }
+        .icon-btn { background: rgba(128, 128, 128, 0.1); border: 1px solid var(--surface-border); width: 38px; height: 38px; border-radius: 10px; color: var(--primary); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+
+        main { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 30px 20px; text-align: center; width: 100%; max-width: 500px; margin: 0 auto; }
+        .logo-box { width: 125px; height: 125px; border-radius: 25px; background: var(--surface); padding: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid var(--surface-border); margin-bottom: 15px; }
+
+        .status-area { margin-bottom: 25px; display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; }
+        .badge { background: var(--surface); padding: 10px 20px; border-radius: 50px; font-size: 0.9rem; font-weight: 700; display: flex; align-items: center; gap: 10px; border: 1px solid var(--surface-border); box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .open-dot { background: var(--success); box-shadow: 0 0 8px var(--success); }
+        .closed-dot { background: var(--error); box-shadow: 0 0 8px var(--error); }
+        .countdown-msg { font-size: 0.8rem; font-weight: 800; color: var(--text-muted); background: rgba(14, 116, 144, 0.05); padding: 4px 12px; border-radius: 10px; }
+
+        .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; margin-bottom: 25px; }
+        .main-card { background: var(--surface); padding: 25px 15px; border-radius: 20px; border: 1px solid var(--surface-border); display: flex; flex-direction: column; align-items: center; gap: 12px; text-decoration: none; transition: 0.2s; color: inherit; transform-style: preserve-3d; }
+        .main-card:active { transform: scale(0.95); }
+        .card-icon { font-size: 2.2rem; color: var(--primary); }
+        .card-title { font-size: 1rem; font-weight: 900; }
+        .highlight-card { background: linear-gradient(135deg, rgba(14, 116, 144, 0.05), rgba(14, 165, 233, 0.1)); }
+
+        .quick-services { display: flex; justify-content: space-around; width: 100%; margin-bottom: 30px; background: var(--surface); padding: 15px; border-radius: 20px; border: 1px solid var(--surface-border); }
+        .service-item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .srv-icon { width: 40px; height: 40px; border-radius: 50%; background: rgba(14, 116, 144, 0.1); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+        .srv-text { font-size: 0.75rem; font-weight: 700; }
+
+        .wide-btn { width: 100%; padding: 18px; border-radius: 16px; font-size: 1rem; font-weight: 800; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; background: var(--primary); color: white; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(14, 116, 144, 0.2); }
+        
+        .social-row { display: flex; gap: 12px; width: 100%; margin-bottom: 30px; }
+        .soc-btn { flex: 1; padding: 14px; border-radius: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; color: white; font-weight: 800; font-size: 0.9rem; }
+        .fb-btn { background: #1877F2; } .insta-btn { background: linear-gradient(45deg, #f09433, #bc1888); }
+
+        .reviews-box { width: 100%; text-align: right; margin-bottom: 30px; }
+        .rev-head { font-size: 1rem; font-weight: 800; color: var(--text-muted); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        .review { background: var(--surface); padding: 18px; border-radius: 20px; margin-bottom: 12px; border: 1px solid var(--surface-border); text-align: right; }
+        .rev-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .rev-user { font-weight: 800; font-size: 0.95rem; }
+        .rev-stars { color: var(--gold); font-size: 0.8rem; letter-spacing: 2px; }
+        .rev-msg { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+
+        .marquee-wrap { background: var(--surface); padding: 20px 0; border-top: 1px solid var(--surface-border); overflow: hidden; display: flex; direction: ltr; margin-top: auto;}
+        .marquee-content { display: flex; animation: scroll 40s linear infinite; }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .brand-item { margin: 0 30px; font-size: 1.2rem; font-weight: 900; opacity: 0.7; color: var(--text-main); white-space: nowrap;}
+
+        .fab-area { position: fixed; bottom: 25px; right: 25px; display: flex; flex-direction: column; gap: 15px; z-index: 200; }
+        .fab { width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; text-decoration: none; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border: none; cursor: pointer; }
+        .fab-ai { background: linear-gradient(135deg, #06b6d4, #8b5cf6); border: 2px solid white; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(6, 182, 212, 0); } 100% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0); } }
+
+        .chat-overlay { position: fixed; bottom: 90px; right: 25px; width: 350px; max-width: calc(100vw - 40px); background: var(--surface); backdrop-filter: blur(20px); border: 1px solid var(--surface-border); border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.2); z-index: 1000; display: none; flex-direction: column; overflow: hidden; animation: scaleUp 0.3s ease; }
+        @keyframes scaleUp { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+        .chat-header { background: var(--primary); color: white; padding: 15px; font-weight: 800; display: flex; justify-content: space-between; align-items: center; }
+        .chat-body { height: 300px; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 10px; text-align: right; }
+        .msg { padding: 10px 15px; border-radius: 15px; font-size: 0.9rem; max-width: 85%; }
+        .ai-msg { background: rgba(14, 116, 144, 0.1); align-self: flex-start; border-bottom-right-radius: 2px; font-weight: 700; }
+        .user-msg { background: var(--primary); color: white; align-self: flex-end; border-bottom-left-radius: 2px; }
+        .chat-footer { padding: 10px; border-top: 1px solid var(--surface-border); display: flex; gap: 8px; }
+        .chat-footer input { flex: 1; padding: 10px; border-radius: 10px; border: 1px solid var(--surface-border); background: var(--bg-color); color: var(--text-main); }
+    </style>
+</head>
+<body>
+
+    <div id="dynamic-topbar" class="announcement-bar">
+        <i class="fas fa-tags"></i>
+        <span id="topbar-text"></span>
+    </div>
+
+    <header>
+        <div class="header-brand">
+            <img src="logo.jpg" class="header-logo" alt="Logo" fetchpriority="high">
+            <h2 class="header-title">DELTA OPTICS</h2>
+        </div>
+        <div class="header-actions">
+            <button class="icon-btn" onclick="toggleTheme()" id="theme-btn"><i class="fas fa-moon"></i></button>
+            <button class="icon-btn" onclick="toggleLang()" id="lang-btn" style="font-weight: 900; font-size: 0.8rem;">EN</button>
+        </div>
+    </header>
+
+    <main>
+        <img src="logo.jpg" class="logo-box" alt="Delta Logo" fetchpriority="high">
+        <h1 id="txt-hero">دلتا للبصريات</h1>
+        <p class="subtitle" id="txt-sub">المقابلين - شارع الإذاعة والتلفزيون<br>خبراء العناية بالعين وأحدث الماركات</p>
+
+        <div class="status-area">
+            <div id="status-badge" class="badge">
+                <div id="status-dot" class="dot"></div>
+                <span id="status-text" style="font-weight: 900;">جاري التحقق...</span>
+            </div>
+            <div id="countdown-msg" class="countdown-msg" style="display:none;"></div>
+        </div>
+
+        <div class="cards-grid">
+            <a href="test.html" class="main-card highlight-card tilt-card">
+                <i class="fas fa-microscope card-icon"></i>
+                <span class="card-title" id="txt-test">الفحص الذكي</span>
+            </a>
+            <a href="collection.html" class="main-card tilt-card">
+                <i class="fas fa-glasses card-icon"></i>
+                <span class="card-title" id="txt-coll">التشكيلات</span>
+            </a>
+        </div>
+
+        <div class="quick-services">
+            <div class="service-item"><div class="srv-icon"><i class="fas fa-tools"></i></div><span class="srv-text">صيانة فورية</span></div>
+            <div class="service-item"><div class="srv-icon"><i class="fas fa-truck"></i></div><span class="srv-text">توصيل متاح</span></div>
+            <div class="service-item"><div class="srv-icon"><i class="fas fa-eye"></i></div><span class="srv-text">تجهيز عدسات</span></div>
+        </div>
+
+        <a href="https://maps.app.goo.gl/YourMapLink" target="_blank" class="wide-btn">
+            <i class="fas fa-map-marker-alt"></i> <span id="txt-loc">موقع الفرع على الخريطة</span>
+        </a>
+
+        <div class="social-row">
+            <a href="https://facebook.com/delta.optics1" target="_blank" class="soc-btn fb-btn"><i class="fab fa-facebook-f"></i> Facebook</a>
+            <a href="https://instagram.com/delta.optics1" target="_blank" class="soc-btn insta-btn"><i class="fab fa-instagram"></i> Instagram</a>
+        </div>
+
+        <div class="reviews-box">
+            <div class="rev-head"><i class="fas fa-star"></i> <span id="txt-rev-title">آراء عملائنا</span></div>
+            <div id="reviews-container"></div>
+        </div>
+    </main>
+
+    <div class="marquee-wrap">
+        <div class="marquee-content">
+            <span class="brand-item">RAY-BAN</span><span class="brand-item">GUCCI</span><span class="brand-item">OAKLEY</span><span class="brand-item">PRADA</span><span class="brand-item">VERSACE</span><span class="brand-item">TOM FORD</span><span class="brand-item">DIOR</span>
+            <span class="brand-item">RAY-BAN</span><span class="brand-item">GUCCI</span><span class="brand-item">OAKLEY</span><span class="brand-item">PRADA</span><span class="brand-item">VERSACE</span><span class="brand-item">TOM FORD</span><span class="brand-item">DIOR</span>
+        </div>
+    </div>
+
+    <div class="fab-area">
+        <button class="fab fab-ai" onclick="toggleChat()"><i class="fas fa-robot"></i></button>
+        <a href="https://wa.me/962775549700" class="fab" style="background:#25D366;"><i class="fab fa-whatsapp"></i></a>
+        <a href="tel:+962775549700" class="fab" style="background:var(--primary);"><i class="fas fa-phone"></i></a>
+    </div>
+
+    <div class="chat-overlay" id="chat-overlay">
+        <div class="chat-header"><span>مستشار دلتا الذكي</span><button onclick="toggleChat()" style="background:none; border:none; color:white; cursor:pointer;"><i class="fas fa-times"></i></button></div>
+        <div class="chat-body" id="chat-body"><div class="msg ai-msg">أهلاً بك! كيف بقدر أخدمك اليوم بخصوص نظاراتك؟ 👓</div></div>
+        <div class="chat-footer">
+            <input type="text" id="chat-input" placeholder="اكتب سؤالك..." onkeypress="if(event.key==='Enter') sendChat()">
+            <button onclick="sendChat()" style="background:var(--primary); color:white; border:none; padding:10px; border-radius:10px; cursor:pointer;"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <script>
+        window.cmsData = {
+            topbar: "",
+            openTime: "10:00",
+            closeTime: "23:59",
+            statusMode: "auto" 
+        };
+
+        window.applyCmsData = function(data) {
+            if (!data) return;
+            
+            // تفعيل وتغيير نص شريط الإعلانات فقط
+            if (data.topbar && data.topbar.trim() !== "") {
+                document.getElementById('dynamic-topbar').style.display = 'block';
+                document.getElementById('topbar-text').innerText = data.topbar;
+            } else {
+                document.getElementById('dynamic-topbar').style.display = 'none';
+            }
+
+            if (data.openTime) window.cmsData.openTime = data.openTime;
+            if (data.closeTime) window.cmsData.closeTime = data.closeTime;
+            if (data.statusMode) window.cmsData.statusMode = data.statusMode;
+
+            updateStoreStatus();
+        };
+
+        function updateStoreStatus() {
+            const text = document.getElementById('status-text');
+            const dot = document.getElementById('status-dot');
+            const countdown = document.getElementById('countdown-msg');
+            const mode = window.cmsData.statusMode;
+
+            if (mode === 'force_open') {
+                text.innerText = (curLang === 'ar' ? "مفتوح الآن" : "Open Now");
+                dot.className = "dot open-dot";
+                countdown.style.display = 'none'; 
+                return;
+            } else if (mode === 'force_close') {
+                text.innerText = (curLang === 'ar' ? "مغلق (إجازة)" : "Closed");
+                dot.className = "dot closed-dot";
+                countdown.style.display = 'none'; 
+                return;
+            }
+
+            countdown.style.display = 'block';
+            const now = new Date();
+            const curTotalMin = (now.getHours() * 60) + now.getMinutes();
+
+            let openStr = window.cmsData.openTime || "10:00";
+            let closeStr = window.cmsData.closeTime || "23:59";
+            
+            if (!openStr.includes(':')) openStr = "10:00";
+            if (!closeStr.includes(':')) closeStr = "23:59";
+
+            let [openH, openM] = openStr.split(':').map(Number);
+            let [closeH, closeM] = closeStr.split(':').map(Number);
+
+            const openTotalMin = (openH * 60) + (openM || 0);
+            const closeTotalMin = (closeH * 60) + (closeM || 0);
+
+            let isOpen = false;
+            if (closeTotalMin > openTotalMin) {
+                isOpen = (curTotalMin >= openTotalMin && curTotalMin < closeTotalMin);
+            } else { 
+                isOpen = (curTotalMin >= openTotalMin || curTotalMin < closeTotalMin);
+            }
+
+            if (isOpen) {
+                text.innerText = (curLang === 'ar' ? "مفتوح الآن" : "Open Now");
+                dot.className = "dot open-dot";
+                let timeToClose = closeTotalMin - curTotalMin;
+                if (timeToClose < 0) timeToClose += 1440;
+                countdown.innerText = (curLang === 'ar' ? "يغلق بعد: " : "Closes in: ") + formatTime(timeToClose);
+            } else {
+                text.innerText = (curLang === 'ar' ? "مغلق الآن" : "Closed Now");
+                dot.className = "dot closed-dot";
+                let timeToOpen = openTotalMin - curTotalMin;
+                if (timeToOpen < 0) timeToOpen += 1440;
+                countdown.innerText = (curLang === 'ar' ? "يفتح بعد: " : "Opens in: ") + formatTime(timeToOpen);
+            }
+        }
+
+        window.triggerStatusUpdate = updateStoreStatus;
+
+        function formatTime(t) {
+            const h = Math.floor(t / 60); const m = t % 60;
+            if (curLang === 'en') return `${h}h ${m}m`;
+            let res = "";
+            if (h > 0) res += (h === 1 ? "ساعة" : h === 2 ? "ساعتين" : h <= 10 ? h + " ساعات" : h + " ساعة") + " ";
+            if (m > 0) res += (h > 0 ? "و " : "") + (m === 1 ? "دقيقة" : m === 2 ? "دقيقتين" : m <= 10 ? m + " دقائق" : m + " دقيقة");
+            return res || "أقل من دقيقة";
+        }
+
+        const reviewsData = {
+            ar: [
+                { name: "محمد العلي", text: "خدمة ممتازة، الدكتور شاطر والفحص دقيق جداً." },
+                { name: "سعاد محمد", text: "المحل مرتب والتعامل راقي، الأسعار مناسبة." },
+                { name: "خالد الزعبي", text: "أفضل محل بصريات في المقابلين، أنصح به بشدة." }
+            ],
+            en: [
+                { name: "Mohammad Ali", text: "Excellent service, very accurate eye test." },
+                { name: "Suad M.", text: "Great shop, professional staff and good prices." },
+                { name: "Khaled Z.", text: "Best optical shop in Al Muqablain, highly recommended." }
+            ]
+        };
+
+        function loadReviews() {
+            const container = document.getElementById('reviews-container');
+            container.innerHTML = '';
+            const list = reviewsData[curLang];
+            const shuffled = [...list].sort(() => 0.5 - Math.random()).slice(0, 2);
+            shuffled.forEach(rev => {
+                container.innerHTML += `<div class="review"><div class="rev-top"><span class="rev-user">${rev.name}</span><span class="rev-stars">★★★★★</span></div><p class="rev-msg">${rev.text}</p></div>`;
+            });
+        }
+
+        async function sendChat() {
+            const input = document.getElementById('chat-input');
+            const body = document.getElementById('chat-body');
+            if(!input.value.trim()) return;
+            const q = input.value;
+            body.innerHTML += `<div class="msg user-msg">${q}</div>`;
+            input.value = ""; body.scrollTop = body.scrollHeight;
+            try {
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyAgR51pScEgGUIky_N6fX6GaelzsfI5ZBM`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ contents: [{ parts: [{ text: "أنت مساعد ذكي لمركز دلتا للبصريات في الأردن. أجب بلهجة أردنية مختصرة. شجع على فحص النظر المجاني في المقابلين. السؤال: " + q }] }] })
+                });
+                const data = await res.json();
+                body.innerHTML += `<div class="msg ai-msg">${data.candidates[0].content.parts[0].text}</div>`;
+                body.scrollTop = body.scrollHeight;
+            } catch (e) { body.innerHTML += `<div class="msg ai-msg">تواصل معنا واتساب لخدمة أسرع! 💚</div>`; }
+        }
+
+        let curLang = 'ar';
+        function toggleLang() {
+            curLang = curLang === 'ar' ? 'en' : 'ar';
+            document.getElementById('lang-btn').innerText = curLang === 'ar' ? 'EN' : 'AR';
+            document.documentElement.dir = curLang === 'ar' ? 'rtl' : 'ltr';
+            updateStoreStatus(); loadReviews();
+        }
+
+        function toggleTheme() {
+            const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+            document.getElementById('theme-btn').innerHTML = theme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        }
+
+        document.querySelectorAll('.tilt-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                let r = card.getBoundingClientRect();
+                card.style.transform = `rotateX(${(e.clientY - r.top - r.height/2)/-10}deg) rotateY(${(e.clientX - r.left - r.width/2)/10}deg) scale(1.02)`;
+            });
+            card.addEventListener('mouseleave', () => card.style.transform = 'rotateX(0) rotateY(0) scale(1)');
+        });
+
+        function toggleChat() { const c = document.getElementById('chat-overlay'); c.style.display = (c.style.display === 'flex') ? 'none' : 'flex'; }
+
+        updateStoreStatus(); setInterval(updateStoreStatus, 60000); loadReviews();
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB11C4GGgAyqeThs8a9cvDNN7frvAA1nqQ",
+            authDomain: "delta-optics-system.firebaseapp.com",
+            projectId: "delta-optics-system",
+            storageBucket: "delta-optics-system.firebasestorage.app",
+            messagingSenderId: "111176219224",
+            appId: "1:111176219224:web:e0d8a5f26b84d57249a82d"
+        };
+
+        try {
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
+
+            onSnapshot(doc(db, "settings", "cms"), (docSnap) => {
+                if (docSnap.exists()) {
+                    window.applyCmsData(docSnap.data());
+                }
+            });
+        } catch(error) {
+            console.error("مشكلة في الاتصال:", error);
+        }
+    </script>
+
+</body>
+</html>
