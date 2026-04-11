@@ -3,1574 +3,1294 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Delta Vision OS</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Delta Vision Pro • نظام دلتا المتطور</title>
+<link rel="icon" href="logo.jpg" type="image/jpeg">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
-
 /* ═══════════════════════════════════════════
-
-   THEME TOKENS (Light & Dark)
-
+   🎨 MODERN DESIGN SYSTEM - GLASSMORPHISM
 ═══════════════════════════════════════════ */
 
 :root {
-  --bg:     #09090b;
-  --bg2:    #0f0f12;
-  --bg3:    #17171c;
-  --bg4:    #1e1e26;
-  --b0:     rgba(255,255,255,0.04);
-  --b1:     rgba(255,255,255,0.08);
-  --b2:     rgba(255,255,255,0.13);
-  --blue:   #4f8ef7;
-  --purple: #7c3aed;
-  --green:  #06d6a0;
-  --amber:  #f59e0b;
-  --red:    #ef4444;
-  --t1: #eef0f8;
-  --t2: #8891a8;
-  --t3: #3f4559;
-  --mono: 'JetBrains Mono', monospace;
-  --sans: 'IBM Plex Sans Arabic', sans-serif;
-  --r1: 8px; --r2: 12px; --r3: 18px; --r4: 24px;
-  --sw: 252px;
-  --hh: 58px;
+  /* Colors */
+  --primary: #2563eb;
+  --primary-dark: #1e40af;
+  --secondary: #7c3aed;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --info: #06b6d4;
+  
+  /* Backgrounds */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  
+  /* Glass Effect */
+  --glass: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-hover: rgba(255, 255, 255, 0.08);
+  
+  /* Text */
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-tertiary: #64748b;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.2);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.3);
+  --shadow-glow: 0 0 20px rgba(37, 99, 235, 0.3);
+  
+  /* Animations */
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-/* LIGHT MODE */
-:root.light-mode {
-  --bg:     #f5f5f7;
-  --bg2:    #ffffff;
-  --bg3:    #f0f0f3;
-  --bg4:    #e8e8ec;
-  --b0:     rgba(0,0,0,0.04);
-  --b1:     rgba(0,0,0,0.08);
-  --b2:     rgba(0,0,0,0.13);
-  --t1: #1a1a1a;
-  --t2: #666666;
-  --t3: #999999;
+/* Light Mode */
+.light-mode {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f5f9;
+  --glass: rgba(0, 0, 0, 0.02);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-hover: rgba(0, 0, 0, 0.04);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #94a3b8;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
 }
 
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Cairo', sans-serif;
+}
 
-body{font-family:var(--sans);background:var(--bg);color:var(--t1);min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s;}
+body {
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: var(--transition);
+}
 
-::-webkit-scrollbar{width:3px;height:3px;}
-::-webkit-scrollbar-track{background:transparent;}
-::-webkit-scrollbar-thumb{background:var(--b2);border-radius:2px;}
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
 
-.mono{font-family:var(--mono)!important;}
+::-webkit-scrollbar-track {
+  background: var(--glass);
+  border-radius: 10px;
+}
 
+::-webkit-scrollbar-thumb {
+  background: var(--glass-border);
+  border-radius: 10px;
+  transition: var(--transition);
+}
 
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
 
 /* ═══════════════════════════════════════════
-
-   LOGIN SCREEN
-
+   🔐 LOGIN SCREEN - MODERN DESIGN
 ═══════════════════════════════════════════ */
 
 #login-screen {
-  position:fixed;inset:0;z-index:9999;
-  background:var(--bg);
-  display:flex;align-items:center;justify-content:center;
-  transition:opacity .3s;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  opacity: 1;
+  transition: opacity 0.5s ease;
 }
 
 #login-screen.hidden {
-  display:none;
+  opacity: 0;
+  pointer-events: none;
 }
 
-.login-wrap {
-  width:380px;
-  background:var(--bg2);
-  border:1px solid var(--b2);
-  border-radius:var(--r4);
-  padding:40px;
-  position:relative;overflow:hidden;
+#login-screen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
+  animation: drift 20s linear infinite;
 }
 
-.login-wrap::before{
-  content:'';position:absolute;
-  top:-100px;left:50%;transform:translateX(-50%);
-  width:280px;height:280px;
-  background:radial-gradient(circle,rgba(79,142,247,.1) 0%,transparent 65%);
-  pointer-events:none;
+@keyframes drift {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(50px, 50px); }
 }
 
-.l-logo{text-align:center;margin-bottom:28px;}
-
-.l-logo .l-icon{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:52px;height:52px;
-  background:linear-gradient(135deg,var(--blue),var(--purple));
-  border-radius:14px;margin-bottom:14px;
-  font-size:20px;color:#fff;
+.login-container {
+  position: relative;
+  width: 90%;
+  max-width: 420px;
+  padding: 50px 40px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  animation: slideUp 0.6s var(--bounce);
 }
 
-.l-logo h1{font-size:18px;font-weight:600;margin-bottom:3px;}
-.l-logo p{font-size:11px;color:var(--t3);font-family:var(--mono);letter-spacing:2px;}
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.login-logo {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.login-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.login-title {
+  font-size: 28px;
+  font-weight: 900;
+  color: white;
+  text-align: center;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.login-subtitle {
+  font-size: 14px;
+  color: rgba(255,255,255,0.8);
+  text-align: center;
+  margin-bottom: 30px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
 
 .login-tabs {
-  display:flex;gap:0;margin-bottom:20px;border-bottom:1px solid var(--b1);
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+  background: rgba(0,0,0,0.2);
+  padding: 5px;
+  border-radius: 12px;
 }
 
 .login-tab {
-  flex:1;padding:12px;text-align:center;font-size:12px;font-weight:600;
-  color:var(--t3);cursor:pointer;border:none;background:none;
-  border-bottom:2px solid transparent;transition:all .2s;
+  flex: 1;
+  padding: 12px;
+  border: none;
+  background: transparent;
+  color: rgba(255,255,255,0.6);
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: var(--transition);
 }
 
 .login-tab.active {
-  color:var(--blue);border-bottom-color:var(--blue);
-}
-
-.login-tab:hover {
-  color:var(--t2);
-}
-
-.lf{margin-bottom:13px;}
-.lf label{display:block;font-size:11px;font-weight:600;color:var(--t2);margin-bottom:6px;letter-spacing:.5px;text-transform:uppercase;}
-
-.lf input{
-  width:100%;padding:11px 13px;
-  background:var(--bg3);border:1px solid var(--b1);
-  border-radius:var(--r1);color:var(--t1);
-  font-family:var(--mono);font-size:13px;outline:none;
-  transition:border-color .2s,box-shadow .2s;
-}
-
-.lf input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(79,142,247,.1);}
-
-.l-btn{
-  width:100%;padding:12px;margin-top:4px;
-  background:linear-gradient(135deg,var(--blue),var(--purple));
-  color:#fff;border:none;border-radius:var(--r1);
-  font-family:var(--sans);font-size:14px;font-weight:600;
-  cursor:pointer;transition:opacity .2s,transform .1s;
-}
-
-.l-btn:hover{opacity:.9;}
-.l-btn:active{transform:scale(.99);}
-
-.l-btn-sec {
-  width:100%;padding:12px;margin-top:4px;
-  background:var(--bg3);color:var(--t1);border:1px solid var(--b1);
-  border-radius:var(--r1);font-family:var(--sans);font-size:14px;font-weight:600;
-  cursor:pointer;transition:all .2s;
-  display:flex;align-items:center;justify-content:center;gap:8px;
-}
-
-.l-btn-sec:hover{border-color:var(--blue);color:var(--blue);}
-
-.login-divider {
-  text-align:center;margin:16px 0;font-size:12px;color:var(--t3);
-}
-
-.login-divider::before,
-.login-divider::after {
-  content:'';display:inline-block;width:40%;height:1px;background:var(--b1);vertical-align:middle;margin:0 8px;
-}
-
-.login-footer {
-  text-align:center;margin-top:16px;font-size:12px;color:var(--t3);
-}
-
-.login-footer a {
-  color:var(--blue);text-decoration:none;cursor:pointer;transition:color .2s;
-}
-
-.login-footer a:hover {
-  color:var(--purple);
+  background: white;
+  color: var(--primary);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
 .login-panel {
-  display:none;
+  display: none;
 }
 
 .login-panel.active {
-  display:block;
+  display: block;
+  animation: fadeIn 0.4s ease;
 }
 
+@keyframes fadeIn {
+  0% { opacity: 0; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
 
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.1);
+  color: white;
+  font-size: 15px;
+  border-radius: 12px;
+  outline: none;
+  transition: var(--transition);
+}
+
+.form-input::placeholder {
+  color: rgba(255,255,255,0.5);
+}
+
+.form-input:focus {
+  border-color: white;
+  background: rgba(255,255,255,0.15);
+  box-shadow: 0 0 20px rgba(255,255,255,0.2);
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.6);
+  cursor: pointer;
+  font-size: 16px;
+  transition: var(--transition);
+}
+
+.password-toggle:hover {
+  color: white;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.btn-primary:hover::before {
+  opacity: 1;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  width: 100%;
+  padding: 16px;
+  border: 2px solid rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.1);
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-secondary:hover {
+  background: rgba(255,255,255,0.2);
+  border-color: white;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 25px 0;
+  color: rgba(255,255,255,0.6);
+  font-size: 13px;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,0.2);
+}
 
 /* ═══════════════════════════════════════════
-
-   SHELL
-
+   🎯 MAIN APP - GLASS DESIGN
 ═══════════════════════════════════════════ */
 
-#shell{display:none;min-height:100vh;}
-#shell.visible {
-  display:flex;flex-direction:column;min-height:100vh;
+#app {
+  display: none;
+  min-height: 100vh;
 }
 
-
-
-/* SIDEBAR */
-
-.sidebar{
-  width:var(--sw);height:100vh;
-  position:fixed;top:0;right:0;
-  background:var(--bg2);
-  border-left:1px solid var(--b0);
-  display:flex;flex-direction:column;
-  z-index:300;
-  transition:transform .3s cubic-bezier(.16,1,.3,1);
+#app.visible {
+  display: block;
+  animation: fadeIn 0.5s ease;
 }
 
-.sidebar.off{transform:translateX(100%);}
-
-.sb-overlay{
-  display:none;position:fixed;inset:0;z-index:299;
-  background:rgba(0,0,0,.6);backdrop-filter:blur(3px);
+/* Header */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
+  padding: 15px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
 }
 
-.sb-overlay.on{display:block;}
-
-.sb-head{
-  padding:18px 16px;
-  border-bottom:1px solid var(--b0);
-  display:flex;align-items:center;gap:10px;
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
-.sb-logo-icon{
-  width:32px;height:32px;flex-shrink:0;
-  background:linear-gradient(135deg,var(--blue),var(--purple));
-  border-radius:8px;display:flex;align-items:center;justify-content:center;
-  font-size:14px;color:#fff;
+.btn-menu {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: var(--glass);
+  color: var(--text-primary);
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: var(--transition);
+  border: 1px solid var(--glass-border);
 }
 
-.sb-logo-txt{flex:1;}
-.sb-logo-txt strong{display:block;font-size:13px;font-weight:600;}
-.sb-logo-txt small{font-size:10px;color:var(--t3);font-family:var(--mono);letter-spacing:1.5px;}
-
-.sb-x{background:none;border:none;color:var(--t3);cursor:pointer;font-size:15px;padding:4px;transition:color .2s;}
-.sb-x:hover{color:var(--t1);}
-
-.sb-nav{flex:1;overflow-y:auto;padding:8px;}
-
-.nav-grp-lbl{
-  font-size:10px;font-weight:700;color:var(--t3);
-  letter-spacing:1.5px;text-transform:uppercase;
-  padding:14px 10px 6px;
+.btn-menu:hover {
+  background: var(--glass-hover);
+  transform: scale(1.05);
 }
 
-.nav-grp-lbl.adm{color:rgba(79,142,247,.45);}
-.nav-grp-lbl.dev{color:rgba(239,68,68,.45);}
-
-.ni{
-  display:flex;align-items:center;gap:9px;
-  padding:9px 10px;border-radius:var(--r1);
-  color:var(--t2);font-size:13px;font-weight:500;
-  cursor:pointer;border:none;background:none;
-  width:100%;text-align:right;
-  transition:all .15s;
+.search-box {
+  position: relative;
+  width: 300px;
 }
 
-.ni i{width:14px;text-align:center;flex-shrink:0;font-size:12px;}
-.ni:hover{background:var(--bg3);color:var(--t1);}
-.ni.active{background:rgba(79,142,247,.1);color:var(--blue);}
-.ni.active i{color:var(--blue);}
-
-.sb-foot{padding:12px;border-top:1px solid var(--b0);display:flex;gap:8px;}
-
-.btn-logout{
-  flex:1;padding:9px 12px;
-  background:rgba(239,68,68,.06);color:var(--red);
-  border:1px solid rgba(239,68,68,.12);border-radius:var(--r1);
-  font-family:var(--sans);font-size:13px;font-weight:600;
-  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;
-  transition:background .2s;
+.search-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-tertiary);
+  font-size: 16px;
+  pointer-events: none;
 }
 
-.btn-logout:hover{background:rgba(239,68,68,.13);}
+.search-input {
+  width: 100%;
+  padding: 10px 45px 10px 15px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass);
+  color: var(--text-primary);
+  border-radius: 12px;
+  font-size: 14px;
+  outline: none;
+  transition: var(--transition);
+}
+
+.search-input:focus {
+  background: var(--glass-hover);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-icon {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: var(--glass);
+  color: var(--text-primary);
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: var(--transition);
+  border: 1px solid var(--glass-border);
+  position: relative;
+}
+
+.btn-icon:hover {
+  background: var(--glass-hover);
+  transform: scale(1.05);
+}
+
+.user-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 15px 6px 6px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.user-badge:hover {
+  background: var(--glass-hover);
+}
+
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.user-info {
+  text-align: right;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.user-role {
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 280px;
+  height: 100vh;
+  background: var(--glass);
+  backdrop-filter: blur(30px);
+  border-left: 1px solid var(--glass-border);
+  transform: translateX(100%);
+  transition: transform 0.4s var(--bounce);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-lg);
+}
+
+.sidebar.active {
+  transform: translateX(0);
+}
+
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(5px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  z-index: 199;
+}
+
+.sidebar-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.sidebar-header {
+  padding: 25px 20px;
+  border-bottom: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sidebar-logo-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.sidebar-logo-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sidebar-logo-text h3 {
+  font-size: 16px;
+  font-weight: 900;
+  margin-bottom: 2px;
+}
+
+.sidebar-logo-text p {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  letter-spacing: 1px;
+}
+
+.btn-close {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: var(--glass);
+  color: var(--text-primary);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: var(--transition);
+}
+
+.btn-close:hover {
+  background: var(--danger);
+  color: white;
+  transform: rotate(90deg);
+}
+
+.sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px;
+}
+
+.nav-section-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 15px 10px 10px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 15px;
+  border-radius: 12px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition);
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+
+.nav-item:hover {
+  background: var(--glass);
+  color: var(--text-primary);
+  border-color: var(--glass-border);
+}
+
+.nav-item.active {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.nav-item i {
+  width: 20px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.sidebar-footer {
+  padding: 20px;
+  border-top: 1px solid var(--glass-border);
+  display: flex;
+  gap: 10px;
+}
+
+.btn-logout {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--danger);
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-logout:hover {
+  background: var(--danger);
+  color: white;
+}
 
 .btn-theme {
-  flex:1;padding:9px 12px;
-  background:var(--bg3);color:var(--t2);
-  border:1px solid var(--b1);border-radius:var(--r1);
-  font-family:var(--sans);font-size:13px;font-weight:600;
-  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;
-  transition:all .2s;
+  width: 45px;
+  padding: 12px;
+  border: none;
+  background: var(--glass);
+  color: var(--text-primary);
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: var(--transition);
+  border: 1px solid var(--glass-border);
 }
 
-.btn-theme:hover{border-color:var(--blue);color:var(--blue);}
-
-
-
-/* HEADER */
-
-.main{display:flex;flex-direction:column;min-height:100vh;}
-
-.hdr{
-  height:var(--hh);
-  background:var(--bg2);border-bottom:1px solid var(--b0);
-  padding:0 20px;
-  display:flex;align-items:center;justify-content:space-between;
-  position:sticky;top:0;z-index:100;
-  gap:12px;
+.btn-theme:hover {
+  background: var(--glass-hover);
+  transform: scale(1.05);
 }
 
-.hdr-l{display:flex;align-items:center;gap:10px;}
-
-.btn-menu{
-  width:32px;height:32px;
-  background:var(--bg3);border:1px solid var(--b1);
-  border-radius:var(--r1);color:var(--t2);
-  cursor:pointer;display:flex;align-items:center;justify-content:center;
-  font-size:13px;flex-shrink:0;transition:all .2s;
+/* Main Content */
+.main-content {
+  padding: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-.btn-menu:hover{border-color:var(--blue);color:var(--blue);}
-
-.srch{position:relative;}
-.srch i{position:absolute;right:10px;top:50%;transform:translateY(-50%);color:var(--t3);font-size:11px;}
-
-.srch input{
-  background:var(--bg3);border:1px solid var(--b1);
-  border-radius:var(--r1);padding:7px 28px 7px 12px;
-  color:var(--t1);font-family:var(--sans);font-size:13px;
-  width:200px;outline:none;transition:all .2s;
+.page {
+  display: none;
 }
 
-.srch input::placeholder{color:var(--t3);}
-.srch input:focus{border-color:var(--blue);width:240px;}
-
-.u-pill{
-  display:flex;align-items:center;gap:8px;
-  padding:5px 11px 5px 6px;
-  background:var(--bg3);border:1px solid var(--b1);border-radius:50px;
+.page.active {
+  display: block;
+  animation: pageSlide 0.4s ease;
 }
 
-.u-av{
-  width:24px;height:24px;border-radius:50%;
-  background:linear-gradient(135deg,var(--blue),var(--purple));
-  display:flex;align-items:center;justify-content:center;
-  font-size:10px;color:#fff;font-weight:700;
+@keyframes pageSlide {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.u-name{font-size:12px;font-weight:600;}
-.u-role{font-size:10px;color:var(--blue);}
-
-
-
-/* ═══════════════════════════════════════════
-
-   PAGE SYSTEM — FIXED LAYOUT
-
-═══════════════════════════════════════════ */
-
-.pages-root{
-  flex:1;
-  position:relative;
-  width:100%;
-  min-height:calc(100vh - var(--hh));
-  overflow-y:auto;
+.page-header {
+  margin-bottom: 30px;
 }
 
-.page{
-  display:none !important;
-  position:static !important;
-  padding:24px;
-  min-height:calc(100vh - var(--hh));
-  animation:pgIn .25s ease;
-  width:100%;
+.page-title {
+  font-size: 32px;
+  font-weight: 900;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.page.page-active{
-  display:block !important;
-  position:static !important;
+.page-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
 }
 
-@keyframes pgIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
-
-
-
-/* PAGE HEADER */
-
-.pg-hd{
-  display:flex;align-items:flex-start;justify-content:space-between;
-  margin-bottom:22px;gap:12px;flex-wrap:wrap;
+/* Glass Cards */
+.glass-card {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
 }
 
-.pg-hd-l h2{font-size:19px;font-weight:600;letter-spacing:-.3px;margin-bottom:2px;}
-.pg-hd-l p{font-size:12px;color:var(--t2);}
-
-.date-chip{
-  padding:6px 13px;border-radius:var(--r1);
-  background:var(--bg3);border:1px solid var(--b1);
-  font-size:11px;color:var(--t2);font-family:var(--mono);
-  white-space:nowrap;flex-shrink:0;
+.glass-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary);
 }
 
-
-
-/* ═══════════════════════════════════════════
-
-   CARDS
-
-═══════════════════════════════════════════ */
-
-.card{
-  background:var(--bg2);border:1px solid var(--b0);
-  border-radius:var(--r3);overflow:hidden;
-  transition:border-color .2s;
+/* KPI Cards */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
 }
 
-.card:hover{border-color:var(--b1);}
-
-.card-h{
-  padding:14px 18px;border-bottom:1px solid var(--b0);
-  display:flex;align-items:center;gap:8px;
+.kpi-card {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 25px;
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition);
 }
 
-.card-h h3{font-size:13px;font-weight:600;}
-
-.c-icon{
-  width:24px;height:24px;border-radius:7px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:11px;flex-shrink:0;
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
 }
 
-.ci-b{background:rgba(79,142,247,.1);color:var(--blue);}
-.ci-p{background:rgba(124,58,237,.1);color:var(--purple);}
-.ci-g{background:rgba(6,214,160,.1);color:var(--green);}
-.ci-a{background:rgba(245,158,11,.1);color:var(--amber);}
-.ci-r{background:rgba(239,68,68,.1);color:var(--red);}
-
-.card-b{padding:18px;}
-
-
-
-/* ═══════════════════════════════════════════
-
-   KPI CARDS
-
-═══════════════════════════════════════════ */
-
-.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:13px;margin-bottom:20px;}
-
-.kpi{
-  background:var(--bg2);border:1px solid var(--b0);
-  border-radius:var(--r3);padding:18px;
-  position:relative;overflow:hidden;
-  transition:border-color .2s,transform .2s;
+.kpi-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
 }
 
-.kpi:hover{border-color:var(--b1);transform:translateY(-2px);}
-
-.kpi-line{position:absolute;top:0;left:0;right:0;height:2px;}
-
-.k-bl .kpi-line{background:linear-gradient(90deg,transparent,var(--blue),transparent);}
-.k-pu .kpi-line{background:linear-gradient(90deg,transparent,var(--purple),transparent);}
-.k-gr .kpi-line{background:linear-gradient(90deg,transparent,var(--green),transparent);}
-.k-am .kpi-line{background:linear-gradient(90deg,transparent,var(--amber),transparent);}
-.k-re .kpi-line{background:linear-gradient(90deg,transparent,var(--red),transparent);}
-
-.kpi-lbl{font-size:11px;color:var(--t2);font-weight:500;margin-bottom:8px;}
-.kpi-num{font-size:24px;font-weight:600;font-family:var(--mono);letter-spacing:-.5px;}
-
-.k-bl .kpi-num{color:var(--blue);}
-.k-pu .kpi-num{color:var(--purple);}
-.k-gr .kpi-num{color:var(--green);}
-.k-am .kpi-num{color:var(--amber);}
-.k-re .kpi-num{color:var(--red);}
-
-.kpi-unit{font-size:11px;color:var(--t3);margin-top:4px;}
-
-
-
-/* ═══════════════════════════════════════════
-
-   GRID HELPERS
-
-═══════════════════════════════════════════ */
-
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
-.g21{display:grid;grid-template-columns:2fr 1fr;gap:16px;}
-.g12{display:grid;grid-template-columns:1fr 2fr;gap:16px;}
-
-.mb{margin-bottom:16px;}
-.mb2{margin-bottom:22px;}
-.gap{display:flex;flex-direction:column;gap:14px;}
-
-
-
-/* ═══════════════════════════════════════════
-
-   FORM CONTROLS
-
-═══════════════════════════════════════════ */
-
-.fg{margin-bottom:13px;}
-.fg:last-child{margin-bottom:0;}
-
-.fl{
-  display:block;font-size:11px;font-weight:600;
-  color:var(--t2);margin-bottom:6px;
-  letter-spacing:.4px;text-transform:uppercase;
+.kpi-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  margin-bottom: 10px;
 }
 
-.fc{
-  width:100%;padding:10px 12px;
-  background:var(--bg3);border:1px solid var(--b1);
-  border-radius:var(--r1);color:var(--t1);
-  font-family:var(--sans);font-size:13px;outline:none;
-  transition:border-color .2s,box-shadow .2s;
+.kpi-value {
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--primary);
+  margin-bottom: 5px;
 }
 
-.fc:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(79,142,247,.08);}
-.fc::placeholder{color:var(--t3);}
-
-select.fc{cursor:pointer;}
-input[type=file].fc{padding:7px 12px;cursor:pointer;}
-
-.fc.mono{font-family:var(--mono);}
-.fc.hi{border-color:var(--blue);}
-
-.row-2{display:grid;grid-template-columns:1fr auto;gap:9px;}
-
-.pass-field {
-  position:relative;
+.kpi-unit {
+  font-size: 12px;
+  color: var(--text-tertiary);
 }
 
-.pass-field input {
-  padding-left:38px !important;
+/* Coming Soon Message */
+.coming-soon {
+  text-align: center;
+  padding: 60px 20px;
 }
 
-.pass-toggle {
-  position:absolute;left:10px;top:50%;transform:translateY(-50%);
-  background:none;border:none;color:var(--t3);cursor:pointer;
-  font-size:13px;transition:color .2s;
-  z-index:10;
+.coming-soon i {
+  font-size: 64px;
+  color: var(--primary);
+  margin-bottom: 20px;
+  animation: float 3s ease-in-out infinite;
 }
 
-.pass-toggle:hover {
-  color:var(--t2);
+.coming-soon h2 {
+  font-size: 28px;
+  font-weight: 900;
+  margin-bottom: 10px;
 }
 
-
-
-/* CHECKBOX PERMISSIONS */
-
-.perm-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;}
-
-.perm-item{
-  display:flex;align-items:center;gap:8px;
-  padding:9px 11px;
-  background:var(--bg3);border:1px solid var(--b1);
-  border-radius:var(--r1);cursor:pointer;
-  transition:border-color .15s,background .15s;
+.coming-soon p {
+  font-size: 16px;
+  color: var(--text-secondary);
 }
 
-.perm-item:hover{border-color:var(--b2);}
-
-.perm-item input[type=checkbox]{
-  width:15px;height:15px;accent-color:var(--blue);cursor:pointer;flex-shrink:0;
+/* Responsive */
+@media (max-width: 768px) {
+  .search-box {
+    width: 200px;
+  }
+  
+  .sidebar {
+    width: 100%;
+  }
+  
+  .main-content {
+    padding: 20px;
+  }
+  
+  .page-title {
+    font-size: 24px;
+  }
+  
+  .kpi-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
-.perm-item label{font-size:12px;color:var(--t2);cursor:pointer;user-select:none;}
-
-.perm-item.checked{border-color:rgba(79,142,247,.3);background:rgba(79,142,247,.05);}
-.perm-item.checked label{color:var(--blue);}
-
-
-
-/* ═══════════════════════════════════════════
-
-   BUTTONS
-
-═══════════════════════════════════════════ */
-
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:6px;
-  padding:9px 15px;border-radius:var(--r1);
-  font-family:var(--sans);font-size:13px;font-weight:600;
-  cursor:pointer;border:none;transition:all .15s;
+/* Loading Animation */
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 0.6s linear infinite;
 }
 
-.btn-pr{background:var(--blue);color:#fff;}
-.btn-pr:hover{background:#3b7de8;}
-
-.btn-sc{background:var(--bg3);color:var(--t1);border:1px solid var(--b1);}
-.btn-sc:hover{border-color:var(--blue);color:var(--blue);}
-
-.btn-dn{background:rgba(239,68,68,.09);color:var(--red);border:1px solid rgba(239,68,68,.15);}
-.btn-dn:hover{background:rgba(239,68,68,.17);}
-
-.btn-gn{background:rgba(6,214,160,.09);color:var(--green);border:1px solid rgba(6,214,160,.15);}
-.btn-gn:hover{background:rgba(6,214,160,.17);}
-
-.btn-am{background:rgba(245,158,11,.09);color:var(--amber);border:1px solid rgba(245,158,11,.15);}
-.btn-am:hover{background:rgba(245,158,11,.17);}
-
-.btn-gr{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;}
-.btn-gr:hover{opacity:.9;}
-
-.btn-full{width:100%;}
-.btn-lg{padding:12px 20px;font-size:14px;border-radius:var(--r2);}
-.btn-sm{padding:5px 10px;font-size:11px;border-radius:6px;}
-
-
-
-/* ═══════════════════════════════════════════
-
-   TABLES
-
-═══════════════════════════════════════════ */
-
-.tw{overflow-x:auto;}
-
-.tbl{
-  width:100%;border-collapse:collapse;
-  font-size:13px;text-align:right;
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
-.tbl thead th{
-  padding:11px 14px;
-  color:var(--t3);font-weight:700;font-size:10px;
-  letter-spacing:.8px;text-transform:uppercase;
-  border-bottom:1px solid var(--b0);
-  background:var(--bg3);white-space:nowrap;
+/* Success Animation */
+@keyframes success {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
-.tbl tbody td{
-  padding:12px 14px;
-  border-bottom:1px solid var(--b0);
-  color:var(--t1);vertical-align:middle;
+.animate-success {
+  animation: success 0.5s var(--bounce);
 }
-
-.tbl tbody tr:last-child td{border-bottom:none;}
-.tbl tbody tr:hover td{background:var(--bg3);}
-
-.fw{font-weight:600;}
-.dim{color:var(--t2);}
-
-
-
-/* ═══════════════════════════════════════════
-
-   BADGES
-
-═══════════════════════════════════════════ */
-
-.bdg{display:inline-block;padding:3px 9px;border-radius:50px;font-size:11px;font-weight:600;}
-
-.bdg-b{background:rgba(79,142,247,.1);color:var(--blue);}
-.bdg-p{background:rgba(124,58,237,.1);color:var(--purple);}
-.bdg-g{background:rgba(6,214,160,.1);color:var(--green);}
-.bdg-a{background:rgba(245,158,11,.1);color:var(--amber);}
-.bdg-r{background:rgba(239,68,68,.1);color:var(--red);}
-.bdg-x{background:var(--b0);color:var(--t2);}
-
-
-
-/* ═══════════════════════════════════════════
-
-   FINANCE BOX
-
-═══════════════════════════════════════════ */
-
-.fin{
-  background:var(--bg3);border:1px solid var(--b1);
-  border-radius:var(--r3);padding:18px;
-}
-
-.fin-ttl{
-  font-size:10px;font-weight:700;color:var(--t3);
-  letter-spacing:1.5px;text-transform:uppercase;
-  margin-bottom:16px;display:flex;align-items:center;gap:6px;
-}
-
-.fin-row{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:9px 0;border-bottom:1px solid var(--b0);
-}
-
-.fin-row:last-of-type{border-bottom:none;}
-
-.fin-row label{font-size:12px;color:var(--t2);}
-
-.fin-row .fv{font-family:var(--mono);font-size:13px;font-weight:600;}
-
-.fin-total{
-  margin-top:10px;padding:13px;
-  background:var(--bg2);border-radius:var(--r2);
-  border:1px solid var(--b1);
-  display:flex;justify-content:space-between;align-items:baseline;
-}
-
-.fin-total label{font-size:12px;font-weight:600;color:var(--green);}
-
-.fin-total .fv{font-family:var(--mono);font-size:24px;font-weight:700;color:var(--green);}
-
-.fin-due{
-  margin-top:9px;padding:12px 14px;
-  background:rgba(239,68,68,.05);
-  border:1px solid rgba(239,68,68,.1);border-radius:var(--r2);
-  display:flex;justify-content:space-between;align-items:center;
-}
-
-.fin-due label{font-size:12px;color:#fca5a5;}
-
-.fin-due-val{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--red);}
-
-
-
-/* RX TABLE */
-
-.rx-tbl{width:100%;border-collapse:collapse;font-size:13px;}
-
-.rx-tbl th{
-  padding:9px 8px;color:var(--t3);font-weight:700;
-  font-size:10px;letter-spacing:.7px;text-align:center;
-  border-bottom:1px solid var(--b0);
-}
-
-.rx-tbl td{padding:8px 4px;border-bottom:1px solid var(--b0);}
-
-.rx-eye{font-weight:700;font-size:12px;padding:0 10px;white-space:nowrap;}
-
-.rx-eye.od{color:var(--blue);}
-.rx-eye.os{color:var(--green);}
-
-.rx-tbl input{
-  background:var(--bg);border:1px solid var(--b1);
-  border-radius:6px;padding:7px 8px;
-  color:var(--t1);font-family:var(--mono);font-size:13px;
-  outline:none;text-align:center;width:100%;
-  transition:border-color .2s;
-}
-
-.rx-tbl input:focus{border-color:var(--blue);}
-
-
-
-/* PURCHASE ROW */
-
-.pr{display:flex;gap:8px;margin-bottom:8px;}
-.pr input:first-child{flex:1;}
-.pr input:last-child{width:110px;text-align:right;}
-
-
-
-/* LEDGER */
-
-.ledger-item{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:10px 0;border-bottom:1px solid var(--b0);
-}
-
-.ledger-item:last-child{border-bottom:none;}
-
-.ledger-lft{display:flex;align-items:center;gap:9px;}
-
-.ldot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
-
-.ltime{font-family:var(--mono);font-size:10px;color:var(--t3);width:44px;}
-
-.ldesc{font-size:12px;color:var(--t2);}
-
-.lval{font-family:var(--mono);font-size:12px;font-weight:600;}
-
-.lval.inc{color:var(--green);}
-.lval.dec{color:var(--red);}
-
-
-
-/* MODALS */
-
-.modal-bg{
-  position:fixed;inset:0;z-index:500;
-  background:rgba(0,0,0,.72);backdrop-filter:blur(4px);
-  display:none;align-items:center;justify-content:center;
-}
-
-.modal-bg.open{display:flex;}
-
-.modal{
-  background:var(--bg2);border:1px solid var(--b1);
-  border-radius:var(--r4);padding:28px;
-  width:90%;max-width:560px;
-  animation:mIn .22s cubic-bezier(.16,1,.3,1);
-  max-height:92vh;overflow-y:auto;
-}
-
-.modal-wide{max-width:780px;}
-
-@keyframes mIn{from{transform:scale(.95) translateY(6px);opacity:0;}to{transform:none;opacity:1;}}
-
-.modal-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
-
-.modal-h h3{font-size:15px;font-weight:600;}
-
-.modal-cl{
-  background:var(--bg3);border:1px solid var(--b1);color:var(--t2);
-  width:28px;height:28px;border-radius:var(--r1);
-  cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;
-}
-
-.modal-cl:hover{color:var(--t1);}
-
-
-
-/* SECTION DIVIDER */
-
-.s-div{
-  font-size:10px;font-weight:700;color:var(--t3);
-  letter-spacing:1.5px;text-transform:uppercase;
-  border-bottom:1px solid var(--b0);padding-bottom:8px;
-  margin-bottom:14px;
-}
-
-
-
-/* PRINT */
-
-#print-area{display:none;}
-
-@media print{
-  body>*:not(#print-area){display:none!important;}
-  #print-area{display:block!important;}
-  .print-card{font-family:Arial,sans-serif;font-size:12px;padding:18px;max-width:90mm;margin:0 auto;}
-  .ptbl{width:100%;border-collapse:collapse;margin:7px 0;}
-  .ptbl th,.ptbl td{border:1px solid #ddd;padding:5px;text-align:center;}
-  .en{font-family:'Courier New',monospace;}
-}
-
-
-
-/* RESPONSIVE */
-
-@media(max-width:720px){
-  .g2,.g3,.g21,.g12{grid-template-columns:1fr;}
-  .kpi-row{grid-template-columns:1fr 1fr;}
-  .page{padding:14px;}
-  .srch input{width:130px;}
-  .login-wrap{width:90vw;}
-}
-
 </style>
-
 </head>
-
 <body>
 
-
-
-<!-- ═══ LOGIN SCREEN ═══ -->
+<!-- ═══════════════════════════════════════════
+     🔐 LOGIN SCREEN
+═══════════════════════════════════════════ -->
 
 <div id="login-screen">
-
-  <div class="login-wrap">
-
-    <div class="l-logo">
-      <div class="l-icon"><i class="fas fa-eye"></i></div>
-      <h1>Delta Vision OS</h1>
-      <p>ENTERPRISE PLATFORM</p>
+  <div class="login-container">
+    <div class="login-logo">
+      <img src="logo.jpg" alt="Delta Optics">
     </div>
-
-    <!-- LOGIN TABS -->
+    
+    <h1 class="login-title">Delta Vision Pro</h1>
+    <p class="login-subtitle">Enterprise System</p>
+    
     <div class="login-tabs">
-      <button class="login-tab active" onclick="switchLoginTab('login')"><i class="fas fa-sign-in-alt"></i> دخول</button>
-      <button class="login-tab" onclick="switchLoginTab('forgot')"><i class="fas fa-key"></i> نسيت المرور</button>
+      <button class="login-tab active" onclick="switchTab('login')">
+        <i class="fas fa-sign-in-alt"></i> دخول
+      </button>
+      <button class="login-tab" onclick="switchTab('reset')">
+        <i class="fas fa-key"></i> استرجاع
+      </button>
     </div>
-
-    <!-- LOGIN PANEL -->
+    
+    <!-- Login Panel -->
     <div id="login-panel" class="login-panel active">
-      <div class="lf"><label>البريد الإلكتروني</label><input type="text" id="auth-u" placeholder="user@delta.com" dir="ltr"></div>
-
-      <div class="lf">
-        <label>كلمة المرور</label>
-        <div class="pass-field">
-          <input type="password" id="auth-p" placeholder="••••••••" dir="ltr" onkeydown="if(event.key==='Enter')handleLogin()">
-          <button class="pass-toggle" type="button" onclick="toggleAuthPassVis()">
-            <i class="fas fa-eye" id="pass-eye-login"></i>
+      <div class="form-group">
+        <label class="form-label">البريد الإلكتروني</label>
+        <input type="email" id="login-email" class="form-input" placeholder="user@delta.com" autocomplete="email">
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label">كلمة المرور</label>
+        <div class="password-wrapper">
+          <input type="password" id="login-password" class="form-input" placeholder="••••••••" autocomplete="current-password">
+          <button type="button" class="password-toggle" onclick="togglePassword('login-password', this)">
+            <i class="fas fa-eye"></i>
           </button>
         </div>
       </div>
-
-      <button class="l-btn" onclick="handleLogin()"><i class="fas fa-arrow-right-to-bracket"></i> دخول النظام</button>
-
-      <div class="login-divider">أو</div>
-
-      <button class="l-btn-sec" onclick="handleGoogleLogin()">
-        <i class="fab fa-google"></i> دخول عبر Google
+      
+      <button class="btn-primary" onclick="handleLogin()">
+        <i class="fas fa-arrow-right-to-bracket"></i> تسجيل الدخول
+      </button>
+      
+      <div class="divider">أو</div>
+      
+      <button class="btn-secondary" onclick="handleGoogleLogin()">
+        <i class="fab fa-google"></i> الدخول عبر Google
       </button>
     </div>
-
-    <!-- FORGOT PASSWORD PANEL -->
-    <div id="forgot-panel" class="login-panel">
-      <p style="font-size:12px;color:var(--t2);margin-bottom:14px;">أدخل بريدك الإلكتروني وسنرسل لك رابط استرجاع كلمة المرور</p>
-
-      <div class="lf">
-        <label>البريد الإلكتروني</label>
-        <input type="text" id="forgot-email" placeholder="user@delta.com" dir="ltr">
+    
+    <!-- Reset Panel -->
+    <div id="reset-panel" class="login-panel">
+      <div class="form-group">
+        <label class="form-label">البريد الإلكتروني</label>
+        <input type="email" id="reset-email" class="form-input" placeholder="user@delta.com">
       </div>
-
-      <button class="l-btn" onclick="handleForgotPassword()"><i class="fas fa-paper-plane"></i> إرسال رابط الاسترجاع</button>
-
-      <div class="login-footer">
-        أتذكر كلمة المرور؟ <a onclick="switchLoginTab('login')">عد للدخول</a>
-      </div>
-    </div>
-
-  </div>
-
-</div>
-
-
-
-<!-- ═══ MODALS ═══ -->
-
-<div id="mod-history" class="modal-bg">
-  <div class="modal modal-wide">
-    <div class="modal-h">
-      <h3><i class="fas fa-folder-open" style="color:var(--blue);margin-left:8px;"></i>سجل: <span id="hist-name" style="color:var(--blue);"></span></h3>
-      <div style="display:flex;gap:7px;">
-        <button class="btn btn-sc btn-sm" onclick="printPatientHistory()"><i class="fas fa-print"></i> طباعة</button>
-        <button class="modal-cl" onclick="closeModal('mod-history')"><i class="fas fa-times"></i></button>
-      </div>
-    </div>
-    <div class="tw"><table class="tbl"><thead><tr><th>التاريخ</th><th>رقم الملف</th><th>التفاصيل</th><th>القيمة</th><th>خيارات</th></tr></thead><tbody id="tb-hist"></tbody></table></div>
-  </div>
-</div>
-
-<div id="mod-online" class="modal-bg">
-  <div class="modal">
-    <div class="modal-h">
-      <h3><i class="fas fa-microscope" style="color:var(--blue);margin-left:8px;"></i>تقرير الفحص الذكي</h3>
-      <button class="modal-cl" onclick="closeModal('mod-online')"><i class="fas fa-times"></i></button>
-    </div>
-    <div style="background:var(--bg3);border:1px solid var(--b1);border-radius:var(--r2);padding:13px 15px;margin-bottom:13px;">
-      <div style="display:flex;justify-content:space-between;margin-bottom:7px;"><span style="font-size:11px;color:var(--t2);">الاسم</span><span id="rpt-name" style="font-weight:600;font-size:13px;"></span></div>
-      <div style="display:flex;justify-content:space-between;"><span style="font-size:11px;color:var(--t2);">الهاتف</span><span id="rpt-phone" class="mono" style="color:var(--blue);font-weight:600;font-size:14px;"></span></div>
-    </div>
-    <div id="rpt-details" style="background:var(--bg3);border:1px solid var(--b1);border-radius:var(--r2);padding:16px;font-size:13px;line-height:1.8;white-space:pre-wrap;color:var(--t1);max-height:200px;overflow-y:auto;"></div>
-    <div style="margin-top:13px;display:flex;gap:9px;">
-      <button id="btn-done-rpt" class="btn btn-gn btn-full"><i class="fas fa-check-double"></i> تعليم كمُنجز</button>
-      <a id="btn-wa-rpt" href="#" target="_blank" class="btn btn-full" style="background:#10b981;color:#fff;text-decoration:none;"><i class="fab fa-whatsapp"></i> واتساب</a>
+      
+      <button class="btn-primary" onclick="handleReset()">
+        <i class="fas fa-paper-plane"></i> إرسال رابط الاسترجاع
+      </button>
     </div>
   </div>
 </div>
 
+<!-- ═══════════════════════════════════════════
+     🎯 MAIN APP
+═══════════════════════════════════════════ -->
 
-
-<!-- ═══ SIDEBAR ═══ -->
-
-<div class="sb-overlay" id="sb-overlay" onclick="toggleSidebar()"></div>
-
-<aside class="sidebar off" id="sidebar">
-
-  <div class="sb-head">
-    <div class="sb-logo-icon"><i class="fas fa-eye"></i></div>
-    <div class="sb-logo-txt"><strong>Delta Vision</strong><small>ENTERPRISE OS</small></div>
-    <button class="sb-x" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
-  </div>
-
-  <nav class="sb-nav">
-
-    <div class="nav-grp-lbl">العمليات اليومية</div>
-    <button class="ni active" data-page="dash" onclick="goPage('dash')"><i class="fas fa-chart-pie"></i> لوحة التحكم</button>
-    <button class="ni" data-page="rx" onclick="goPage('rx')"><i class="fas fa-notes-medical"></i> العيادة والملفات</button>
-    <button class="ni" data-page="pos" onclick="goPage('pos')"><i class="fas fa-cash-register"></i> الكاشير السريع</button>
-    <button class="ni" data-page="online" onclick="goPage('online')"><i class="fas fa-globe"></i> فحوصات الأونلاين</button>
-
-    <div class="nav-grp-lbl">اللوجستيات</div>
-    <button class="ni" data-page="inv" onclick="goPage('inv')"><i class="fas fa-boxes"></i> المخزون</button>
-    <button class="ni" data-page="lab" onclick="goPage('lab')"><i class="fas fa-flask"></i> المختبر</button>
-
-    <div class="admin-only" style="display:none;">
-      <div class="nav-grp-lbl adm">الإدارة</div>
-      <button class="ni" data-page="gallery" onclick="goPage('gallery')"><i class="fas fa-images"></i> المعرض</button>
-      <button class="ni" data-page="cms" onclick="goPage('cms')"><i class="fas fa-cog"></i> إعدادات النظام</button>
+<div id="app">
+  <!-- Sidebar Overlay -->
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+  
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">
+          <img src="logo.jpg" alt="Delta">
+        </div>
+        <div class="sidebar-logo-text">
+          <h3>Delta Vision</h3>
+          <p>ENTERPRISE PRO</p>
+        </div>
+      </div>
+      <button class="btn-close" onclick="closeSidebar()">
+        <i class="fas fa-times"></i>
+      </button>
     </div>
-
-    <div class="developer-only" style="display:none;">
-      <div class="nav-grp-lbl dev">المطور</div>
-      <button class="ni" data-page="accounts" onclick="goPage('accounts')"><i class="fas fa-user-shield"></i> إدارة الحسابات</button>
-      <button class="ni" data-page="audit" onclick="goPage('audit')"><i class="fas fa-user-secret"></i> سجل التدقيق</button>
-      <button class="ni" data-page="recycle" onclick="goPage('recycle')"><i class="fas fa-trash-restore"></i> سلة المحذوفات</button>
+    
+    <nav class="sidebar-nav">
+      <div class="nav-section-title">العمليات الرئيسية</div>
+      <div class="nav-item active" onclick="goToPage('dashboard')">
+        <i class="fas fa-chart-line"></i>
+        <span>لوحة التحكم</span>
+      </div>
+      <div class="nav-item" onclick="goToPage('clinic')">
+        <i class="fas fa-stethoscope"></i>
+        <span>العيادة</span>
+      </div>
+      <div class="nav-item" onclick="goToPage('pos')">
+        <i class="fas fa-cash-register"></i>
+        <span>الكاشير</span>
+      </div>
+      <div class="nav-item" onclick="goToPage('tests')">
+        <i class="fas fa-microscope"></i>
+        <span>الفحوصات</span>
+      </div>
+      
+      <div class="nav-section-title">الإدارة</div>
+      <div class="nav-item" onclick="goToPage('inventory')">
+        <i class="fas fa-boxes"></i>
+        <span>المخزون</span>
+      </div>
+      <div class="nav-item" onclick="goToPage('gallery')">
+        <i class="fas fa-images"></i>
+        <span>المعرض</span>
+      </div>
+      <div class="nav-item" onclick="goToPage('settings')">
+        <i class="fas fa-cog"></i>
+        <span>الإعدادات</span>
+      </div>
+    </nav>
+    
+    <div class="sidebar-footer">
+      <button class="btn-logout" onclick="handleLogout()">
+        <i class="fas fa-power-off"></i>
+        <span>خروج</span>
+      </button>
+      <button class="btn-theme" onclick="toggleTheme()" id="theme-toggle">
+        <i class="fas fa-moon"></i>
+      </button>
     </div>
-
-  </nav>
-
-  <div class="sb-foot">
-    <button class="btn-theme" onclick="toggleTheme()" title="تبديل الوضع"><i class="fas fa-moon" id="theme-icon"></i></button>
-    <button class="btn-logout" onclick="handleLogout()"><i class="fas fa-power-off"></i> خروج</button>
-  </div>
-
-</aside>
-
-
-
-<!-- ═══ SHELL ═══ -->
-
-<div id="shell">
-
-  <div class="main">
-
-    <!-- HEADER -->
-
-    <header class="hdr">
-
-      <div class="hdr-l">
-
-        <button class="btn-menu" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
-
-        <div class="srch"><i class="fas fa-search"></i><input type="text" id="g-search" placeholder="بحث سريع..." onkeyup="globalSearch()"></div>
-
+  </aside>
+  
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <button class="btn-menu" onclick="openSidebar()">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <div class="search-box">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" class="search-input" placeholder="بحث سريع..." id="global-search">
       </div>
-
-      <div class="u-pill">
-
-        <div class="u-av" id="u-av">?</div>
-
-        <div><div class="u-name" id="u-name-display">—</div><div class="u-role" id="u-role-display">—</div></div>
-
+    </div>
+    
+    <div class="header-right">
+      <button class="btn-icon" title="الإشعارات">
+        <i class="fas fa-bell"></i>
+      </button>
+      
+      <div class="user-badge" onclick="openSidebar()">
+        <div class="user-avatar" id="user-avatar">DV</div>
+        <div class="user-info">
+          <div class="user-name" id="user-name">Delta User</div>
+          <div class="user-role" id="user-role">مدير النظام</div>
+        </div>
       </div>
-
-    </header>
-
-
-
-    <!-- PAGES ROOT — fully isolated -->
-
-    <div class="pages-root">
-
-      <!-- ══ DASHBOARD ══ -->
-      <div id="page-dash" class="page page-active">
-
-        <div class="pg-hd">
-
-          <div class="pg-hd-l"><h2>لوحة التحكم</h2><p>ملخص الأداء المالي اليومي</p></div>
-
-          <div class="date-chip" id="date-chip">—</div>
-
-        </div>
-
-        <div class="kpi-row">
-
-          <div class="kpi k-bl"><div class="kpi-line"></div><div class="kpi-lbl">المبيعات الإجمالية</div><div class="kpi-num" id="kpi-sales">0.00</div><div class="kpi-unit">JOD — اليوم</div></div>
-
-          <div class="kpi k-pu admin-only"><div class="kpi-line"></div><div class="kpi-lbl">المقبوضات</div><div class="kpi-num" id="kpi-paid">0.00</div><div class="kpi-unit">JOD — نقدي + تحويل</div></div>
-
-          <div class="kpi k-re admin-only"><div class="kpi-line"></div><div class="kpi-lbl">المصروفات</div><div class="kpi-num" id="kpi-exp">0.00</div><div class="kpi-unit">JOD — اليوم</div></div>
-
-          <div class="kpi k-gr admin-only"><div class="kpi-line"></div><div class="kpi-lbl">الصافي في الصندوق</div><div class="kpi-num" id="kpi-net">0.00</div><div class="kpi-unit">مقبوضات − مصاريف</div></div>
-
-          <div class="kpi k-am admin-only"><div class="kpi-line"></div><div class="kpi-lbl">الذمم</div><div class="kpi-num" id="kpi-due">0.00</div><div class="kpi-unit">JOD — متبقٍ</div></div>
-
-        </div>
-
-        <div class="g21 mb2 admin-only">
-
-          <div class="card">
-
-            <div class="card-h"><div class="c-icon ci-b"><i class="fas fa-list"></i></div><h3>حركة الصندوق اليومية</h3></div>
-
-            <div class="card-b" id="ledger-wrap" style="max-height:280px;overflow-y:auto;padding-top:4px;"></div>
-
-          </div>
-
-          <div class="card">
-
-            <div class="card-h"><div class="c-icon ci-r"><i class="fas fa-wallet"></i></div><h3>تسجيل مصروف</h3></div>
-
-            <div class="card-b">
-
-              <div class="fg"><label class="fl">المبلغ (JOD)</label><input type="number" id="exp-amount" class="fc mono" placeholder="0.00"></div>
-
-              <div class="fg"><label class="fl">البيان</label><input type="text" id="exp-desc" class="fc" placeholder="كهرباء، ضيافة، صيانة..."></div>
-
-              <button class="btn btn-dn btn-full btn-lg" style="margin-top:4px;" onclick="saveExpense()"><i class="fas fa-minus-circle"></i> تسجيل المصروف</button>
-
-            </div>
-
-          </div>
-
-        </div>
-
+    </div>
+  </header>
+  
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Dashboard Page -->
+    <div id="page-dashboard" class="page active">
+      <div class="page-header">
+        <h1 class="page-title">لوحة التحكم</h1>
+        <p class="page-subtitle">نظرة شاملة على الأداء اليومي</p>
       </div>
-
-      <!-- ══ CLINIC / RX ══ -->
-      <div id="page-rx" class="page">
-
-        <datalist id="patients-dl"></datalist>
-
-        <div class="pg-hd"><div class="pg-hd-l"><h2>العيادة والملفات</h2><p>تسجيل المراجعين وإصدار الوصفات الطبية</p></div></div>
-
-        <div class="card mb">
-
-          <div class="card-h"><div class="c-icon ci-b"><i class="fas fa-user-plus"></i></div><h3>بيانات المراجع</h3></div>
-
-          <div class="card-b">
-
-            <div class="g2">
-
-              <div class="fg"><label class="fl">اسم المراجع</label><input type="text" id="u-name" list="patients-dl" class="fc" placeholder="الاسم الكامل..."></div>
-
-              <div class="fg"><label class="fl">رقم الهاتف</label><input type="text" id="u-phone" class="fc mono" placeholder="07XXXXXXXX" dir="ltr"></div>
-
-            </div>
-
-          </div>
-
+      
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">المبيعات اليومية</div>
+          <div class="kpi-value">0.00</div>
+          <div class="kpi-unit">JOD</div>
         </div>
-
-        <div class="card mb2">
-
-          <div class="card-h"><div class="c-icon ci-p"><i class="fas fa-eye"></i></div><h3>القياسات البصرية — Optical Rx</h3></div>
-
-          <div class="card-b">
-
-            <div class="tw">
-
-              <table class="rx-tbl">
-
-                <thead><tr><th style="text-align:right;padding-right:10px;">Eye</th><th>SPH</th><th>CYL</th><th>AXIS</th><th>ADD</th></tr></thead>
-
-                <tbody>
-
-                  <tr><td class="rx-eye od">R — OD</td><td><input id="od-s" placeholder="0.00"></td><td><input id="od-c" placeholder="0.00"></td><td><input id="od-a" placeholder="0"></td><td><input id="od-add" placeholder="0.00"></td></tr>
-
-                  <tr><td class="rx-eye os">L — OS</td><td><input id="os-s" placeholder="0.00"></td><td><input id="os-c" placeholder="0.00"></td><td><input id="os-a" placeholder="0"></td><td><input id="os-add" placeholder="0.00"></td></tr>
-
-                </tbody>
-
-              </table>
-
-            </div>
-
-            <div class="g2" style="margin-top:14px;">
-
-              <div class="fg" style="margin:0;"><label class="fl">PD — المسافة الحدقية</label><input id="u-pd" class="fc mono" placeholder="60"></div>
-
-              <div class="fg" style="margin:0;"><label class="fl">ملاحظات</label><input id="u-notes" class="fc" placeholder="ملاحظات للوصفة..."></div>
-
-            </div>
-
-          </div>
-
+        
+        <div class="kpi-card">
+          <div class="kpi-label">المراجعين</div>
+          <div class="kpi-value">0</div>
+          <div class="kpi-unit">مراجع</div>
         </div>
-
-        <div class="g2 mb2">
-
-          <div class="card">
-
-            <div class="card-h"><div class="c-icon ci-g"><i class="fas fa-shopping-bag"></i></div><h3>المشتريات</h3></div>
-
-            <div class="card-b">
-
-              <div class="pr"><input id="u-fr-t" class="fc" placeholder="الإطار (الماركة)"><input id="u-fr-p" type="number" class="fc mono" placeholder="السعر" oninput="calcRx()"></div>
-
-              <div class="pr"><input id="u-ln-t" class="fc" placeholder="العدسات (النوع)"><input id="u-ln-p" type="number" class="fc mono" placeholder="السعر" oninput="calcRx()"></div>
-
-              <div class="pr"><input id="u-cl-t" class="fc" placeholder="العدسات اللاصقة"><input id="u-cl-p" type="number" class="fc mono" placeholder="السعر" oninput="calcRx()"></div>
-
-              <div class="pr"><input id="u-ex-t" class="fc" placeholder="أخرى (قطرات...)"><input id="u-ex-p" type="number" class="fc mono" placeholder="السعر" oninput="calcRx()"></div>
-
-            </div>
-
-          </div>
-
-          <div>
-
-            <div class="fin">
-
-              <div class="fin-ttl"><i class="fas fa-calculator"></i> الخلاصة المالية</div>
-
-              <div class="fin-row"><label>المجموع</label><span class="fv mono" id="rx-sub">0.00 JOD</span></div>
-
-              <div class="fin-row"><label>الخصم</label>
-
-                <select id="rx-disc" class="fc mono" style="width:95px;padding:6px 9px;font-size:12px;" onchange="calcRx()">
-
-                  <option value="0">0%</option><option value="10">10%</option><option value="20">20%</option>
-
-                  <option value="30">30%</option><option value="40">40%</option><option value="50">50%</option><option value="100">100%</option>
-
-                </select>
-
-              </div>
-
-              <div class="fin-row"><label>طريقة الدفع</label>
-
-                <select id="rx-pay" class="fc" style="width:115px;padding:6px 9px;font-size:12px;">
-
-                  <option value="كاش">كاش</option><option value="فيزا">فيزا</option><option value="كليك">كليك</option><option value="تأمين">تأمين</option>
-
-                </select>
-
-              </div>
-
-              <div class="fin-row"><label>المدفوع نقداً</label>
-
-                <input id="rx-paid" type="number" class="fc mono hi" placeholder="0.00" oninput="calcRx()" style="width:120px;padding:8px 10px;font-size:13px;">
-
-              </div>
-
-              <div class="fin-total"><label>الإجمالي</label><span class="fv" id="rx-total">0.00</span></div>
-
-              <div class="fin-due"><label>الباقي (الذمة)</label><span class="fin-due-val" id="rx-due-disp">0.00 JOD</span></div>
-
-              <input type="hidden" id="rx-due-val" value="0">
-
-              <button class="btn btn-gr btn-full btn-lg" style="margin-top:13px;" onclick="saveRx()"><i class="fas fa-print"></i> حفظ وطباعة الوصفة</button>
-
-            </div>
-
-          </div>
-
+        
+        <div class="kpi-card">
+          <div class="kpi-label">الفحوصات</div>
+          <div class="kpi-value">0</div>
+          <div class="kpi-unit">فحص</div>
         </div>
-
-        <div class="card">
-
-          <div class="card-h"><div class="c-icon ci-b"><i class="fas fa-users"></i></div><h3>أرشيف المراجعين</h3></div>
-
-          <div class="tw"><table class="tbl"><thead><tr><th>المراجع</th><th>آخر زيارة</th><th>إجمالي الإنفاق</th><th>السجل</th></tr></thead><tbody id="tb-rx"></tbody></table></div>
-
+        
+        <div class="kpi-card">
+          <div class="kpi-label">الأرباح</div>
+          <div class="kpi-value">0.00</div>
+          <div class="kpi-unit">JOD</div>
         </div>
-
       </div>
-
-      <!-- ══ POS ══ -->
-      <div id="page-pos" class="page">
-
-        <div class="pg-hd"><div class="pg-hd-l"><h2>الكاشير السريع</h2><p>مبيعات سريعة من المخزون</p></div></div>
-
-        <div class="g2 mb2">
-
-          <div class="card">
-
-            <div class="card-h"><div class="c-icon ci-g"><i class="fas fa-shopping-cart"></i></div><h3>بيانات البيع</h3></div>
-
-            <div class="card-b">
-
-              <div class="fg"><label class="fl">الزبون</label><input type="text" id="pos-cust" list="patients-dl" class="fc" placeholder="اسم الزبون..."></div>
-
-              <div class="fg"><label class="fl">المنتج من المخزون</label><select id="pos-prod" class="fc" onchange="posUpdatePrice()"><option value="">— اختر المنتج —</option></select></div>
-
-            </div>
-
-          </div>
-
-          <div>
-
-            <div class="fin">
-
-              <div class="fin-ttl"><i class="fas fa-receipt"></i> ملخص الفاتورة</div>
-
-              <div class="fin-row"><label>السعر</label><span class="fv mono" id="pos-price-disp">0.00 JOD</span></div>
-
-              <div class="fin-row"><label>الخصم</label>
-
-                <select id="pos-disc" class="fc mono" style="width:95px;padding:6px 9px;font-size:12px;" onchange="posCalc()">
-
-                  <option value="0">0%</option><option value="10">10%</option><option value="20">20%</option><option value="50">50%</option><option value="100">100%</option>
-
-                </select>
-
-              </div>
-
-              <div class="fin-row"><label>طريقة الدفع</label>
-
-                <select id="pos-pay" class="fc" style="width:115px;padding:6px 9px;font-size:12px;">
-
-                  <option value="كاش">كاش</option><option value="فيزا">فيزا</option><option value="كليك">كليك</option>
-
-                </select>
-
-              </div>
-
-              <div class="fin-row"><label>المدفوع</label>
-
-                <input id="pos-paid" type="number" class="fc mono hi" placeholder="0.00" oninput="posCalc()" style="width:120px;padding:8px 10px;font-size:13px;">
-
-              </div>
-
-              <div class="fin-total"><label>الإجمالي</label><span class="fv" id="pos-total-disp">0.00</span></div>
-
-              <div class="fin-due"><label>الباقي</label><span class="fin-due-val" id="pos-due-disp">0.00 JOD</span></div>
-
-              <input type="hidden" id="pos-due-val" value="0">
-
-              <input type="hidden" id="pos-price-val" value="0">
-
-              <button class="btn btn-gr btn-full btn-lg" style="margin-top:13px;" onclick="savePos()"><i class="fas fa-receipt"></i> إصدار وطباعة الفاتورة</button>
-
-            </div>
-
-          </div>
-
-        </div>
-
-        <div class="card">
-
-          <div class="card-h"><div class="c-icon ci-a"><i class="fas fa-list-alt"></i></div><h3>سجل الكاشير</h3></div>
-
-          <div class="tw"><table class="tbl"><thead><tr><th>الفاتورة</th><th>الزبون</th><th>المنتج</th><th>الإجمالي</th><th>الباقي</th><th>خيارات</th></tr></thead><tbody id="tb-pos"></tbody></table></div>
-
-        </div>
-
+      
+      <div class="coming-soon">
+        <i class="fas fa-rocket"></i>
+        <h2>قريباً: تحليلات متقدمة</h2>
+        <p>رسوم بيانية وتقارير تفصيلية</p>
       </div>
-
-      <!-- ══ ONLINE RX ══ -->
-      <div id="page-online" class="page">
-
-        <div class="pg-hd"><div class="pg-hd-l"><h2>فحوصات الأونلاين</h2><p>الطلبات الواردة من الموقع الإلكتروني</p></div></div>
-
-        <div class="card"><div class="card-h"><div class="c-icon ci-b"><i class="fas fa-globe"></i></div><h3>الفحوصات الذكية</h3></div><div class="tw"><table class="tbl"><thead><tr><th>الاسم</th><th>الهاتف</th><th>التاريخ</th><th>الحالة</th><th>إجراء</th></tr></thead><tbody id="tb-online"></tbody></table></div></div>
-
+    </div>
+    
+    <!-- Other Pages -->
+    <div id="page-clinic" class="page">
+      <div class="page-header">
+        <h1 class="page-title">العيادة والملفات</h1>
+        <p class="page-subtitle">إدارة المراجعين والوصفات الطبية</p>
       </div>
-
-      <!-- ══ INVENTORY ══ -->
-      <div id="page-inv" class="page">
-
-        <div class="pg-hd"><div class="pg-hd-l"><h2>إدارة المخزون</h2><p>متابعة المنتجات والكميات والأسعار</p></div></div>
-
-        <div class="card mb2">
-
-          <div class="card-h"><div class="c-icon ci-g"><i class="fas fa-plus-circle"></i></div><h3>إضافة / تعديل منتج</h3></div>
-
-          <div class="card-b">
-
-            <div class="g3">
-
-              <div class="fg"><label class="fl">الاسم</label><input id="p-name" class="fc"></div>
-
-              <div class="fg"><label class="fl">السعر (JOD)</label><input id="p-price" type="number" class="fc mono"></div>
-
-              <div class="fg"><label class="fl">الكمية</label><input id="p-qty" type="number" class="fc mono"></div>
-
-            </div>
-
-            <div class="g2" style="margin-top:0;">
-
-              <div class="fg"><label class="fl">التصنيف</label><select id="p-type" class="fc"><option value="طبي">طبي</option></select></div>
-
-              <div class="fg"><label class="fl">صورة المنتج</label><input type="file" accept="image/*" class="fc" onchange="compressImage(event,'p-img')"><input type="hidden" id="p-img"></div>
-
-            </div>
-
-            <button class="btn btn-gr btn-lg" onclick="saveProduct()"><i class="fas fa-save"></i> حفظ في المستودع</button>
-
-          </div>
-
-        </div>
-
-        <div class="card"><div class="card-h"><div class="c-icon ci-b"><i class="fas fa-warehouse"></i></div><h3>المستودع الحالي</h3></div><div class="tw"><table class="tbl"><thead><tr><th>المنتج</th><th>التصنيف</th><th>الكمية</th><th>السعر</th><th>خيارات</th></tr></thead><tbody id="tb-inv"></tbody></table></div></div>
-
+      <div class="coming-soon">
+        <i class="fas fa-stethoscope"></i>
+        <h2>صفحة العيادة قيد التطوير</h2>
+        <p>نظام متكامل لإدارة المراجعين</p>
       </div>
-
-      <!-- ══ LAB ══ -->
-      <div id="page-lab" class="page">
-
-        <div class="pg-hd"><div class="pg-hd-l"><h2>المختبر والتجهيز</h2><p>متابعة حالات التجهيز والتسليم</p></div></div>
-
-        <div class="card"><div class="card-h"><div class="c-icon ci-p"><i class="fas fa-flask"></i></div><h3>قائمة المختبر</h3></div><div class="tw"><table class="tbl"><thead><tr><th>الفاتورة</th><th>المراجع</th><th>التفاصيل</th><th>الحالة</th></tr></thead><tbody id="tb-lab"></tbody></table></div></div>
-
+    </div>
+    
+    <div id="page-pos" class="page">
+      <div class="page-header">
+        <h1 class="page-title">الكاشير السريع</h1>
+        <p class="page-subtitle">مبيعات سريعة ومباشرة</p>
       </div>
-
-      <!-- ══ GALLERY ══ -->
-      <div id="page-gallery" class="page admin-only">
-
-        <div class="pg-hd"><div class="pg-hd-l"><h2>واجهة المعرض</h2><p>إدارة التشكيلات المعروضة على الموقع</p></div></div>
-
-        <div class="card mb2">
-
-          <div class="card-h"><div class="c-icon ci-b"><i class="fas fa-cloud-upload-alt"></i></div><h3>رفع تشكيلة</h3></div>
-
-          <div class="card-b">
-
-            <input type="hidden" id="gal-id">
-
-            <div class="g2">
-
-              <div class="fg"><label class="fl">الاسم</label><input id="gal-name" class="fc"></div>
-
-              <div class="fg"><label class="fl">النوع</label><select id="gal-type" class="fc"><option value="medical">طبي</option><option value="sun">شمسي</option></select></div>
-
-            </div>
-
-            <div class="fg"><label class="fl">الصورة</label><input type="file" accept="image/*" class="fc" onchange="compressImage(event,'gal-img','gal-prev')"><input type="hidden" id="gal-img"><img id="gal-prev" style="display:none;margin-top:8px;border-radius:var(--r2);max-height:80px;border:1px solid var(--b1);"></div>
-
-            <button class="btn btn-gr btn-lg" onclick="saveGallery()"><i class="fas fa-cloud-upload-alt"></i> نشر للموقع</button>
-
-          </div>
-
-        </div>
-
-        <div class="card"><div class="card-h"><div class="c-icon ci-a"><i class="fas fa-images"></i></div><h3>الموديلات المرفوعة</h3></div><div class="tw"><table class="tbl"><thead><tr><th>الاسم</th><th>النوع</th><th>خيارات</th></tr></thead><tbody id="tb-gal"></tbody></table></div></div>
-
+      <div class="coming-soon">
+        <i class="fas fa-cash-register"></i>
+        <h2>نظام الكاشير قيد التحديث</h2>
+        <p>واجهة سريعة وسهلة الاستخدام</p>
       </div>
-
-      <!-- ══ CMS ══ -->
-      <div id="page-cms" class="page admin-only">
-
-        <div class="pg-hd"><div class="pg-hd-l"><h2>إعدادات النظام</h2><p>تكوين النظام والموقع الإلكتروني</p></div></div>
-
-        <div class="card">
-
-          <div class="card-h"><div class="c-icon ci-b"><i class="fas fa-cog"></i></div><h3>الإعدادات العامة</h3></div>
-
-          <div class="card-b">
-
-            <div class="fg"><label class="fl">شريط الإعلانات</label><input id="cms-topbar" class="fc" placeholder="نص الإعلان..."></div>
-
-            <div class="g3" style="margin-top:2px;">
-
-              <div class="fg"><label class="fl">حالة المحل</label><select id="cms-mode" class="fc"><option value="auto">تلقائي</option><option value="force_open">مفتوح دائماً</option><option value="force_close">مغلق</option></select></div>
-
-              <div class="fg"><label class="fl">وقت الفتح</label><input type="time" id="cms-open" class="fc mono"></div>
-
-              <div class="fg"><label class="fl">وقت الإغلاق</label><input type="time" id="cms-close" class="fc mono"></div>
-
-            </div>
-
-            <button class="btn btn-gr btn-lg" style="margin-top:4px;" onclick="saveCMS()"><i class="fas fa-sync"></i> تحديث الإعدادات</button>
-
-          </div>
-
-        </div>
-
+    </div>
+    
+    <div id="page-tests" class="page">
+      <div class="page-header">
+        <h1 class="page-title">الفحوصات الذكية</h1>
+        <p class="page-subtitle">فحوصات العين الإلكترونية</p>
       </div>
-
-      <!-- ══ ACCOUNTS ══ -->
-      <div id="page-accounts" class="page developer-only">
-
-        <div class="pg-hd"><div class="pg-hd-l"><h2>إدارة الحسابات</h2><p>نظام الصلاحيات المتقدم — RBAC</p></div></div>
-
-        <div class="g12 mb2">
-
-          <!-- FORM PANEL -->
-          <div class="card">
-
-            <div class="card-h"><div class="c-icon ci-r"><i class="fas fa-user-edit"></i></div><h3 id="acc-form-title">إضافة حساب جديد</h3></div>
-
-            <div class="card-b">
-
-              <input type="hidden" id="acc-id">
-
-              <div class="s-div">بيانات الحساب</div>
-
-              <div class="fg"><label class="fl">الاسم الكامل</label><input id="acc-name" class="fc" placeholder="محمد أحمد..."></div>
-
-              <div class="fg"><label class="fl">البريد الإلكتروني (اليوزر)</label><input id="acc-user" class="fc mono" placeholder="user@delta.com" dir="ltr"></div>
-
-              <div class="fg">
-
-                <label class="fl">كلمة المرور</label>
-
-                <div class="pass-field">
-
-                  <input id="acc-pass" type="password" class="fc mono" placeholder="••••••••" dir="ltr">
-
-                  <button class="pass-toggle" type="button" onclick="togglePassVis('acc-pass','eye-acc')"><i class="fas fa-eye" id="eye-acc"></i></button>
-
-                </div>
-
-              </div>
-
-              <div class="s-div" style="margin-top:16px;">مستوى الوصول</div>
-
-              <div class="fg">
-
-                <label class="fl">الرتبة الرئيسية</label>
-
-                <select id="acc-role" class="fc" onchange="syncRolePerms()">
-
-                  <option value="employee">موظف</option>
-
-                  <option value="manager">مدير</option>
-
-                  <option value="developer">مطور / مسؤول</option>
-
-                </select>
-
-              </div>
-
-              <div class="s-div" style="margin-top:16px;">الصلاحيات التفصيلية</div>
-
-              <div class="perm-grid" id="perm-grid">
-
-                <label class="perm-item" id="p-view_dash"><input type="checkbox" id="perm-view_dash" onchange="permToggle(this)"><label for="perm-view_dash">لوحة التحكم</label></label>
-
-                <label class="perm-item" id="p-clinic"><input type="checkbox" id="perm-clinic" onchange="permToggle(this)"><label for="perm-clinic">العيادة والملفات</label></label>
-
-                <label class="perm-item" id="p-pos"><input type="checkbox" id="perm-pos" onchange="permToggle(this)"><label for="perm-pos">الكاشير</label></label>
-
-                <label class="perm-item" id="p-online"><input type="checkbox" id="perm-online" onchange="permToggle(this)"><label for="perm-online">فحوصات الأونلاين</label></label>
-
-                <label class="perm-item" id="p-inventory"><input type="checkbox" id="perm-inventory" onchange="permToggle(this)"><label for="perm-inventory">المخزون</label></label>
-
-                <label class="perm-item" id="p-lab"><input type="checkbox" id="perm-lab" onchange="permToggle(this)"><label for="perm-lab">المختبر</label></label>
-
-                <label class="perm-item" id="p-expenses"><input type="checkbox" id="perm-expenses" onchange="permToggle(this)"><label for="perm-expenses">تسجيل المصاريف</label></label>
-
-                <label class="perm-item" id="p-delete"><input type="checkbox" id="perm-delete" onchange="permToggle(this)"><label for="perm-delete">حذف السجلات</label></label>
-
-                <label class="perm-item" id="p-reports"><input type="checkbox" id="perm-reports" onchange="permToggle(this)"><label for="perm-reports">التقارير المالية</label></label>
-
-                <label class="perm-item" id="p-gallery"><input type="checkbox" id="perm-gallery" onchange="permToggle(this)"><label for="perm-gallery">إدارة المعرض</label></label>
-
-              </div>
-
-              <div style="display:flex;gap:9px;margin-top:16px;">
-
-                <button class="btn btn-gr btn-lg" style="flex:1;" onclick="saveAccount()"><i class="fas fa-save"></i> حفظ الحساب</button>
-
-                <button class="btn btn-sc btn-lg" onclick="resetAccountForm()"><i class="fas fa-times"></i> إلغاء</button>
-
-              </div>
-
-            </div>
-
-          </div>
-
-          <!-- TABLE PANEL -->
-          <div class="card">
-
-            <div class="card-h"><div class="c-icon ci-b"><i class="fas fa-users-cog"></i></div><h3>قائمة الحسابات</h3></div>
-
-            <div class="tw"><table class="tbl"><thead><tr><th>الاسم</th><th>البريد</th><th>الرتبة</th><th>الحالة</th><th>خيارات</th></tr></thead><tbody id="tb-accounts"></tbody></table></div>
-
-          </div>
-
-        </div>
-
+      <div class="coming-soon">
+        <i class="fas fa-microscope"></i>
+        <h2>نظام الفحوصات محدّث</h2>
+        <p>متاح عبر test.html</p>
       </div>
-
-      <!-- ══ AUDIT ══ -->
-      <div id="page-audit" class="page developer-only">
-
-        <div class="pg-hd"><div class="pg-hd-l"><h2>سجل التدقيق</h2><p>مراقبة جميع العمليات في الوقت الفعلي</p></div></div>
-
-        <div class="card"><div class="card-h"><div class="c-icon ci-r"><i class="fas fa-user-secret"></i></div><h3>Audit Log — آخر 50 عملية</h3></div><div class="tw" style="max-height:580px;overflow-y:auto;"><table class="tbl"><thead><tr><th>الموظف</th><th>الجهاز</th><th>العملية</th><th>الوقت</th></tr></thead><tbody id="tb-audit"></tbody></table></div></div>
-
+    </div>
+    
+    <div id="page-inventory" class="page">
+      <div class="page-header">
+        <h1 class="page-title">إدارة المخزون</h1>
+        <p class="page-subtitle">متابعة المنتجات والكميات</p>
       </div>
-
-      <!-- ══ RECYCLE ══ -->
-      <div id="page-recycle" class="page developer-only">
-
-        <div class="pg-hd"><div class="pg-hd-l"><h2>سلة المحذوفات</h2><p>استرجاع البيانات المحذوفة</p></div></div>
-
-        <div class="card"><div class="card-h"><div class="c-icon ci-r"><i class="fas fa-trash-restore"></i></div><h3>المحذوفات</h3></div><div class="tw" style="max-height:580px;overflow-y:auto;"><table class="tbl"><thead><tr><th>النوع</th><th>البيان</th><th>حُذف بواسطة</th><th>الوقت</th><th>استرجاع</th></tr></thead><tbody id="tb-recycle"></tbody></table></div></div>
-
+      <div class="coming-soon">
+        <i class="fas fa-boxes"></i>
+        <h2>نظام المخزون قريباً</h2>
+        <p>إدارة كاملة للمنتجات</p>
       </div>
-
-    </div><!-- /pages-root -->
-
-  </div><!-- /main -->
-
-</div><!-- /shell -->
-
-<div id="print-area"><div id="print-content"></div></div>
+    </div>
+    
+    <div id="page-gallery" class="page">
+      <div class="page-header">
+        <h1 class="page-title">معرض التشكيلات</h1>
+        <p class="page-subtitle">إدارة الموديلات والعروض</p>
+      </div>
+      <div class="coming-soon">
+        <i class="fas fa-images"></i>
+        <h2>المعرض متاح</h2>
+        <p>عبر collection.html</p>
+      </div>
+    </div>
+    
+    <div id="page-settings" class="page">
+      <div class="page-header">
+        <h1 class="page-title">إعدادات النظام</h1>
+        <p class="page-subtitle">تخصيص وإدارة النظام</p>
+      </div>
+      <div class="coming-soon">
+        <i class="fas fa-cog"></i>
+        <h2>الإعدادات قيد التطوير</h2>
+        <p>لوحة تحكم شاملة</p>
+      </div>
+    </div>
+  </main>
+</div>
 
 <script type="module" src="./app.js"></script>
+<script>
+// ═══════════════════════════════════════════
+//  UI CONTROLS
+// ═══════════════════════════════════════════
 
+function switchTab(tab) {
+  document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.login-panel').forEach(p => p.classList.remove('active'));
+  
+  event.target.closest('.login-tab').classList.add('active');
+  document.getElementById(tab + '-panel').classList.add('active');
+}
+
+function togglePassword(inputId, btn) {
+  const input = document.getElementById(inputId);
+  const icon = btn.querySelector('i');
+  
+  if (input.type === 'password') {
+    input.type = 'text';
+    icon.className = 'fas fa-eye-slash';
+  } else {
+    input.type = 'password';
+    icon.className = 'fas fa-eye';
+  }
+}
+
+function openSidebar() {
+  document.getElementById('sidebar').classList.add('active');
+  document.getElementById('sidebar-overlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('active');
+  document.getElementById('sidebar-overlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function goToPage(pageId) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + pageId).classList.add('active');
+  
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  event.target.closest('.nav-item').classList.add('active');
+  
+  closeSidebar();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleTheme() {
+  document.documentElement.classList.toggle('light-mode');
+  const icon = document.getElementById('theme-toggle').querySelector('i');
+  
+  if (document.documentElement.classList.contains('light-mode')) {
+    icon.className = 'fas fa-sun';
+    localStorage.setItem('theme', 'light');
+  } else {
+    icon.className = 'fas fa-moon';
+    localStorage.setItem('theme', 'dark');
+  }
+}
+
+// Load theme
+if (localStorage.getItem('theme') === 'light') {
+  document.documentElement.classList.add('light-mode');
+  const icon = document.getElementById('theme-toggle')?.querySelector('i');
+  if (icon) icon.className = 'fas fa-sun';
+}
+
+// ✅ Keyboard Shortcuts
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeSidebar();
+  }
+  
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+    e.preventDefault();
+    document.getElementById('global-search')?.focus();
+  }
+  
+  if ((e.ctrlKey || e.metaKey) && e.key === 'b') {
+    e.preventDefault();
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar.classList.contains('active')) {
+      closeSidebar();
+    } else {
+      openSidebar();
+    }
+  }
+});
+</script>
 </body>
-
 </html>
